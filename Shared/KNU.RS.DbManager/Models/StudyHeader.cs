@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace KNU.RS.DbManager.Models
 {
@@ -8,14 +8,22 @@ namespace KNU.RS.DbManager.Models
     {
         public Guid Id { get; set; }
 
-        public DateTime Date { get; set; }
-        public Guid DoctorId { get; set; }
-        [JsonIgnore]
-        public Doctor Doctor { get; set; }
-        public Guid PatientId { get; set; }
-        [JsonIgnore]
-        public Patient Patient { get; set; }
+        public decimal? PatientWeight { get; set; }
+        public decimal? PatientHeight { get; set; }
+
+        public string Complaints { get; set; }
+        public string Diagnosis { get; set; }
+        public string Notes { get; set; }
         public decimal Price { get; set; }
+
+        public Guid VisitId { get; set; }
+        [JsonIgnore]
+        public Visit Visit { get; set; }
+
+        public Guid RecoveryPlanId { get; set; }
+        [JsonIgnore]
+        public RecoveryPlan RecoveryPlan { get; set; }
+
 
         [JsonIgnore]
         public List<StudyDetails> StudyDetails { get; set; }

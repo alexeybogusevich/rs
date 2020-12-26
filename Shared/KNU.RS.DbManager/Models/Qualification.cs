@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace KNU.RS.DbManager.Models
 {
-    public class Department
+    public class Qualification
     {
         public Guid Id { get; set; }
 
         public string Name { get; set; }
 
         [JsonIgnore]
-        public List<Clinic> Clinics { get; set; }
+        public List<Doctor> Doctors { get; set; }
     }
 }
