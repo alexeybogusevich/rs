@@ -14,6 +14,6 @@ namespace KNU.RS.DbManager.Models
         public Guid DepartmentId { get; set; }
         public Department Department { get; set; }
 
-        public List<Doctor> Doctors { get; set; }
+        public List<DoctorProfile> Doctors { get; set; }
     }
 }

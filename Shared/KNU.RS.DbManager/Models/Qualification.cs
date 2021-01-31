@@ -11,6 +11,6 @@ namespace KNU.RS.DbManager.Models
         public string Name { get; set; }
 
         [JsonIgnore]
-        public List<Doctor> Doctors { get; set; }
+        public List<DoctorProfile> Doctors { get; set; }
     }
 }

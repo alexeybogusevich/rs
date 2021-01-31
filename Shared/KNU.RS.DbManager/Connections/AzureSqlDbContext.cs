@@ -3,13 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KNU.RS.DbManager.Connections
 {
-    public class AzureSqlDbContext : DbContext
+    public class AzureSqlDbContext : IdentityDbContext<User>
     {
-        public DbSet<Admin> Admins { get; set; }
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Patient> Patients { get; set; }
+        public DbSet<DoctorProfile> DoctorProfiles { get; set; }
+        public DbSet<PatientProfile> PatientProfiles { get; set; }
         public DbSet<Qualification> Qualifications { get; set; }
         public DbSet<RecoveryPlan> RecoveryPlans { get; set; }
         public DbSet<StudyDetails> StudyDetails { get; set; }
@@ -31,73 +30,122 @@ namespace KNU.RS.DbManager.Connections
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Admin
-            modelBuilder.Entity<Admin>().ToTable(nameof(Admins))
-                .HasKey(a => a.Id);
-
             // Clinic
-            modelBuilder.Entity<Clinic>().ToTable(nameof(Clinics))
-                .HasKey(e => e.Id);
-            modelBuilder.Entity<Clinic>().HasOne(c => c.Department)
-                .WithMany(d => d.Clinics).HasForeignKey(c => c.DepartmentId);
+            modelBuilder.Entity<Clinic>(c =>
+            {
+                c.HasKey(e => e.Id);
+
+                c.HasOne(c => c.Department).WithMany(d => d.Clinics)
+                    .HasForeignKey(c => c.DepartmentId);
+
+                c.ToTable(nameof(Clinics));
+            });
 
             // Department
-            modelBuilder.Entity<Department>().ToTable(nameof(Departments))
-                .HasKey(d => d.Id);
+            modelBuilder.Entity<Department>(d =>
+            {
+                d.HasKey(d => d.Id);
+                d.ToTable(nameof(Departments));
+            });
 
-            // Doctor
-            modelBuilder.Entity<Doctor>().ToTable(nameof(Doctors))
-                .HasKey(d => d.Id);
-            modelBuilder.Entity<Doctor>().HasOne(d => d.Clinic)
-                .WithMany(c => c.Doctors).HasForeignKey(d => d.ClinicId);
-            modelBuilder.Entity<Doctor>().HasOne(d => d.Qualification)
-                .WithMany(q => q.Doctors).HasForeignKey(d => d.QualificationId);
+            // DoctorProfile
+            modelBuilder.Entity<DoctorProfile>(dp =>
+            {
+                dp.HasKey(d => d.Id);
+               
+                dp.HasOne(d => d.Clinic).WithMany(c => c.Doctors)
+                    .HasForeignKey(d => d.ClinicId);
+                dp.HasOne(d => d.Qualification).WithMany(q => q.Doctors)
+                    .HasForeignKey(d => d.QualificationId);
 
-            // Patient
-            modelBuilder.Entity<Patient>().ToTable(nameof(Patients))
-                .HasKey(p => p.Id);
+                dp.ToTable(nameof(DoctorProfiles));
+            });
+
+            // PatientProfile
+            modelBuilder.Entity<PatientProfile>(p =>
+            {
+                p.HasKey(p => p.Id);
+                p.ToTable(nameof(PatientProfiles));
+            });
 
             // Qualification
-            modelBuilder.Entity<Qualification>().ToTable(nameof(Qualifications))
-                .HasKey(q => q.Id);
+            modelBuilder.Entity<Qualification>(q =>
+            {
+                q.HasKey(q => q.Id);
+                q.ToTable(nameof(Qualifications));
+            });
 
             // RecoveryPlan
-            modelBuilder.Entity<RecoveryPlan>().ToTable(nameof(RecoveryPlans))
-                .HasKey(r => r.Id);
+            modelBuilder.Entity<RecoveryPlan>(rp =>
+            {
+                rp.HasKey(r => r.Id);
+                rp.ToTable(nameof(RecoveryPlans));
+            });
+
 
             // StudyDetails
-            modelBuilder.Entity<StudyDetails>().ToTable(nameof(StudyDetails))
-                .HasKey(s => s.Id);
-            modelBuilder.Entity<StudyDetails>().HasOne(s => s.StudyHeader)
-                .WithMany(s => s.StudyDetails).HasForeignKey(s => s.StudyHeaderId);
-            modelBuilder.Entity<StudyDetails>().HasOne(s => s.StudySubtype)
-                .WithMany(s => s.StudyDetails).HasForeignKey(s => s.StudySubtypeId);
+            modelBuilder.Entity<StudyDetails>(sd =>
+            {
+                sd.HasKey(s => s.Id);
+
+                sd.HasOne(s => s.StudyHeader).WithMany(s => s.StudyDetails)
+                    .HasForeignKey(s => s.StudyHeaderId);
+                sd.HasOne(s => s.StudySubtype).WithMany(s => s.StudyDetails)
+                    .HasForeignKey(s => s.StudySubtypeId);
+
+                sd.ToTable(nameof(StudyDetails));
+            });
 
             // StudyHeader
-            modelBuilder.Entity<StudyHeader>().ToTable(nameof(StudyHeaders))
-                .HasKey(s => s.Id);
-            modelBuilder.Entity<StudyHeader>().HasOne(s => s.RecoveryPlan)
-                .WithMany(r => r.Studies).HasForeignKey(s => s.RecoveryPlanId);
-            modelBuilder.Entity<StudyHeader>().HasOne(s => s.Visit)
-                .WithOne(c => c.Study).HasForeignKey<StudyHeader>(s => s.VisitId);
+            modelBuilder.Entity<StudyHeader>(sh =>
+            {
+                sh.HasKey(s => s.Id);
+
+                sh.HasOne(s => s.RecoveryPlan).WithMany(r => r.Studies)
+                    .HasForeignKey(s => s.RecoveryPlanId);
+                sh.HasOne(s => s.Visit).WithOne(c => c.Study)
+                    .HasForeignKey<StudyHeader>(s => s.VisitId);
+
+                sh.ToTable(nameof(StudyHeaders));
+            });
 
             // StudySubtype
-            modelBuilder.Entity<StudySubtype>().ToTable(nameof(StudySubtypes))
-                .HasKey(s => s.Id);
-            modelBuilder.Entity<StudySubtype>().HasOne(s => s.StudyType)
-                .WithMany(s => s.StudySubtypes).HasForeignKey(s => s.StudyTypeId);
+            modelBuilder.Entity<StudySubtype>(ss =>
+            {
+                ss.HasKey(s => s.Id);
+
+                ss.HasOne(s => s.StudyType).WithMany(s => s.StudySubtypes)
+                    .HasForeignKey(s => s.StudyTypeId);
+
+                ss.ToTable(nameof(StudySubtypes));
+            });
 
             // StudyType
-            modelBuilder.Entity<StudyType>().ToTable(nameof(StudyTypes))
-                .HasKey(s => s.Id);
+            modelBuilder.Entity<StudyType>(st =>
+            {
+                st.HasKey(s => s.Id);
+                st.ToTable(nameof(StudyTypes));
+            });
+
+            // StudyType
+            modelBuilder.Entity<User>(st =>
+            {
+                st.HasKey(s => s.Id);
+                st.ToTable(nameof(StudyTypes));
+            });
 
             // Visit
-            modelBuilder.Entity<Visit>().ToTable(nameof(Visits))
-                .HasKey(v => v.Id);
-            modelBuilder.Entity<Visit>().HasOne(v => v.Patient)
-                .WithMany(p => p.Visits).HasForeignKey(v => v.PatientId);
-            modelBuilder.Entity<Visit>().HasOne(v => v.Doctor)
-                .WithMany(d => d.Visits).HasForeignKey(v => v.DoctorId);
+            modelBuilder.Entity<Visit>(v =>
+            {
+                v.HasKey(v => v.Id);
+
+                v.HasOne(v => v.Patient).WithMany(p => p.Visits)
+                    .HasForeignKey(v => v.PatientId);
+                v.HasOne(v => v.Doctor).WithMany(d => d.Visits)
+                    .HasForeignKey(v => v.DoctorId);
+
+                v.ToTable(nameof(Visits));
+            });
         }
     }
 }

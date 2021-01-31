@@ -13,11 +13,11 @@ namespace KNU.RS.DbManager.Models
 
         public Guid DoctorId { get; set; }
         [JsonIgnore]
-        public Doctor Doctor { get; set; }
+        public DoctorProfile Doctor { get; set; }
 
         public Guid PatientId { get; set; }
         [JsonIgnore]
-        public Patient Patient { get; set; }
+        public PatientProfile Patient { get; set; }
 
         public StudyHeader Study { get; set; } 
     }
