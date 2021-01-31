@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace KNU.RS.DbManager.Models
 {
-    public class User : Microsoft.AspNetCore.Identity. IdentityUser<Guid>
+    public class User : IdentityUser<Guid>
     {
         public string FirstName { get; set; }
         public string MiddleName { get; set; }

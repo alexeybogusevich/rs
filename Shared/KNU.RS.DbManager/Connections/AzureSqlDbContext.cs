@@ -1,9 +1,11 @@
 ﻿using KNU.RS.DbManager.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace KNU.RS.DbManager.Connections
 {
-    public class AzureSqlDbContext : IdentityDbContext<User>
+    public class AzureSqlDbContext : IdentityDbContext<User, Role, Guid>
     {
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -30,6 +32,8 @@ namespace KNU.RS.DbManager.Connections
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             // Clinic
             modelBuilder.Entity<Clinic>(c =>
             {
@@ -52,7 +56,9 @@ namespace KNU.RS.DbManager.Connections
             modelBuilder.Entity<DoctorProfile>(dp =>
             {
                 dp.HasKey(d => d.Id);
-               
+
+                dp.HasOne(d => d.User).WithOne()
+                    .HasForeignKey<DoctorProfile>(d => d.UserId);
                 dp.HasOne(d => d.Clinic).WithMany(c => c.Doctors)
                     .HasForeignKey(d => d.ClinicId);
                 dp.HasOne(d => d.Qualification).WithMany(q => q.Doctors)
@@ -81,7 +87,6 @@ namespace KNU.RS.DbManager.Connections
                 rp.HasKey(r => r.Id);
                 rp.ToTable(nameof(RecoveryPlans));
             });
-
 
             // StudyDetails
             modelBuilder.Entity<StudyDetails>(sd =>
@@ -122,13 +127,6 @@ namespace KNU.RS.DbManager.Connections
 
             // StudyType
             modelBuilder.Entity<StudyType>(st =>
-            {
-                st.HasKey(s => s.Id);
-                st.ToTable(nameof(StudyTypes));
-            });
-
-            // StudyType
-            modelBuilder.Entity<User>(st =>
             {
                 st.HasKey(s => s.Id);
                 st.ToTable(nameof(StudyTypes));
