@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace KNU.RS.DbManager.Migrations
+namespace KNU.RS.Data.Migrations
 {
     public partial class FirstMigration : Migration
     {

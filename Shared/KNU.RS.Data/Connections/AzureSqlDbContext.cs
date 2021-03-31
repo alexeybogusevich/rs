@@ -1,9 +1,9 @@
-﻿using KNU.RS.DbManager.Models;
+﻿using KNU.RS.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace KNU.RS.DbManager.Connections
+namespace KNU.RS.Data.Connections
 {
     public class AzureSqlDbContext : IdentityDbContext<User, Role, Guid>
     {

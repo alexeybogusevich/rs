@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace KNU.RS.DbManager.Models
+namespace KNU.RS.Data.Models
 {
     public class Visit
     {

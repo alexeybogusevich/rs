@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace KNU.RS.DbManager.Models
+namespace KNU.RS.Data.Models
 {
     public class StudyHeader
     {

@@ -15,14 +15,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="SendGrid" Version="9.22.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Shared\KNU.RS.DbManager\KNU.RS.DbManager.csproj" />
+    <ProjectReference Include="..\..\Shared\KNU.RS.Data\KNU.RS.Data.csproj" />
   </ItemGroup>
 
 </Project>

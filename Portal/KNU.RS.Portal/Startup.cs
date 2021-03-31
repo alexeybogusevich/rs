@@ -5,8 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using KNU.RS.Portal.Constants;
-using KNU.RS.DbManager.Connections;
-using KNU.RS.DbManager.Models;
+using KNU.RS.Data.Connections;
+using KNU.RS.Data.Models;
+using SendGrid;
+using KNU.RS.Portal.Services.EmailSender;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using KNU.RS.Portal.Configuration;
 
 namespace KNU.RS.Portal
 {
@@ -28,6 +32,14 @@ namespace KNU.RS.Portal
 
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AzureSqlDbContext>();
+
+            var apiKey = Configuration.GetSection(ConfigurationConstants.Emailing)[ConfigurationConstants.ApiKey];
+            
+            services.AddScoped<ISendGridClient>(service => new SendGridClient(apiKey));
+            services.AddScoped<IEmailSender, EmailSender>();
+
+            services.Configure<EmailingConfiguration>
+                (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));
 
             services.AddRazorPages();
         }

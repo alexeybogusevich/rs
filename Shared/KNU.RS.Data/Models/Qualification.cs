@@ -2,15 +2,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace KNU.RS.DbManager.Models
+namespace KNU.RS.Data.Models
 {
-    public class Department
+    public class Qualification
     {
         public Guid Id { get; set; }
 
         public string Name { get; set; }
 
         [JsonIgnore]
-        public List<Clinic> Clinics { get; set; }
+        public List<DoctorProfile> Doctors { get; set; }
     }
 }

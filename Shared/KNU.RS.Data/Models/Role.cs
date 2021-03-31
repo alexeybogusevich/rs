@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace KNU.RS.DbManager.Models
+namespace KNU.RS.Data.Models
 {
     public class Role : IdentityRole<Guid> { }
 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace KNU.RS.DbManager.Models
+namespace KNU.RS.Data.Models
 {
     public class User : IdentityUser<Guid>
     {
@@ -10,5 +10,6 @@ namespace KNU.RS.DbManager.Models
         public string LastName { get; set; }
         public string Address { get; set; }
         public DateTime Birthday { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }
