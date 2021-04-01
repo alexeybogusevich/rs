@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace KNU.RS.Data.Models
@@ -10,7 +9,6 @@ namespace KNU.RS.Data.Models
 
         public string Name { get; set; }
 
-        [JsonIgnore]
         public List<StudySubtype> StudySubtypes { get; set; }
     }
 }

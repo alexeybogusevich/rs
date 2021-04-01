@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace KNU.RS.Data.Models
@@ -9,11 +8,9 @@ namespace KNU.RS.Data.Models
         public Guid Id { get; set; }
 
         public Guid QualificationId { get; set; }
-        [JsonIgnore]
         public Qualification Qualification { get; set; }
 
         public Guid ClinicId { get; set; }
-        [JsonIgnore]
         public Clinic Clinic { get; set; }
 
         public Guid UserId { get; set; }

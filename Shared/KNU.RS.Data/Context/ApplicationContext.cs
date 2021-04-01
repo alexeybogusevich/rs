@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace KNU.RS.Data.Connections
+namespace KNU.RS.Data.Context
 {
-    public class AzureSqlDbContext : IdentityDbContext<User, Role, Guid>
+    public class ApplicationContext : IdentityDbContext<User, Role, Guid>
     {
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -20,7 +20,7 @@ namespace KNU.RS.Data.Connections
         public DbSet<Visit> Visits { get; set; }
 
 
-        public AzureSqlDbContext(DbContextOptions<AzureSqlDbContext> options) : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
 
         }
@@ -147,4 +147,3 @@ namespace KNU.RS.Data.Connections
         }
     }
 }
- 

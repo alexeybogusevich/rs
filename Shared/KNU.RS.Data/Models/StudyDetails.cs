@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 
 namespace KNU.RS.Data.Models
 {
@@ -11,11 +10,9 @@ namespace KNU.RS.Data.Models
         public decimal CounterClockwiseDegrees { get; set; }
 
         public Guid StudySubtypeId { get; set; }
-        [JsonIgnore]
         public StudySubtype StudySubtype { get; set; }
 
         public Guid StudyHeaderId { get; set; }
-        [JsonIgnore]
         public StudyHeader StudyHeader { get; set; }
     }
 }

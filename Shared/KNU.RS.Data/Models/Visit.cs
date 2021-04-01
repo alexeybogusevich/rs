@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 
 namespace KNU.RS.Data.Models
 {
@@ -12,13 +11,11 @@ namespace KNU.RS.Data.Models
         public bool Completed { get; set; }
 
         public Guid DoctorId { get; set; }
-        [JsonIgnore]
         public DoctorProfile Doctor { get; set; }
 
         public Guid PatientId { get; set; }
-        [JsonIgnore]
         public PatientProfile Patient { get; set; }
 
-        public StudyHeader Study { get; set; } 
+        public StudyHeader Study { get; set; }
     }
 }

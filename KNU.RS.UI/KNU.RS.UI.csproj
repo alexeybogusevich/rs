@@ -13,4 +13,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KNU.RS.Logic\KNU.RS.Logic.csproj" />
+    <ProjectReference Include="..\Shared\KNU.RS.Data\KNU.RS.Data.csproj" />
+  </ItemGroup>
+
 </Project>
