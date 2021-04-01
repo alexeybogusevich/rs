@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>aspnet-KNU.RS.UI-401FC83A-E7B5-4063-8E09-D65FD8BF1292</UserSecretsId>
+    <UserSecretsId>aspnet-KNU.RS.UI-31237F69-250D-4C5D-BF5B-E614504B538C</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\KNU.RS.Data\KNU.RS.Data.csproj" />
+    <ProjectReference Include="..\..\Shared\KNU.RS.Data\KNU.RS.Data.csproj" />
   </ItemGroup>
 
 </Project>

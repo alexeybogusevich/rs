@@ -1,4 +1,5 @@
 using KNU.RS.Data.Context;
+using KNU.RS.Data.Models;
 using KNU.RS.UI.Areas.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -24,16 +25,12 @@ namespace KNU.RS.UI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationContext>(options =>
-            //    options.UseSqlServer(
-            //         Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<ApplicationContext>
-                (options => options.UseInMemoryDatabase(ConfigurationConstants.DatabaseName));
-
-
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationContext>();
-
+            services.AddDbContext<ApplicationContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationContext>()
+                .AddDefaultTokenProviders();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
