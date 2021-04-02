@@ -1,5 +1,11 @@
 using KNU.RS.Data.Context;
 using KNU.RS.Data.Models;
+using KNU.RS.Logic.Services.DoctorService;
+using KNU.RS.Logic.Services.PasswordService;
+using KNU.RS.Logic.Services.PatientService;
+using KNU.RS.Logic.Services.StudyService;
+using KNU.RS.PlatformExtensions.Configuration;
+using KNU.RS.PlatformExtensions.Enums;
 using KNU.RS.UI.Areas.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -21,23 +27,26 @@ namespace KNU.RS.UI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Configuration.GetConnectionString(ConnectionString.Database)));
+
             services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddScoped<IDoctorService, BaseDoctorService>();
+            services.AddScoped<IPasswordService, BasePasswordService>()
+            services.AddScoped<IPatientService, BasePatientService>();
+            services.AddScoped<IStudyService, BaseStudyService>();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

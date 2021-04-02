@@ -9,8 +9,8 @@ namespace KNU.RS.Data.Context
     public class ApplicationContext : IdentityDbContext<User, Role, Guid>
     {
         public DbSet<Clinic> Clinics { get; set; }
-        public DbSet<Doctor> DoctorProfiles { get; set; }
-        public DbSet<Patient> PatientProfiles { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
         public DbSet<Qualification> Qualifications { get; set; }
         public DbSet<RecoveryDailyPlan> RecoveryDailyPlans { get; set; }
         public DbSet<StudyDetails> StudyDetails { get; set; }
@@ -21,14 +21,12 @@ namespace KNU.RS.Data.Context
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
-            
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.EnableSensitiveDataLogging();
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,7 +41,7 @@ namespace KNU.RS.Data.Context
             modelBuilder.Entity<Doctor>(dp =>
             {
                 dp.HasKey(d => d.Id);
-                dp.HasOne(d => d.User).WithOne().HasForeignKey<Doctor>(d => d.UserId);
+                dp.HasOne(d => d.User).WithOne(u => u.Doctor).HasForeignKey<Doctor>(d => d.UserId).OnDelete(DeleteBehavior.ClientCascade);
                 dp.HasOne(d => d.Clinic).WithMany(c => c.Doctors).HasForeignKey(d => d.ClinicId);
                 dp.HasOne(d => d.Qualification).WithMany(q => q.Doctors).HasForeignKey(d => d.QualificationId);
             });
@@ -59,7 +57,7 @@ namespace KNU.RS.Data.Context
             modelBuilder.Entity<Patient>(p =>
             {
                 p.HasKey(p => p.Id);
-                p.HasOne(d => d.User).WithOne().HasForeignKey<Patient>(d => d.UserId);
+                p.HasOne(d => d.User).WithOne(u => u.Patient).HasForeignKey<Patient>(d => d.UserId);
             });
 
             modelBuilder.Entity<Qualification>(q =>
@@ -84,7 +82,7 @@ namespace KNU.RS.Data.Context
             modelBuilder.Entity<StudyHeader>(sh =>
             {
                 sh.HasKey(s => s.Id);
-                sh.HasOne(s => s.RecoveryPlan).WithMany(r => r.Studies).HasForeignKey(s => s.RecoveryPlanId);
+                sh.HasOne(s => s.DoctorPatient).WithMany(r => r.StudyHeaders).HasForeignKey(s => s.DoctorPatientId);
             });
 
             modelBuilder.Entity<StudySubtype>(ss =>

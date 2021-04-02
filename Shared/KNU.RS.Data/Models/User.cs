@@ -10,5 +10,8 @@ namespace KNU.RS.Data.Models
         public string MiddleName { get; set; }
 
         public string Address { get; set; }
+
+        public Doctor Doctor { get; set; }
+        public Patient Patient { get; set; }
     }
 }

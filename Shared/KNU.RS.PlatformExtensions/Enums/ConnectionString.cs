@@ -4,7 +4,7 @@ namespace KNU.RS.PlatformExtensions.Enums
 {
     public enum ConnectionString
     {
-        [Description("DatabaseConnectionString")]
+        [Description("SqlConnectionString")]
         Database
     }
 }

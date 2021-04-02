@@ -14,5 +14,6 @@ namespace KNU.RS.Data.Models
         public Patient Patient { get; set; }
 
         public IEnumerable<RecoveryDailyPlan> RecoveryDailyPlans { get; set; }
+        public IEnumerable<StudyHeader> StudyHeaders { get; set; }
     }
 }

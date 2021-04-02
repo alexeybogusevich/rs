@@ -9,23 +9,20 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KNU.RS.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class AzureSqlDbContextModelSnapshot : ModelSnapshot
+    partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.2");
+                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Clinic", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.Clinic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Location")
@@ -39,26 +36,19 @@ namespace KNU.RS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DepartmentId");
-
                     b.ToTable("Clinics");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a6285a67-6f1b-4adb-8de1-ffb26050c36a"),
+                            Location = "Локация",
+                            Name = "Военный госпиталь",
+                            PhoneNumber = "12345"
+                        });
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Department", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("KNU.RS.DbManager.Models.DoctorProfile", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.Doctor", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,39 +72,57 @@ namespace KNU.RS.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("DoctorProfiles");
+                    b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.PatientProfile", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.DoctorPatient", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("DoctorPatient");
+                });
+
+            modelBuilder.Entity("KNU.RS.Data.Models.Patient", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal?>("Height")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PatientProfiles");
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Qualification", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.Qualification", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,32 +134,44 @@ namespace KNU.RS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Qualifications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("35b9add3-729d-41b9-8a8c-d74681d1d526"),
+                            Name = "Терапевт"
+                        });
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.RecoveryPlan", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.RecoveryDailyPlan", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Day")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
+                    b.Property<Guid>("DoctorPatientId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("Times")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("RecoveryPlans");
+                    b.HasIndex("DoctorPatientId");
+
+                    b.ToTable("RecoveryDailyPlans");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Role", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.Role", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,9 +197,29 @@ namespace KNU.RS.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7322ebe8-cfc4-4bd8-8cf9-67a9ceeae0a3"),
+                            ConcurrencyStamp = "7b14e6df-e4cb-42e1-971b-2e1d3d1c02c3",
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("5ec23f46-4f31-457f-b9b7-16f4fb090ee3"),
+                            ConcurrencyStamp = "01e58d7c-65f9-42b5-a821-c09a871ca201",
+                            Name = "Doctor"
+                        },
+                        new
+                        {
+                            Id = new Guid("c63e87f9-dee0-4ec5-911c-a8d2c591dc17"),
+                            ConcurrencyStamp = "c9337ebf-ac82-42ac-8f9e-3aa98f4caec1",
+                            Name = "Patient"
+                        });
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudyDetails", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.StudyDetails", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -206,7 +246,7 @@ namespace KNU.RS.Data.Migrations
                     b.ToTable("StudyDetails");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudyHeader", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.StudyHeader", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -215,38 +255,29 @@ namespace KNU.RS.Data.Migrations
                     b.Property<string>("Complaints")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Diagnosis")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DoctorPatientId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("PatientHeight")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("PatientWeight")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("RecoveryPlanId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("VisitId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("RecoveryPlanId");
-
-                    b.HasIndex("VisitId")
-                        .IsUnique();
+                    b.HasIndex("DoctorPatientId");
 
                     b.ToTable("StudyHeaders");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudySubtype", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.StudySubtype", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -265,7 +296,7 @@ namespace KNU.RS.Data.Migrations
                     b.ToTable("StudySubtypes");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudyType", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.StudyType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -279,7 +310,7 @@ namespace KNU.RS.Data.Migrations
                     b.ToTable("StudyTypes");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.User", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -290,9 +321,6 @@ namespace KNU.RS.Data.Migrations
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Birthday")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -360,42 +388,12 @@ namespace KNU.RS.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Visit", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Completed")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PatientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Reason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("Visits");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -418,7 +416,7 @@ namespace KNU.RS.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -439,12 +437,10 @@ namespace KNU.RS.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -480,12 +476,10 @@ namespace KNU.RS.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -495,35 +489,24 @@ namespace KNU.RS.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Clinic", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.Doctor", b =>
                 {
-                    b.HasOne("KNU.RS.DbManager.Models.Department", "Department")
-                        .WithMany("Clinics")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("KNU.RS.DbManager.Models.DoctorProfile", b =>
-                {
-                    b.HasOne("KNU.RS.DbManager.Models.Clinic", "Clinic")
+                    b.HasOne("KNU.RS.Data.Models.Clinic", "Clinic")
                         .WithMany("Doctors")
                         .HasForeignKey("ClinicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KNU.RS.DbManager.Models.Qualification", "Qualification")
+                    b.HasOne("KNU.RS.Data.Models.Qualification", "Qualification")
                         .WithMany("Doctors")
                         .HasForeignKey("QualificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KNU.RS.DbManager.Models.User", "User")
+                    b.HasOne("KNU.RS.Data.Models.User", "User")
                         .WithOne()
-                        .HasForeignKey("KNU.RS.DbManager.Models.DoctorProfile", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("KNU.RS.Data.Models.Doctor", "UserId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Clinic");
@@ -533,15 +516,56 @@ namespace KNU.RS.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudyDetails", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.DoctorPatient", b =>
                 {
-                    b.HasOne("KNU.RS.DbManager.Models.StudyHeader", "StudyHeader")
+                    b.HasOne("KNU.RS.Data.Models.Doctor", "Doctor")
+                        .WithMany("Patients")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KNU.RS.Data.Models.Patient", "Patient")
+                        .WithMany("Doctors")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("KNU.RS.Data.Models.Patient", b =>
+                {
+                    b.HasOne("KNU.RS.Data.Models.User", "User")
+                        .WithOne()
+                        .HasForeignKey("KNU.RS.Data.Models.Patient", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("KNU.RS.Data.Models.RecoveryDailyPlan", b =>
+                {
+                    b.HasOne("KNU.RS.Data.Models.DoctorPatient", "DoctorPatient")
+                        .WithMany("RecoveryDailyPlans")
+                        .HasForeignKey("DoctorPatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DoctorPatient");
+                });
+
+            modelBuilder.Entity("KNU.RS.Data.Models.StudyDetails", b =>
+                {
+                    b.HasOne("KNU.RS.Data.Models.StudyHeader", "StudyHeader")
                         .WithMany("StudyDetails")
                         .HasForeignKey("StudyHeaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KNU.RS.DbManager.Models.StudySubtype", "StudySubtype")
+                    b.HasOne("KNU.RS.Data.Models.StudySubtype", "StudySubtype")
                         .WithMany("StudyDetails")
                         .HasForeignKey("StudySubtypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -552,28 +576,20 @@ namespace KNU.RS.Data.Migrations
                     b.Navigation("StudySubtype");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudyHeader", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.StudyHeader", b =>
                 {
-                    b.HasOne("KNU.RS.DbManager.Models.RecoveryPlan", "RecoveryPlan")
-                        .WithMany("Studies")
-                        .HasForeignKey("RecoveryPlanId")
+                    b.HasOne("KNU.RS.Data.Models.DoctorPatient", "DoctorPatient")
+                        .WithMany("StudyHeaders")
+                        .HasForeignKey("DoctorPatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KNU.RS.DbManager.Models.Visit", "Visit")
-                        .WithOne("Study")
-                        .HasForeignKey("KNU.RS.DbManager.Models.StudyHeader", "VisitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RecoveryPlan");
-
-                    b.Navigation("Visit");
+                    b.Navigation("DoctorPatient");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudySubtype", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.StudySubtype", b =>
                 {
-                    b.HasOne("KNU.RS.DbManager.Models.StudyType", "StudyType")
+                    b.HasOne("KNU.RS.Data.Models.StudyType", "StudyType")
                         .WithMany("StudySubtypes")
                         .HasForeignKey("StudyTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -582,28 +598,9 @@ namespace KNU.RS.Data.Migrations
                     b.Navigation("StudyType");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Visit", b =>
-                {
-                    b.HasOne("KNU.RS.DbManager.Models.DoctorProfile", "Doctor")
-                        .WithMany("Visits")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KNU.RS.DbManager.Models.PatientProfile", "Patient")
-                        .WithMany("Visits")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Patient");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
-                    b.HasOne("KNU.RS.DbManager.Models.Role", null)
+                    b.HasOne("KNU.RS.Data.Models.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -612,7 +609,7 @@ namespace KNU.RS.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("KNU.RS.DbManager.Models.User", null)
+                    b.HasOne("KNU.RS.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -621,7 +618,7 @@ namespace KNU.RS.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("KNU.RS.DbManager.Models.User", null)
+                    b.HasOne("KNU.RS.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -630,13 +627,13 @@ namespace KNU.RS.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("KNU.RS.DbManager.Models.Role", null)
+                    b.HasOne("KNU.RS.Data.Models.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KNU.RS.DbManager.Models.User", null)
+                    b.HasOne("KNU.RS.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -645,61 +642,53 @@ namespace KNU.RS.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("KNU.RS.DbManager.Models.User", null)
+                    b.HasOne("KNU.RS.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Clinic", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.Clinic", b =>
                 {
                     b.Navigation("Doctors");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Department", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.Doctor", b =>
                 {
-                    b.Navigation("Clinics");
+                    b.Navigation("Patients");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.DoctorProfile", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.DoctorPatient", b =>
                 {
-                    b.Navigation("Visits");
+                    b.Navigation("RecoveryDailyPlans");
+
+                    b.Navigation("StudyHeaders");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.PatientProfile", b =>
-                {
-                    b.Navigation("Visits");
-                });
-
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Qualification", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.Patient", b =>
                 {
                     b.Navigation("Doctors");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.RecoveryPlan", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.Qualification", b =>
                 {
-                    b.Navigation("Studies");
+                    b.Navigation("Doctors");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudyHeader", b =>
-                {
-                    b.Navigation("StudyDetails");
-                });
-
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudySubtype", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.StudyHeader", b =>
                 {
                     b.Navigation("StudyDetails");
                 });
 
-            modelBuilder.Entity("KNU.RS.DbManager.Models.StudyType", b =>
+            modelBuilder.Entity("KNU.RS.Data.Models.StudySubtype", b =>
+                {
+                    b.Navigation("StudyDetails");
+                });
+
+            modelBuilder.Entity("KNU.RS.Data.Models.StudyType", b =>
                 {
                     b.Navigation("StudySubtypes");
-                });
-
-            modelBuilder.Entity("KNU.RS.DbManager.Models.Visit", b =>
-                {
-                    b.Navigation("Study");
                 });
 #pragma warning restore 612, 618
         }
