@@ -11,9 +11,6 @@ namespace KNU.RS.Data.Models
         public string PhoneNumber { get; set; }
         public string Location { get; set; }
 
-        public Guid DepartmentId { get; set; }
-        public Department Department { get; set; }
-
-        public List<DoctorProfile> Doctors { get; set; }
+        public List<Doctor> Doctors { get; set; }
     }
 }

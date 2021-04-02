@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace KNU.RS.Data.Models
 {
-    public class DoctorProfile
+    public class Doctor
     {
         public Guid Id { get; set; }
 
@@ -16,6 +16,6 @@ namespace KNU.RS.Data.Models
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        public List<Visit> Visits { get; set; }
+        public IEnumerable<DoctorPatient> Patients { get; set; }
     }
 }

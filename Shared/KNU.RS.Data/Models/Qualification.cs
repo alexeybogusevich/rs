@@ -9,6 +9,6 @@ namespace KNU.RS.Data.Models
 
         public string Name { get; set; }
 
-        public List<DoctorProfile> Doctors { get; set; }
+        public List<Doctor> Doctors { get; set; }
     }
 }

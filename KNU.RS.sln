@@ -9,11 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KNU.RS.Logic", "Portal\KNU.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{DD47D2D2-3E1E-4106-A97A-E8F4A53B7518}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNU.RS.PlatformExtensions", "Shared\KNU.RS.PlatformExtensions\KNU.RS.PlatformExtensions.csproj", "{ABA397F9-AE53-4EAC-88A3-BD603E673035}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KNU.RS.PlatformExtensions", "Shared\KNU.RS.PlatformExtensions\KNU.RS.PlatformExtensions.csproj", "{ABA397F9-AE53-4EAC-88A3-BD603E673035}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portal", "Portal", "{28F503A1-0727-4EB3-9536-23AC8A7F1208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KNU.RS.UI", "Portal\KNU.RS.UI\KNU.RS.UI.csproj", "{06692223-2964-4716-A088-6475E8AC4DEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KNU.RS.UI", "Portal\KNU.RS.UI\KNU.RS.UI.csproj", "{06692223-2964-4716-A088-6475E8AC4DEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
