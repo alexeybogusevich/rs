@@ -1,5 +1,7 @@
 ﻿using KNU.RS.Data.Context;
 using KNU.RS.Data.Models;
+using KNU.RS.Logic.Converters;
+using KNU.RS.Logic.Models.Patient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,18 +19,20 @@ namespace KNU.RS.Logic.Services.PatientService
             this.context = context;
         }
 
-        public async Task<IEnumerable<Patient>> GetPatientsAsync()
+        public async Task<IEnumerable<PatientInfo>> GetInfoAsync()
         {
             return await context.Patients
                 .Include(p => p.User)
+                .Select(p => PatientConverter.Convert(p))
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Patient>> GetPatientsAsync(Guid doctorId)
+        public async Task<IEnumerable<PatientInfo>> GetInfoAsync(Guid doctorId)
         {
             return await context.Patients
                 .Include(p => p.User)
                 .Where(p => p.Doctors.Select(d => d.DoctorId).Contains(doctorId))
+                .Select(p => PatientConverter.Convert(p))
                 .ToListAsync();
         }
 

@@ -37,7 +37,7 @@ namespace KNU.RS.UI
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IDoctorService, BaseDoctorService>();
-            services.AddScoped<IPasswordService, BasePasswordService>()
+            services.AddScoped<IPasswordService, BasePasswordService>();
             services.AddScoped<IPatientService, BasePatientService>();
             services.AddScoped<IStudyService, BaseStudyService>();
 

@@ -1,4 +1,4 @@
-﻿namespace KNU.RS.UI.Models.User
+﻿namespace KNU.RS.Logic.Models.User
 {
     public class FooterInfo
     {

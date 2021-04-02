@@ -1,4 +1,4 @@
-﻿using KNU.RS.Data.Models;
+﻿using KNU.RS.Logic.Models.Study;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,6 +7,6 @@ namespace KNU.RS.Logic.Services.StudyService
 {
     public interface IStudyService
     {
-        Task<IEnumerable<StudyHeader>> GetStudiesAsync(Guid patientId);
+        Task<IEnumerable<StudyInfo>> GetAsync(Guid patientId);
     }
 }

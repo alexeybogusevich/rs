@@ -1,7 +1,10 @@
 ﻿using KNU.RS.Data.Context;
 using KNU.RS.Data.Models;
+using KNU.RS.Logic.Converters;
+using KNU.RS.Logic.Models.Doctor;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.DoctorService
@@ -15,12 +18,13 @@ namespace KNU.RS.Logic.Services.DoctorService
             this.context = context;
         }
 
-        public async Task<IEnumerable<Doctor>> GetDoctorsAsync()
+        public async Task<IEnumerable<DoctorInfo>> GetInfoAsync()
         {
             return await context.Doctors
                 .Include(d => d.Clinic)
                 .Include(d => d.Qualification)
                 .Include(d => d.User)
+                .Select(d => DoctorConverter.Convert(d))
                 .ToListAsync();
         }
 
