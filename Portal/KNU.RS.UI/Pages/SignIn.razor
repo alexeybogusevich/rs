@@ -9,20 +9,18 @@
 </head>
 
 <body>
-    <div class="absoluteCenter">
-        <div class="wrapper fadeInDown">
-            <div id="formContent">
-                <!-- Tabs Titles -->
-                <h2 class="active"> Вхід в систему </h2>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active"> Вхід в систему </h2>
 
-                <!-- Login Form -->
-                <form>
-                    <input type="text" id="login" class="fadeIn second" name="login" placeholder="логін">
-                    <input type="text" id="password" class="fadeIn third" name="login" placeholder="пароль">
-                    <input type="submit" class="fadeIn fourth" value="Увійти">
-                </form>
+            <!-- Login Form -->
+            <form>
+                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Логін" data-inputtype="email" maxlength="100" required="required">
+                <input type="password" id="password" class="fadeIn third" placeholder="Пароль" data-inputtype="password" name="password" required="required">
+                <input type="submit" class="fadeIn fourth" value="Увійти">
+            </form>
 
-            </div>
         </div>
     </div>
 
