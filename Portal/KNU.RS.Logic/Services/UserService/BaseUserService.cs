@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.UserService
 {
-    public class UserService : IUserService
+    public class BaseUserService : IUserService
     {
         private readonly ApplicationContext context;
 
-        public UserService(ApplicationContext context)
+        public BaseUserService(ApplicationContext context)
         {
             this.context = context;
         }

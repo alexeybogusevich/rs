@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.UserService
 {
-    internal interface IUserService
+    public interface IUserService
     {
         Task<FooterInfo> GetFooterAsync(Guid id);
     }

@@ -29,17 +29,20 @@ namespace KNU.RS.Data.Extensions
                 new Role
                 {
                     Id = RoleId.AdminId,
-                    Name = RoleName.Admin
+                    Name = RoleName.Admin,
+                    NormalizedName = RoleName.Admin.ToUpper()
                 },
                 new Role
                 {
                     Id = RoleId.DoctorId,
-                    Name = RoleName.Doctor
+                    Name = RoleName.Doctor,
+                    NormalizedName = RoleName.Doctor.ToUpper()
                 },
                 new Role
                 {
                     Id = RoleId.PatientId,
-                    Name = RoleName.Patient
+                    Name = RoleName.Patient,
+                    NormalizedName = RoleName.Patient.ToUpper()
                 });
         }
     }

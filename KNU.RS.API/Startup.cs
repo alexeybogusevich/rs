@@ -6,26 +6,21 @@ using KNU.RS.Logic.Constants;
 using KNU.RS.Logic.Mapper;
 using KNU.RS.Logic.Middleware;
 using KNU.RS.Logic.Services.AccountService;
-using KNU.RS.Logic.Services.DoctorService;
 using KNU.RS.Logic.Services.EmailingService;
 using KNU.RS.Logic.Services.PasswordService;
 using KNU.RS.Logic.Services.PatientService;
-using KNU.RS.Logic.Services.RecoveryPlanService;
-using KNU.RS.Logic.Services.StudyService;
-using KNU.RS.Logic.Services.UserService;
 using KNU.RS.PlatformExtensions.Configuration;
 using KNU.RS.PlatformExtensions.Enums;
-using KNU.RS.UI.Areas.Identity;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
-namespace KNU.RS.UI
+namespace KNU.RS.API
 {
     public class Startup
     {
@@ -38,6 +33,8 @@ namespace KNU.RS.UI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(ConnectionString.Database)));
 
@@ -49,21 +46,18 @@ namespace KNU.RS.UI
             services.AddSingleton<IMapper>(service => new Mapper(mapperConfig));
 
             services.AddScoped<IAccountService, BaseAccountService>();
-            services.AddScoped<IDoctorService, BaseDoctorService>();
             services.AddScoped<IEmailingService, BaseEmailingService>();
             services.AddScoped<IPasswordService, BasePasswordService>();
             services.AddScoped<IPatientService, BasePatientService>();
-            services.AddScoped<IRecoveryPlanService, BaseRecoveryPlanService>();
-            services.AddScoped<IStudyService, BaseStudyService>();
-            services.AddScoped<IUserService, BaseUserService>();
 
             services.Configure<EmailingConfiguration>
                 (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));
 
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "KNU.RS.API", Version = "v1" });
+            });
+            services.AddSwaggerGenNewtonsoftSupport();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -71,17 +65,11 @@ namespace KNU.RS.UI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseMigrationsEndPoint();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "KNU.RS.API v1"));
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -93,8 +81,6 @@ namespace KNU.RS.UI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }

@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using KNU.RS.Data.Constants;
 using KNU.RS.Data.Context;
 using KNU.RS.Data.Models;
+using KNU.RS.Logic.Enums;
 using KNU.RS.Logic.Models.Account;
+using KNU.RS.Logic.Services.EmailingService;
 using KNU.RS.Logic.Services.PasswordService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -21,15 +24,17 @@ namespace KNU.RS.Logic.Services.AccountService
         private readonly IMapper mapper;
 
         private readonly IPasswordService passwordService;
+        private readonly IEmailingService emailingService;
 
         public BaseAccountService(ApplicationContext context, IMapper mapper,
             UserManager<User> userManager, SignInManager<User> signInManager,
-            IPasswordService passwordService) // IEmailingService emailingService
+            IEmailingService emailingService, IPasswordService passwordService) 
         {
             this.context = context;
             this.mapper = mapper;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.emailingService = emailingService;
             this.passwordService = passwordService;
         }
 
@@ -62,6 +67,8 @@ namespace KNU.RS.Logic.Services.AccountService
                 patient.UserId = user.Id;
 
                 await userManager.CreateAsync(user);
+                await userManager.AddToRoleAsync(user, RoleName.Patient);
+                await context.Patients.AddAsync(patient);
             }
             else
             {
@@ -83,7 +90,7 @@ namespace KNU.RS.Logic.Services.AccountService
             await SetPasswordAsync(user, password);
 
             await context.SaveChangesAsync();
-            // await emailingService.SendEmailAsync(user, EmailType.Registration, password);
+            await emailingService.SendEmailAsync(user, EmailType.Registration, password);
         }
 
         public async Task RegisterDoctorAsync(DoctorRegistrationModel model)
@@ -124,7 +131,7 @@ namespace KNU.RS.Logic.Services.AccountService
             await SetPasswordAsync(user, password);
 
             await context.SaveChangesAsync();
-            // await emailingService.SendEmailAsync(user, EmailType.Registration, password);
+            await emailingService.SendEmailAsync(user, EmailType.Registration, password);
         }
 
         private async Task SetPasswordAsync(User user, string password)
