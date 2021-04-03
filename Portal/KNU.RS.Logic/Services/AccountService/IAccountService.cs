@@ -5,8 +5,10 @@ namespace KNU.RS.Logic.Services.AccountService
 {
     public interface IAccountService
     {
-        Task<bool> LoginAsync(LoginModel model);
-        Task LogoutAsync();
-        Task RegisterPatientAsync(PatientRegistrationModel model);
+        Task<bool> LoginCookieAsync(LoginModel model);
+        Task LogoutCookieAsync();
+        Task<string> LoginJWTAsync(LoginModel model);
+        Task RegisterAsync(PatientRegistrationModel model);
+        Task RegisterAsync(DoctorRegistrationModel model);
     }
 }

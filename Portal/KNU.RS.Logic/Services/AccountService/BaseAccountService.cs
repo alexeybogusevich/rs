@@ -5,6 +5,7 @@ using KNU.RS.Data.Models;
 using KNU.RS.Logic.Enums;
 using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.EmailingService;
+using KNU.RS.Logic.Services.JWTGenerator;
 using KNU.RS.Logic.Services.PasswordService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,12 +24,14 @@ namespace KNU.RS.Logic.Services.AccountService
 
         private readonly IMapper mapper;
 
-        private readonly IPasswordService passwordService;
         private readonly IEmailingService emailingService;
+        private readonly IJWTGenerator jwtGenerator;
+        private readonly IPasswordService passwordService;
 
         public BaseAccountService(ApplicationContext context, IMapper mapper,
             UserManager<User> userManager, SignInManager<User> signInManager,
-            IEmailingService emailingService, IPasswordService passwordService) 
+            IEmailingService emailingService, IPasswordService passwordService,
+            IJWTGenerator jwtGenerator)
         {
             this.context = context;
             this.mapper = mapper;
@@ -36,20 +39,38 @@ namespace KNU.RS.Logic.Services.AccountService
             this.signInManager = signInManager;
             this.emailingService = emailingService;
             this.passwordService = passwordService;
+            this.jwtGenerator = jwtGenerator;
         }
 
-        public async Task<bool> LoginAsync(LoginModel model)
+        public async Task<bool> LoginCookieAsync(LoginModel model)
         {
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password.Trim(), true, true);
             return result.Succeeded;
         }
 
-        public async Task LogoutAsync()
+        public async Task LogoutCookieAsync()
         {
             await signInManager.SignOutAsync();
         }
 
-        public async Task RegisterPatientAsync(PatientRegistrationModel model)
+        public async Task<string> LoginJWTAsync(LoginModel model)
+        {
+            var user = await context.Users.SingleOrDefaultAsync(u => u.Email.Equals(model.Email));
+            if (user == null)
+            {
+                return null;
+            }
+
+            var result = await signInManager.CheckPasswordSignInAsync(user, model.Password.Trim(), true);
+            if (!result.Succeeded)
+            {
+                return null;
+            }
+
+            return jwtGenerator.CreateToken(user);
+        }
+
+        public async Task RegisterAsync(PatientRegistrationModel model)
         {
             var user = await context.Users
                 .Include(u => u.Patient)
@@ -90,10 +111,10 @@ namespace KNU.RS.Logic.Services.AccountService
             await SetPasswordAsync(user, password);
 
             await context.SaveChangesAsync();
-            await emailingService.SendEmailAsync(user, EmailType.Registration, password);
+            // await emailingService.SendEmailAsync(user, EmailType.Registration, password);
         }
 
-        public async Task RegisterDoctorAsync(DoctorRegistrationModel model)
+        public async Task RegisterAsync(DoctorRegistrationModel model)
         {
             var user = await context.Users
                 .Include(u => u.Doctor)

@@ -7,10 +7,12 @@ using KNU.RS.Logic.Mapper;
 using KNU.RS.Logic.Middleware;
 using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.EmailingService;
+using KNU.RS.Logic.Services.JWTGenerator;
 using KNU.RS.Logic.Services.PasswordService;
 using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.PlatformExtensions.Configuration;
 using KNU.RS.PlatformExtensions.Enums;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -18,7 +20,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace KNU.RS.API
 {
@@ -38,7 +42,7 @@ namespace KNU.RS.API
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(ConnectionString.Database)));
 
-            services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
 
@@ -47,11 +51,29 @@ namespace KNU.RS.API
 
             services.AddScoped<IAccountService, BaseAccountService>();
             services.AddScoped<IEmailingService, BaseEmailingService>();
+            services.AddScoped<IJWTGenerator, HMACSHA512JWTGenerator>();
             services.AddScoped<IPasswordService, BasePasswordService>();
             services.AddScoped<IPatientService, BasePatientService>();
 
             services.Configure<EmailingConfiguration>
                 (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));
+
+            services.Configure<TokenConfiguration>
+                (options => Configuration.GetSection(ConfigurationConstants.Token).Bind(options));
+
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Token:Key"]));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(
+                    opt =>
+                    {
+                        opt.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = key,
+                            ValidateAudience = false,
+                            ValidateIssuer = false,
+                        };
+                    });
 
             services.AddSwaggerGen(c =>
             {

@@ -1,5 +1,6 @@
 ﻿using KNU.RS.Logic.Models.Patient;
 using KNU.RS.Logic.Services.PatientService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace KNU.RS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize] 
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService patientService;

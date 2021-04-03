@@ -41,7 +41,7 @@ namespace KNU.RS.UI
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(ConnectionString.Database)));
 
-            services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
 

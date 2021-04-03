@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.AccountService;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using KNU.RS.Logic.Models.Account;
 
 namespace KNU.RS.API.Controllers
 {
@@ -16,31 +16,25 @@ namespace KNU.RS.API.Controllers
             this.accountService = accountService;
         }
 
-        [HttpPost("login")]
-        [ProducesResponseType(200)]
+        [HttpPost("authenticate")]
+        [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginModel loginModel)
+        public async Task<ActionResult<string>> LoginAsync([FromBody] LoginModel loginModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            if (!await accountService.LoginAsync(loginModel))
+            var token = await accountService.LoginJWTAsync(loginModel);
+
+            if (token == null)
             {
                 return Unauthorized();
             }
 
-            return Ok();
-        }
-
-        [HttpPost("logout")]
-        [ProducesResponseType(200)]
-        public async Task<IActionResult> LogoutAsync()
-        {
-            await accountService.LogoutAsync();
-            return Ok();
+            return Ok(token);
         }
 
         [HttpPost("patient")]
@@ -53,7 +47,7 @@ namespace KNU.RS.API.Controllers
                 return BadRequest();
             }
 
-            await accountService.RegisterPatientAsync(registrationModel);
+            await accountService.RegisterAsync(registrationModel);
             return Accepted();
         }
     }
