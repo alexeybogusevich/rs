@@ -7,7 +7,7 @@
             visibility: hidden
         }
     </style>
-    <script async=async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async= async src="https://cdn.ampproject.org/v0.js"></script>
     <style amp-custom=amp-custom>
         .es-desk-hidden {
             display: none;
@@ -569,21 +569,39 @@
                     display: inline-block
                 }
         }
+
+        #logo-center {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 0;
+        }
+
+        .login-wrapper {
+            margin: 0 auto;
+            width: 200px;
+        }
     </style>
 </head>
 <body>
     <div class="es-wrapper-color">
-        <!--[if gte mso 9]><v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t"> <v:fill type="tile" color="#f4f4f4"></v:fill> </v:background><![endif]--><table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0">
-            <tr class="gmail-fix" height="0">
-                <td><table width="600" cellspacing="0" cellpadding="0" border="0" align="center"><tr><td style="line-height: 1px;min-width: 600px" height="0"><amp-img src="https://uc.knu.ua/media/university/logo/knu-logo-ua-250px.png" style="display: block;max-height: 0px;min-height: 0px;min-width: 600px;width: 600px" alt=alt width="600" height="1"></amp-img></td></tr></table></td>
+        <!--[if gte mso 9]><v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t"> <v:fill type="tile" color="#f4f4f4"></v:fill> </v:background><![endif]-->
+        <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td id="logo-center">
+                    <img src="https://uc.knu.ua/media/university/logo/knu-logo-ua-250px.png" alt="КНУ" width="130" height="130" style="margin: 0 auto" />
+                </td>
             </tr>
             <tr>
                 <td valign="top">
-                    <table class="es-header" cellspacing="0" cellpadding="0" align="center">
+                    <!--<table class="es-header" cellspacing="0" cellpadding="0" align="center">
                         <tr>
                             <td align="center" bgcolor="#ffffff" style="background-color: #ffffff"><table class="es-header-body" width="600" cellspacing="0" cellpadding="0" align="center"><tr><td class="es-p20t es-p10b es-p10r es-p10l" align="left"><table width="100%" cellspacing="0" cellpadding="0"><tr><td width="580" valign="top" align="center"><table width="100%" cellspacing="0" cellpadding="0" role="presentation"><tr><td class="es-p25t es-p25b es-p10r es-p10l" align="center" style="font-size: 0px"><amp-img src="https://rebebw.stripocdn.email/content/guids/4c8369c4-116b-4d15-8741-4a7a8dc41a93/images/11941617484773220.png" alt=alt style="display: block" width="130" height="130"></amp-img></td></tr></table></td></tr></table></td></tr></table></td>
                         </tr>
-                    </table><table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                    </table>-->
+                    <table class="es-content" cellspacing="0" cellpadding="0" align="center">
                         <tr>
                             <td style="background-color: #ffffff" bgcolor="#ffffff" align="center">
                                 <table class="es-content-body" style="background-color: transparent" width="600" cellspacing="0" cellpadding="0" align="center">
@@ -618,7 +636,9 @@
                                                         <table style="border-radius: 4px;border-collapse: separate;background-color: #ffffff" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff" role="presentation">
                                                             <tr><td class="es-p20t es-p20b es-p30r es-p30l es-m-txt-l" bgcolor="#efefef" align="center"><p style="color: #333333">Ваш акаунт було успішно створено в системі реабілітації КНУ.</p></td></tr>
                                                             <tr>
-                                                                <td class="es-p20t es-p30r es-p30l es-m-txt-l" align="center" bgcolor="#efefef"><p style="color: #333333">Логін: %EMAIL%<br />Пароль: %PASSWORD%</p></td>
+                                                                <td class="es-p20t es-p30r es-p30l es-m-txt-l" align="center" bgcolor="#efefef">
+                                                                    <p style="color: #333333">Логін: <a href="#" style="color: blue">%EMAIL%</a><br />Пароль: %PASSWORD%</p>
+                                                                </td>
                                                             </tr>
                                                             <tr><td class="es-p35t es-p35b es-p10r es-p10l" align="center" bgcolor="#efefef"><span class="es-button-border" style="background: #e23630"><a href="https://www.univ.kiev.ua/" class="es-button" target="_blank" style="border-width: 15px 30px;background: #e23630;border-color: #e23630">Увійти</a></span></td></tr>
                                                             <tr><td class="es-p20t es-p30r es-p30l es-m-txt-l" align="left" bgcolor="#efefef"><p>Якщо у Вас виникнуть запитання, будь-ласка, звертайтесь. <br />Ми завжди на зв'язку.&nbsp;</p></td></tr>
