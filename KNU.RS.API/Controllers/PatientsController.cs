@@ -1,7 +1,7 @@
 ﻿using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Models.Patient;
-using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.PatientService;
+using KNU.RS.Logic.Services.RegistrationService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -11,16 +11,16 @@ namespace KNU.RS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous] 
+    [AllowAnonymous]
     public class PatientsController : ControllerBase
     {
-        private readonly IAccountService accountService;
         private readonly IPatientService patientService;
+        private readonly IRegistrationService registrationService;
 
         public PatientsController(
-            IAccountService accountService, IPatientService patientService)
+            IRegistrationService registrationService, IPatientService patientService)
         {
-            this.accountService = accountService;
+            this.registrationService = registrationService;
             this.patientService = patientService;
         }
 
@@ -43,7 +43,7 @@ namespace KNU.RS.API.Controllers
                 return BadRequest();
             }
 
-            await accountService.RegisterAsync(registrationModel);
+            await registrationService.RegisterAsync(registrationModel);
             return Accepted();
         }
     }

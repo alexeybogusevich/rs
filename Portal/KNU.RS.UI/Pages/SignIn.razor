@@ -1,4 +1,6 @@
 ﻿@page "/signin"
+@inject IAccountService accountService
+@inject NavigationManager navManager
 
 <!DOCTYPE html>
 <html>
@@ -9,18 +11,20 @@
 </head>
 
 <body>
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
-            <!-- Tabs Titles -->
-            <h2 class="active"> Вхід в систему </h2>
+    <div id="fadeInDown-wrapper">
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <!-- Tabs Titles -->
+                <h2 class="active"> Вхід в систему </h2>
 
-            <!-- Login Form -->
-            <form>
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="Логін" data-inputtype="email" maxlength="100" required="required">
-                <input type="password" id="password" class="fadeIn third" placeholder="Пароль" data-inputtype="password" name="password" required="required">
-                <input type="submit" class="fadeIn fourth" value="Увійти">
-            </form>
+                <!-- Login Form -->
+                <form>
+                    <input type="text" id="login" class="fadeIn second" name="login" placeholder="Логін" data-inputtype="email" maxlength="100" required="required" @bind="@LoginModel.Email">
+                    <input type="password" id="password" class="fadeIn third" placeholder="Пароль" data-inputtype="password" name="password" required="required" @bind="@LoginModel.Password">
+                    <input type="submit" class="fadeIn fourth" value="Увійти" @onclick="@(async () => await LoginAsync())">
+                </form>
 
+            </div>
         </div>
     </div>
 
@@ -34,5 +38,18 @@
 
 
 @code {
+    private LoginModel LoginModel { get; set; } = new LoginModel { Email = String.Empty, Password = String.Empty };
 
+    private async Task LoginAsync()
+    {
+        var loginResult = await accountService.LoginAsync(LoginModel);
+
+        if (loginResult)
+        {
+            navManager.NavigateTo("/");
+            return;
+        }
+
+
+    }
 }

@@ -5,11 +5,12 @@ using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Constants;
 using KNU.RS.Logic.Mapper;
 using KNU.RS.Logic.Middleware;
-using KNU.RS.Logic.Services.AccountService;
+using KNU.RS.Logic.Services.AuthenticationService;
 using KNU.RS.Logic.Services.EmailingService;
 using KNU.RS.Logic.Services.JWTGenerator;
 using KNU.RS.Logic.Services.PasswordService;
 using KNU.RS.Logic.Services.PatientService;
+using KNU.RS.Logic.Services.RegistrationService;
 using KNU.RS.PlatformExtensions.Configuration;
 using KNU.RS.PlatformExtensions.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -50,10 +51,11 @@ namespace KNU.RS.API
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MapperProfile()));
             services.AddSingleton<IMapper>(service => new Mapper(mapperConfig));
 
-            services.AddScoped<IAccountService, BaseAccountService>();
+            services.AddScoped<IAuthenticationService, JWTAuthenticationService>();
             services.AddScoped<IEmailingService, BaseEmailingService>();
             services.AddScoped<IJWTGenerator, HMACSHA512JWTGenerator>();
             services.AddScoped<IPasswordService, BasePasswordService>();
+            services.AddScoped<IRegistrationService, BaseRegistrationService>();
             services.AddScoped<IPatientService, BasePatientService>();
 
             services.Configure<EmailingConfiguration>

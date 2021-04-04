@@ -5,7 +5,6 @@ using KNU.RS.Data.Models;
 using KNU.RS.Logic.Enums;
 using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.EmailingService;
-using KNU.RS.Logic.Services.JWTGenerator;
 using KNU.RS.Logic.Services.PasswordService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,60 +13,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KNU.RS.Logic.Services.AccountService
+namespace KNU.RS.Logic.Services.RegistrationService
 {
-    public class BaseAccountService : IAccountService
+    public class BaseRegistrationService : IRegistrationService
     {
         private readonly ApplicationContext context;
         private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
 
         private readonly IMapper mapper;
 
         private readonly IEmailingService emailingService;
-        private readonly IJWTGenerator jwtGenerator;
         private readonly IPasswordService passwordService;
 
-        public BaseAccountService(ApplicationContext context, IMapper mapper,
-            UserManager<User> userManager, SignInManager<User> signInManager,
-            IEmailingService emailingService, IPasswordService passwordService,
-            IJWTGenerator jwtGenerator)
+        public BaseRegistrationService(ApplicationContext context, IMapper mapper,
+            UserManager<User> userManager,
+            IEmailingService emailingService, IPasswordService passwordService)
         {
             this.context = context;
             this.mapper = mapper;
             this.userManager = userManager;
-            this.signInManager = signInManager;
             this.emailingService = emailingService;
             this.passwordService = passwordService;
-            this.jwtGenerator = jwtGenerator;
-        }
-
-        public async Task<bool> LoginCookieAsync(LoginModel model)
-        {
-            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password.Trim(), true, true);
-            return result.Succeeded;
-        }
-
-        public async Task LogoutCookieAsync()
-        {
-            await signInManager.SignOutAsync();
-        }
-
-        public async Task<string> LoginJWTAsync(LoginModel model)
-        {
-            var user = await context.Users.SingleOrDefaultAsync(u => u.Email.Equals(model.Email));
-            if (user == null)
-            {
-                return null;
-            }
-
-            var result = await signInManager.CheckPasswordSignInAsync(user, model.Password.Trim(), true);
-            if (!result.Succeeded)
-            {
-                return null;
-            }
-
-            return jwtGenerator.CreateToken(user);
         }
 
         public async Task RegisterAsync(PatientRegistrationModel model)

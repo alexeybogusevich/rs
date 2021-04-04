@@ -1,5 +1,5 @@
 ﻿using KNU.RS.Logic.Models.Account;
-using KNU.RS.Logic.Services.AccountService;
+using KNU.RS.Logic.Services.AuthenticationService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -8,20 +8,20 @@ namespace KNU.RS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountsController : ControllerBase
+    [AllowAnonymous]
+    public class AuthenticationController : ControllerBase
     {
-        private readonly IAccountService accountService;
+        private readonly IAuthenticationService authenticationService;
 
-        public AccountsController(IAccountService accountService)
+        public AuthenticationController(IAuthenticationService authenticationService)
         {
-            this.accountService = accountService;
+            this.authenticationService = authenticationService;
         }
 
-        [HttpPost("authenticate")]
+        [HttpPost]
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
-        [AllowAnonymous]
         public async Task<ActionResult<string>> LoginAsync([FromBody] LoginModel loginModel)
         {
             if (!ModelState.IsValid)
@@ -29,7 +29,7 @@ namespace KNU.RS.API.Controllers
                 return BadRequest();
             }
 
-            var token = await accountService.LoginJWTAsync(loginModel);
+            var token = await authenticationService.AuthenticateAsync(loginModel);
 
             if (token == null)
             {
