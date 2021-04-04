@@ -1,5 +1,6 @@
 ﻿using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.AccountService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -20,6 +21,7 @@ namespace KNU.RS.API.Controllers
         [ProducesResponseType(typeof(string), 200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
+        [AllowAnonymous]
         public async Task<ActionResult<string>> LoginAsync([FromBody] LoginModel loginModel)
         {
             if (!ModelState.IsValid)
@@ -35,20 +37,6 @@ namespace KNU.RS.API.Controllers
             }
 
             return Ok(token);
-        }
-
-        [HttpPost("patient")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        public async Task<IActionResult> RegisterAsync([FromBody] PatientRegistrationModel registrationModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            await accountService.RegisterAsync(registrationModel);
-            return Accepted();
         }
     }
 }

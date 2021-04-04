@@ -13,6 +13,7 @@ using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.PlatformExtensions.Configuration;
 using KNU.RS.PlatformExtensions.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -74,6 +75,14 @@ namespace KNU.RS.API
                             ValidateIssuer = false,
                         };
                     });
+
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .Build();
+            });
 
             services.AddSwaggerGen(c =>
             {

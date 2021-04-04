@@ -111,7 +111,7 @@ namespace KNU.RS.Logic.Services.AccountService
             await SetPasswordAsync(user, password);
 
             await context.SaveChangesAsync();
-            // await emailingService.SendEmailAsync(user, EmailType.Registration, password);
+            await emailingService.SendEmailAsync(user, EmailType.Registration, password);
         }
 
         public async Task RegisterAsync(DoctorRegistrationModel model)
