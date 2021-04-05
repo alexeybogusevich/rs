@@ -1,4 +1,5 @@
-﻿using KNU.RS.Logic.Models.Account;
+﻿using KNU.RS.Data.Constants;
+using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Models.Patient;
 using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.Logic.Services.RegistrationService;
@@ -11,7 +12,7 @@ namespace KNU.RS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = RoleName.Patient)]
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService patientService;

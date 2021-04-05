@@ -19,9 +19,9 @@ namespace KNU.RS.Logic.Services.JWTGenerator
             key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(options.Value.Key));
         }
 
-        public string CreateToken(User user)
+        public string CreateToken(User user, IEnumerable<string> roles)
         {
-            var claims = new List<Claim> { new Claim(JwtRegisteredClaimNames.NameId, user.UserName) };
+            var claims = GetClaims(user.Id, roles);
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
@@ -36,6 +36,24 @@ namespace KNU.RS.Logic.Services.JWTGenerator
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
+        }
+
+        private static Claim[] GetClaims(Guid id, IEnumerable<string> roles)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, id.ToString())
+            };
+
+            if (roles != null)
+            {
+                foreach (var role in roles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+            }
+
+            return claims.ToArray();
         }
     }
 }

@@ -12,19 +12,24 @@ namespace KNU.RS.Logic.Services.AuthenticationService
     {
         private readonly ApplicationContext context;
         private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> userManager;
         private readonly IJWTGenerator jwtGenerator;
 
         public JWTAuthenticationService(
-            ApplicationContext context, SignInManager<User> signInManager, IJWTGenerator jwtGenerator)
+            ApplicationContext context, SignInManager<User> signInManager, UserManager<User> userManager,
+            IJWTGenerator jwtGenerator)
         {
             this.context = context;
             this.signInManager = signInManager;
+            this.userManager = userManager;
             this.jwtGenerator = jwtGenerator;
         }
 
         public async Task<string> AuthenticateAsync(LoginModel model)
         {
-            var user = await context.Users.SingleOrDefaultAsync(u => u.Email.Equals(model.Email));
+            var user = await context.Users
+                .SingleOrDefaultAsync(u => u.Email.Equals(model.Email));
+
             if (user == null)
             {
                 return null;
@@ -36,7 +41,9 @@ namespace KNU.RS.Logic.Services.AuthenticationService
                 return null;
             }
 
-            return jwtGenerator.CreateToken(user);
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            return jwtGenerator.CreateToken(user, userRoles);
         }
     }
 }
