@@ -11,7 +11,7 @@ namespace KNU.RS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
+    [Authorize]
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService patientService;
