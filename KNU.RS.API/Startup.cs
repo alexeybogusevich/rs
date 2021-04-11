@@ -10,7 +10,7 @@ using KNU.RS.Logic.Services.EmailingService;
 using KNU.RS.Logic.Services.JWTGenerator;
 using KNU.RS.Logic.Services.PasswordService;
 using KNU.RS.Logic.Services.PatientService;
-using KNU.RS.Logic.Services.RegistrationService;
+using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.PlatformExtensions.Configuration;
 using KNU.RS.PlatformExtensions.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -56,7 +56,7 @@ namespace KNU.RS.API
             services.AddScoped<IEmailingService, BaseEmailingService>();
             services.AddScoped<IJWTGenerator, HMACSHA512JWTGenerator>();
             services.AddScoped<IPasswordService, BasePasswordService>();
-            services.AddScoped<IRegistrationService, BaseRegistrationService>();
+            services.AddScoped<IAccountService, BaseAccountService>();
             services.AddScoped<IPatientService, BasePatientService>();
 
             services.Configure<EmailingConfiguration>

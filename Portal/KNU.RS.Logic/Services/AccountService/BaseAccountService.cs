@@ -13,9 +13,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KNU.RS.Logic.Services.RegistrationService
+namespace KNU.RS.Logic.Services.AccountService
 {
-    public class BaseRegistrationService : IRegistrationService
+    public class BaseAccountService : IAccountService
     {
         private readonly ApplicationContext context;
         private readonly UserManager<User> userManager;
@@ -25,7 +25,7 @@ namespace KNU.RS.Logic.Services.RegistrationService
         private readonly IEmailingService emailingService;
         private readonly IPasswordService passwordService;
 
-        public BaseRegistrationService(ApplicationContext context, IMapper mapper,
+        public BaseAccountService(ApplicationContext context, IMapper mapper,
             UserManager<User> userManager,
             IEmailingService emailingService, IPasswordService passwordService)
         {
@@ -119,6 +119,21 @@ namespace KNU.RS.Logic.Services.RegistrationService
 
             await context.SaveChangesAsync();
             await emailingService.SendEmailAsync(user, EmailType.Registration, password);
+        }
+
+        public async Task HandleForgotPasswordAsync(ForgotPasswordModel model)
+        {
+            var user = await context.Users
+                .FirstOrDefaultAsync(u => u.Email.Equals(model.Email));
+
+            if (user != null)
+            {
+                var password = passwordService.GeneratePassword(userManager.Options.Password);
+                await SetPasswordAsync(user, password);
+
+                await context.SaveChangesAsync();
+                await emailingService.SendEmailAsync(user, EmailType.ForgotPassword, password);
+            }
         }
 
         private async Task SetPasswordAsync(User user, string password)

@@ -3,13 +3,13 @@ using KNU.RS.Logic.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
-namespace KNU.RS.Logic.Services.AccountService
+namespace KNU.RS.Logic.Services.LoginService
 {
-    public class CookieAccountService : IAccountService
+    public class CookieLoginService : ILoginService
     {
         private readonly SignInManager<User> signInManager;
 
-        public CookieAccountService(SignInManager<User> signInManager)
+        public CookieLoginService(SignInManager<User> signInManager)
         {
             this.signInManager = signInManager;
         }

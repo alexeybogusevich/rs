@@ -5,13 +5,13 @@ using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Constants;
 using KNU.RS.Logic.Mapper;
 using KNU.RS.Logic.Middleware;
-using KNU.RS.Logic.Services.AccountService;
+using KNU.RS.Logic.Services.LoginService;
 using KNU.RS.Logic.Services.DoctorService;
 using KNU.RS.Logic.Services.EmailingService;
 using KNU.RS.Logic.Services.PasswordService;
 using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.Logic.Services.RecoveryPlanService;
-using KNU.RS.Logic.Services.RegistrationService;
+using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.StudyService;
 using KNU.RS.Logic.Services.UserService;
 using KNU.RS.PlatformExtensions.Configuration;
@@ -49,13 +49,13 @@ namespace KNU.RS.UI
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new MapperProfile()));
             services.AddSingleton<IMapper>(service => new Mapper(mapperConfig));
 
-            services.AddScoped<IAccountService, CookieAccountService>();
+            services.AddScoped<IAccountService, BaseAccountService>();
             services.AddScoped<IDoctorService, BaseDoctorService>();
             services.AddScoped<IEmailingService, BaseEmailingService>();
+            services.AddScoped<ILoginService, CookieLoginService>();
             services.AddScoped<IPasswordService, BasePasswordService>();
             services.AddScoped<IPatientService, BasePatientService>();
             services.AddScoped<IRecoveryPlanService, BaseRecoveryPlanService>();
-            services.AddScoped<IRegistrationService, BaseRegistrationService>();
             services.AddScoped<IStudyService, BaseStudyService>();
             services.AddScoped<IUserService, BaseUserService>();
 

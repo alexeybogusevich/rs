@@ -156,6 +156,11 @@ textarea.form-control {
 .form-group {
 	margin-bottom: 20px;
 }
+
+.form-group text-margin {
+	margin-top: 25px;
+}
+
 .display-block {
 	display: block;
 }
@@ -1076,6 +1081,7 @@ textarea.form-control {
 	padding: 20px;
 	width: 400px;
 	border-radius: 4px;
+	text-align: center;
 }
 .account-logo {
 	margin-bottom: 20px;
@@ -1088,6 +1094,18 @@ textarea.form-control {
 	color: #333;
 	font-size: 14px;
 }
+
+.account-box-header {
+	text-align: center;
+	font-size: 16px;
+	font-weight: 600;
+	text-transform: uppercase;
+	display: inline-block;
+	margin: 15px 8px 33px 8px;
+	color: #0d0d0d;
+	border-bottom: 2px solid #5fbae9;
+}
+
 .account-box a:hover {
 	color: #009efb;
 }
@@ -1097,6 +1115,7 @@ textarea.form-control {
 	box-shadow: inherit;
 	font-size: 14px;
 	height: 40px;
+	text-align: center;
 }
 .account-box textarea.form-control {
 	height: 130px;
@@ -1121,10 +1140,17 @@ textarea.form-control {
 	color: white;
 }
 
+.login-error {
+	display: none;
+	color: red;
+	padding-top: 5px;
+	font-size: 12px;
+	line-height: 20px;
+}
+
 /*-----------------
 	9. Dashboard
 -----------------------*/
-
 .dash-widget {
 	background-color: #fff;
 	border-radius: 4px;

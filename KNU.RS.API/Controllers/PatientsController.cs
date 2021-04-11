@@ -2,7 +2,7 @@
 using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Models.Patient;
 using KNU.RS.Logic.Services.PatientService;
-using KNU.RS.Logic.Services.RegistrationService;
+using KNU.RS.Logic.Services.AccountService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -16,10 +16,10 @@ namespace KNU.RS.API.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService patientService;
-        private readonly IRegistrationService registrationService;
+        private readonly IAccountService registrationService;
 
         public PatientsController(
-            IRegistrationService registrationService, IPatientService patientService)
+            IAccountService registrationService, IPatientService patientService)
         {
             this.registrationService = registrationService;
             this.patientService = patientService;

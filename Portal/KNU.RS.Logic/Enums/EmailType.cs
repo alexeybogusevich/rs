@@ -2,6 +2,7 @@
 {
     public enum EmailType
     {
-        Registration = 0
+        Registration = 0,
+        ForgotPassword = 1
     }
 }

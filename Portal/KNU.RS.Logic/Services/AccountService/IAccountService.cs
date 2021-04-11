@@ -5,7 +5,8 @@ namespace KNU.RS.Logic.Services.AccountService
 {
     public interface IAccountService
     {
-        Task<bool> LoginAsync(LoginModel model);
-        Task LogoutAsync();
+        Task RegisterAsync(PatientRegistrationModel model);
+        Task RegisterAsync(DoctorRegistrationModel model);
+        Task HandleForgotPasswordAsync(ForgotPasswordModel model);
     }
 }

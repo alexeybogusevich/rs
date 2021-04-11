@@ -80,6 +80,8 @@ namespace KNU.RS.Logic.Services.EmailingService
             {
                 case EmailType.Registration:
                     return "Дякуємо за реєстрацію";
+                case EmailType.ForgotPassword:
+                    return "Відновлення пароля";
                 default:
                     return string.Empty;
             }
