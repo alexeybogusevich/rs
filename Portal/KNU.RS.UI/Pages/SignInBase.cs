@@ -13,7 +13,7 @@ namespace KNU.RS.UI.Pages
         [Inject]
         protected NavigationManager NavigationManager { get; set; }
 
-        protected LoginModel LoginModel { get; set; } = new LoginModel { Email = string.Empty, Password = string.Empty };
+        protected LoginModel LoginModel { get; set; } = new LoginModel();
 
         protected async Task LoginAsync()
         {

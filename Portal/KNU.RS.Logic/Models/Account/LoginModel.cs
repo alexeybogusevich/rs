@@ -4,10 +4,10 @@ namespace KNU.RS.Logic.Models.Account
 {
     public class LoginModel
     {
-        [Required]
+        [Required(ErrorMessage = "Будь-ласка, введіть поштову адресу")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Будь-ласка, введіть пароль")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }
