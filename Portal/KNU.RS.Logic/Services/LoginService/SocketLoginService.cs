@@ -4,18 +4,17 @@ using KNU.RS.Logic.Models.Account;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.LoginService
 {
-    public class CookieLoginService : ILoginService
+    public class SocketLoginService : ILoginService
     {
         private readonly ApplicationContext context;
         private readonly SignInManager<User> signInManager;
         private readonly IHostEnvironmentAuthenticationStateProvider hostAuthentication;
 
-        public CookieLoginService(
+        public SocketLoginService(
             ApplicationContext context, SignInManager<User> signInManager, 
             IHostEnvironmentAuthenticationStateProvider hostAuthentication)
         {

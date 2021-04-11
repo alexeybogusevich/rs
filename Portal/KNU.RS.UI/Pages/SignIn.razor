@@ -1,10 +1,7 @@
 ﻿@page "/"
 @page "/signin"
 @inherits SignInBase
-@using KNU.RS.Logic.Services.LoginService
-@using KNU.RS.Logic.Models.Account;
 @inject NavigationManager navManager
-@inject ILoginService loginService
 @inject IJSRuntime JsRuntime 
 @layout SigninLayout
 
@@ -40,12 +37,12 @@
                             <DataAnnotationsValidator />
                             <div class="form-group">
                                 <label>Email</label>
-                                <InputText @bind-Value="LoginModel.Email" @oninput="ClearErrorAsync" autofocus="" class="form-control" id="account-email-input"/>
+                                <InputText @bind-Value="LoginModel.Email" @oninput="ClearErrorsAsync" autofocus="" class="form-control" id="account-email-input"/>
                                 <ValidationMessage For="@(() => LoginModel.Email)" />
                             </div>
                             <div class="form-group">
                                 <label>Пароль</label>
-                                <InputText type="password" @bind-Value="LoginModel.Password" @oninput="ClearErrorAsync" class="form-control form-control-placeholder" id="account-password-input"/>
+                                <InputText type="password" @bind-Value="LoginModel.Password" @oninput="ClearErrorsAsync" class="form-control form-control-placeholder" id="account-password-input"/>
                                 <ValidationMessage For="@(() => LoginModel.Password)" />
                             </div>
                             <div class="form-group text-right">
@@ -67,25 +64,3 @@
     </div>
 </body>
 </html>
-
-@code {
-    private LoginModel LoginModel { get; set; } = new LoginModel();
-
-    private async Task LoginAsync()
-    {
-        var loginResult = await loginService.LoginAsync(LoginModel);
-
-        if (!loginResult)
-        {
-            await JsRuntime.InvokeVoidAsync("setAuthNFailed");
-            return;
-        }
-
-        navManager.NavigateTo("/");
-    }
-
-    private async Task ClearErrorAsync()
-    {
-        await JsRuntime.InvokeVoidAsync("clearAuthNFailed");
-    }
-}
