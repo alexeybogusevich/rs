@@ -25,6 +25,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Components.Server;
 
 namespace KNU.RS.UI
 {
@@ -71,6 +72,10 @@ namespace KNU.RS.UI
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddScoped<IHostEnvironmentAuthenticationStateProvider>(sp =>
+                (ServerAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>()
+            );
 
             services.ConfigureApplicationCookie(options =>
             {
