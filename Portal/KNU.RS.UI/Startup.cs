@@ -53,7 +53,7 @@ namespace KNU.RS.UI
             services.AddScoped<IAccountService, BaseAccountService>();
             services.AddScoped<IDoctorService, BaseDoctorService>();
             services.AddScoped<IEmailingService, BaseEmailingService>();
-            services.AddScoped<ILoginService, SocketLoginService>();
+            services.AddScoped<ILoginService, CookieLoginService>();
             services.AddScoped<IPasswordService, BasePasswordService>();
             services.AddScoped<IPatientService, BasePatientService>();
             services.AddScoped<IRecoveryPlanService, BaseRecoveryPlanService>();
@@ -76,6 +76,15 @@ namespace KNU.RS.UI
             services.AddScoped<IHostEnvironmentAuthenticationStateProvider>(sp =>
                 (ServerAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>()
             );
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = ConfigurationConstants.CookieV2AuthenticationScheme;
+            })
+            .AddCookie(ConfigurationConstants.CookieV2AuthenticationScheme, options =>
+            {
+                options.Cookie.Name = ConfigurationConstants.CookieTokenName;
+            });
 
             services.ConfigureApplicationCookie(options =>
             {
