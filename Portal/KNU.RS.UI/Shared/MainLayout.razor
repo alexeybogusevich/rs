@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+<div>
     <AuthorizeView>
         <Authorized>
             <div class="sidebar">
@@ -9,14 +9,8 @@
         </Authorized>
     </AuthorizeView>
 
-    <div class="main">
-        <div class="top-row px-4 auth">
-            <img src="images/shared/knu.png" alt="КНУ" width="40" height="40" id="top-row-img"/>
-            Система реабілітації КНУ
-            <LoginDisplay />
-        </div>
-
-        <div class="content px-4" style="height:100%">
+    <div>
+        <div>
             @Body
         </div>
     </div>

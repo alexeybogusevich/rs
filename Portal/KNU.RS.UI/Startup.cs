@@ -62,10 +62,22 @@ namespace KNU.RS.UI
             services.Configure<EmailingConfiguration>
                 (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));
 
+            services.AddRouting(options =>
+            {
+                options.LowercaseUrls = true;
+            });
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/signin";
+                options.LogoutPath = "/signin";
+                options.AccessDeniedPath = "/signin";
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
