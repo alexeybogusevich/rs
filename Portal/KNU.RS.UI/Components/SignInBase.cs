@@ -35,13 +35,15 @@ namespace KNU.RS.UI.Components
                 return;
             }
 
-            var cookieAuthNOptions = CookieAuthNOptionsMonitor.Get(ConfigurationConstants.CookieV2AuthenticationScheme);
-            var value = cookieAuthNOptions.TicketDataFormat.Protect(ticket);
-            await JsRuntime.InvokeVoidAsync(
-                "blazorExtensions.WRITE_COOKIE", ConfigurationConstants.CookieTokenName, 
-                value, cookieAuthNOptions.ExpireTimeSpan.TotalDays);
+            //var cookieAuthNOptions = CookieAuthNOptionsMonitor.Get(ConfigurationConstants.CookieV2AuthenticationScheme);
+            //var value = cookieAuthNOptions.TicketDataFormat.Protect(ticket);
+            //await JsRuntime.InvokeVoidAsync(
+            //    "blazorExtensions.WRITE_COOKIE", ConfigurationConstants.CookieTokenName, 
+            //    value, cookieAuthNOptions.ExpireTimeSpan.TotalDays);
 
-            NavigationManager.NavigateTo("/adminpanel");
+
+            await JsRuntime.InvokeVoidAsync(
+                "blazorExtensions.LOGIN", LoginModel.Email, LoginModel.Password);
         }
 
         protected async Task ClearErrorsAsync()

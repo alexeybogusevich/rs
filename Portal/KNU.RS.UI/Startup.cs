@@ -77,14 +77,7 @@ namespace KNU.RS.UI
                 (ServerAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>()
             );
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = ConfigurationConstants.CookieV2AuthenticationScheme;
-            })
-            .AddCookie(ConfigurationConstants.CookieV2AuthenticationScheme, options =>
-            {
-                options.Cookie.Name = ConfigurationConstants.CookieTokenName;
-            });
+            services.AddAuthentication();
 
             services.ConfigureApplicationCookie(options =>
             {

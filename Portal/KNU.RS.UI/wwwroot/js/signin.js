@@ -23,6 +23,25 @@
             expires = "";
         }
         document.cookie = name + "=" + value + expires + "; path=/";
+    },
+
+    LOGIN: function Login(login, password) {
+        var data = {
+            "Email": login,
+            "Password": password
+        };
+
+        $.ajax({
+            url: "api/login",
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            processData: false,
+            success: function (result) {
+                alert(result.success); 
+            },
+        });
     }
 }
 
