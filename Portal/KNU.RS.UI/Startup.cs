@@ -53,7 +53,7 @@ namespace KNU.RS.UI
             services.AddScoped<IAccountService, BaseAccountService>();
             services.AddScoped<IDoctorService, BaseDoctorService>();
             services.AddScoped<IEmailingService, BaseEmailingService>();
-            services.AddScoped<ILoginService, CookieLoginService>();
+            services.AddScoped<ILoginService, BaseLoginService>();
             services.AddScoped<IPasswordService, BasePasswordService>();
             services.AddScoped<IPatientService, BasePatientService>();
             services.AddScoped<IRecoveryPlanService, BaseRecoveryPlanService>();
