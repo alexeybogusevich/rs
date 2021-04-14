@@ -37,10 +37,7 @@
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
-            processData: false,
-            success: function (result) {
-                alert(result.success); 
-            },
+            processData: false
         });
     }
 }

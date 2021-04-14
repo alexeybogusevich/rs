@@ -1,5 +1,6 @@
 ﻿using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.LoginService;
+using KNU.RS.UI.Constans;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
@@ -21,21 +22,22 @@ namespace KNU.RS.UI.Components
 
         protected async Task LoginAsync()
         {
-            var succeeded = await LoginService.CheckLoginAsync(LoginModel);
+            var passwordCheckSucceeded = await LoginService.CheckLoginAsync(LoginModel);
 
-            if (!succeeded)
+            if (!passwordCheckSucceeded)
             {
-                await JsRuntime.InvokeVoidAsync("blazorExtensions.SET_AUTHN_FAILED");
+                await JsRuntime.InvokeVoidAsync(SignInJSMethods.SetAuthFailed);
                 return;
             }
 
-            await JsRuntime.InvokeVoidAsync(
-                "blazorExtensions.LOGIN", LoginModel.Email, LoginModel.Password);
+            await JsRuntime.InvokeVoidAsync(SignInJSMethods.Login, LoginModel.Email, LoginModel.Password);
+
+            NavigationManager.NavigateTo("/main");
         }
 
         protected async Task ClearErrorsAsync()
         {
-            await JsRuntime.InvokeVoidAsync("blazorExtensions.CLEAR_AUTN_FAILED");
+            await JsRuntime.InvokeVoidAsync(SignInJSMethods.ClearAuthFailed);
         }
     }
 }

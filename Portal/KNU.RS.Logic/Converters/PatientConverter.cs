@@ -14,8 +14,9 @@ namespace KNU.RS.Logic.Converters
                 LastName = patient.User?.LastName,
                 MiddleName = patient.User?.MiddleName,
                 PhoneNumber = patient.User?.PhoneNumber,
+                Email = patient.User?.Email,
                 Address = patient.User?.Address,
-                Birthday = patient.Birthday,
+                Birthday = patient.Birthday.ToString("dd.MM.yyyy"),
                 Weight = patient.Weight,
                 Height = patient.Height
             };

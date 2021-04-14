@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\Shared\KNU.RS.Data\KNU.RS.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
 </Project>
