@@ -4092,7 +4092,7 @@ blockquote p {
 	align-items: center;
 	display: flex;
 	justify-content: center;
-	height: 100%;
+	height: 100vh;
 }
 .error-box h1 {
 	font-size: 150px;

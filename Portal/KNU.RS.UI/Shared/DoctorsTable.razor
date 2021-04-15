@@ -1,11 +1,11 @@
-﻿@using KNU.RS.Logic.Models.Patient
+﻿@using KNU.RS.Logic.Models.Doctor
 
 <div class="main-wrapper">
     <div class="page-wrapper">
         <div class="content">
             <div class="row">
                 <div class="col-sm-4 col-3">
-                    <h4 class="page-title">Пацієнти</h4>
+                    <h4 class="page-title">Лікарі</h4>
                 </div>
                 <div class="col-sm-8 col-9 text-right m-b-20">
                     <a href="add-patient.html" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Додати</a>
@@ -21,23 +21,25 @@
                                     <th>Прізвище</th>
                                     <th>Ім'я</th>
                                     <th>По-батькові</th>
-                                    <th>Народився</th>
+                                    <th>Спеціальність</th>
+                                    <th>Назва закладу</th>
                                     <th>Email</th>
                                     <th>Телефон</th>
                                     <th class="text-right"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var patient in Patients)
+                                @foreach (var doctor in Doctors)
                                 {
                                     <tr>
                                         <td>@(Counter++)</td>
-                                        <td>@patient.LastName</td>
-                                        <td>@patient.FirstName</td>
-                                        <td>@patient.MiddleName</td>
-                                        <td>@patient.Birthday</td>
-                                        <td>@patient.Email</td>
-                                        <td>@patient.PhoneNumber</td>
+                                        <td>@doctor.LastName</td>
+                                        <td>@doctor.FirstName</td>
+                                        <td>@doctor.MiddleName</td>
+                                        <td>@doctor.QualificationName</td>
+                                        <td>@doctor.ClinicName</td>
+                                        <td>@doctor.Email</td>
+                                        <td>@doctor.PhoneNumber</td>
                                         <td class="text-right">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -63,5 +65,5 @@
     private int Counter = 1;
 
     [Parameter]
-    public List<PatientInfo> Patients { get; set; } = new List<PatientInfo>();
+    public List<DoctorInfo> Doctors { get; set; } = new List<DoctorInfo>();
 }

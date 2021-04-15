@@ -1,20 +1,44 @@
 ﻿@page "/main"
 @using KNU.RS.Logic.Models.Patient
+@using KNU.RS.Logic.Models.Doctor 
+@using KNU.RS.Logic.Models.Study 
 @using KNU.RS.Logic.Services.PatientService
+@using KNU.RS.Logic.Services.DoctorService
+@using KNU.RS.Logic.Services.StudyService
 @inject IPatientService patientService
+@inject IDoctorService doctorService 
+@inject IStudyService studyService 
 
 <AuthorizeView Roles="Admin,Doctor,Patient">
     <Authorized>
-        <PatientsTable Patients="Patients" />
+        @if (IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <Dashes StudyCount="StudyCount" DoctorCount="Doctors.Count()" PatientCount="Patients.Count()" />
+            <PatientsTable Patients="Patients" />
+            <DoctorsTable Doctors="Doctors" />
+        }
     </Authorized>
 </AuthorizeView>
 
 @code {
+    private bool IsLoading { get; set; } = true;
+
     private List<PatientInfo> Patients { get; set; } = new List<PatientInfo>();
+    private List<DoctorInfo> Doctors { get; set; } = new List<DoctorInfo>();
+    private int StudyCount { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
+        IsLoading = true;
         var patients = await patientService.GetInfoAsync();
+        var doctors = await doctorService.GetInfoAsync();
+        StudyCount = await studyService.GetCountAsync();
         Patients = patients?.ToList();
+        Doctors = doctors?.ToList();
+        IsLoading = false;
     }
 }

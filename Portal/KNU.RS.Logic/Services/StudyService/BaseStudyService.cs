@@ -18,7 +18,7 @@ namespace KNU.RS.Logic.Services.StudyService
             this.context = context;
         }
 
-        public async Task<IEnumerable<StudyInfo>> GetAsync(Guid patientId)
+        public async Task<IEnumerable<StudyInfo>> GetInfoAsync(Guid patientId)
         {
             return await context.StudyHeaders
                 .Include(s => s.StudyDetails)
@@ -27,6 +27,11 @@ namespace KNU.RS.Logic.Services.StudyService
                 .Where(s => s.DoctorPatient.PatientId.Equals(patientId))
                 .Select(s => StudyConverter.Convert(s))
                 .ToListAsync();
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await context.StudyHeaders.CountAsync();
         }
     }
 }
