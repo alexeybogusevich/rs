@@ -8,6 +8,7 @@
 @inject IPatientService patientService
 @inject IDoctorService doctorService 
 @inject IStudyService studyService 
+@inject IJSRuntime JsRuntime 
 
 <AuthorizeView Roles="Admin,Doctor,Patient">
     <Authorized>
@@ -17,9 +18,12 @@
         }
         else
         {
-            <Dashes StudyCount="StudyCount" DoctorCount="Doctors.Count()" PatientCount="Patients.Count()" />
-            <PatientsTable Patients="Patients" />
-            <DoctorsTable Doctors="Doctors" />
+            <div class="main-wrapper">
+                <Header></Header>
+                <Sidebar></Sidebar>
+                <Panel></Panel>
+            </div>
+            <div class="sidebar-overlay" data-reff=""></div>
         }
     </Authorized>
 </AuthorizeView>
