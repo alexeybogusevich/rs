@@ -1,6 +1,6 @@
 ﻿using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.LoginService;
-using KNU.RS.UI.Constans;
+using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Threading.Tasks;

@@ -3,6 +3,7 @@
 @using KNU.RS.Data.Models 
 
 @inject IQualificationService qualificationService
+@inject IJSRuntime JsRuntime 
 
 @inherits NewDoctorBase
 
@@ -155,5 +156,10 @@ else
     private void AssignPhoto(InputFileChangeEventArgs e)
     {
         RegistrationModel.Photo = e.File;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync(JSExtensionMethods.SetSelect2);
     }
 }
