@@ -56,9 +56,11 @@
         $.ajax({
             url: "api/logout",
             type: 'POST',
-            dataType: 'json',
             contentType: "application/json; charset=utf-8",
-            processData: false
+            processData: false,
+            success: function (resultData) {
+                window.location.href = "/signin";
+            }
         });
     }
 }
