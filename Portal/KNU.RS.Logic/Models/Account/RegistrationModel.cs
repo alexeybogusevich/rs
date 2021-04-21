@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using KNU.RS.Data.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace KNU.RS.Logic.Models.Account
 {
@@ -15,6 +16,9 @@ namespace KNU.RS.Logic.Models.Account
         [Required]
         [MaxLength(100)]
         public string MiddleName { get; set; }
+
+        [Required]
+        public Gender Gender { get; set; }
 
         [Required]
         [MaxLength(200)]

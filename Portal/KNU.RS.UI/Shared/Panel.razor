@@ -1,11 +1,13 @@
-﻿<div class="page-wrapper">
+﻿@using KNU.RS.Logic.Models.Patient 
+
+<div class="page-wrapper">
     <div class="content">
         <div class="row">
             <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
                 <div class="dash-widget">
                     <span class="dash-widget-bg1"><i class="fa fa-stethoscope" aria-hidden="true"></i></span>
                     <div class="dash-widget-info text-right">
-                        <h3>98</h3>
+                        <h3>@NumberOfDoctors</h3>
                         <span class="widget-title1">Лікарі <i class="fa fa-check" aria-hidden="true"></i></span>
                     </div>
                 </div>
@@ -14,7 +16,7 @@
                 <div class="dash-widget">
                     <span class="dash-widget-bg2"><i class="fa fa-user-o"></i></span>
                     <div class="dash-widget-info text-right">
-                        <h3>1072</h3>
+                        <h3>@Patients.Count()</h3>
                         <span class="widget-title2">Пацієнти <i class="fa fa-check" aria-hidden="true"></i></span>
                     </div>
                 </div>
@@ -23,7 +25,7 @@
                 <div class="dash-widget">
                     <span class="dash-widget-bg4"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>
                     <div class="dash-widget-info text-right">
-                        <h3>618</h3>
+                        <h3>@NumberOfStudies</h3>
                         <span class="widget-title4">Обстеження <i class="fa fa-check" aria-hidden="true"></i></span>
                     </div>
                 </div>
@@ -50,39 +52,14 @@
                             <table class="table mb-0 new-patient-table">
                                 <tbody>
                                     <tr>
-                                        <td>
-                                            <img width="28" height="28" class="rounded-circle" src="img/user.jpg" alt="">
-                                        </td>
-                                        <td>Іванов Іван Іванович</td>
-                                        <td>Richard123@yahoo.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img width="28" height="28" class="rounded-circle" src="img/user.jpg" alt="">
-                                        </td>
-                                        <td>Іванов Іван Іванович</td>
-                                        <td>Richard123@yahoo.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img width="28" height="28" class="rounded-circle" src="img/user.jpg" alt="">
-                                        </td>
-                                        <td>Іванов Іван Іванович</td>
-                                        <td>Richard123@yahoo.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img width="28" height="28" class="rounded-circle" src="img/user.jpg" alt="">
-                                        </td>
-                                        <td>Іванов Іван Іванович</td>
-                                        <td>Richard123@yahoo.com</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img width="28" height="28" class="rounded-circle" src="img/user.jpg" alt="">
-                                        </td>
-                                        <td>Іванов Іван Іванович</td>
-                                        <td>Richard123@yahoo.com</td>
+                                        @foreach (var patient in Patients.Take(5))
+                                        {
+                                            <td>
+                                                <img width="28" height="28" class="rounded-circle" src="img/user.jpg" alt="">
+                                            </td>
+                                            <td>@patient.ToString()</td>
+                                            <td>@patient.Email</td>
+                                        }
                                     </tr>
                                 </tbody>
                             </table>
@@ -93,3 +70,14 @@
         </div>
     </div>
 </div>
+
+@code {
+    [Parameter]
+    public List<PatientInfo> Patients { get; set; } = new List<PatientInfo>();
+
+    [Parameter]
+    public int NumberOfStudies { get; set; }
+
+    [Parameter]
+    public int NumberOfDoctors { get; set; }
+}

@@ -1,4 +1,5 @@
-﻿using KNU.RS.Data.Models;
+﻿using KNU.RS.Data.Enums;
+using KNU.RS.Data.Models;
 using KNU.RS.Logic.Models.Patient;
 
 namespace KNU.RS.Logic.Converters
@@ -13,6 +14,7 @@ namespace KNU.RS.Logic.Converters
                 FirstName = patient.User?.FirstName,
                 LastName = patient.User?.LastName,
                 MiddleName = patient.User?.MiddleName,
+                Gender = patient.User?.Gender ?? Gender.Male,
                 PhoneNumber = patient.User?.PhoneNumber,
                 Email = patient.User?.Email,
                 Address = patient.User?.Address,

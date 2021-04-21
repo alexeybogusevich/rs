@@ -1,5 +1,4 @@
 ﻿using KNU.RS.Logic.Models.User;
-using System;
 
 namespace KNU.RS.Logic.Models.Patient
 {

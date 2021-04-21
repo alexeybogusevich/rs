@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KNU.RS.Data.Enums;
+using System;
 
 namespace KNU.RS.Logic.Models.User
 {
@@ -10,8 +11,15 @@ namespace KNU.RS.Logic.Models.User
         public string LastName { get; set; }
         public string MiddleName { get; set; }
 
+        public Gender Gender { get; set; }
+
         public string Address { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+
+        public override string ToString()
+        {
+            return $"{LastName} {FirstName} {MiddleName}";
+        }
     }
 }

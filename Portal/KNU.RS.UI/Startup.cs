@@ -26,6 +26,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Components.Server;
+using System.Globalization;
 
 namespace KNU.RS.UI
 {
@@ -110,6 +111,9 @@ namespace KNU.RS.UI
             app.UseAuthorization();
 
             app.UseGlobalExceptionHandler();
+
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("uk-UA");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("uk-UA");
 
             app.UseEndpoints(endpoints =>
             {

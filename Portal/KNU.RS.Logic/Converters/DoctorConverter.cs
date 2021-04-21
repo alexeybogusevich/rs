@@ -15,6 +15,8 @@ namespace KNU.RS.Logic.Converters
                 MiddleName = doctor.User?.MiddleName,
                 PhoneNumber = doctor.User?.PhoneNumber,
                 Address = doctor.User?.Address,
+                Gender = doctor.User?.Gender ?? Data.Enums.Gender.Male,
+                Biography = doctor.Biography,
                 QualificationId = doctor.QualificationId,
                 QualificationName = doctor.Qualification?.Name,
                 ClinicId = doctor.ClinicId,

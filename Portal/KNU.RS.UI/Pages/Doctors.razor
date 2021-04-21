@@ -1,0 +1,33 @@
+﻿@page "/doctors" 
+@using KNU.RS.Logic.Models.Doctor 
+
+<AuthorizeView Roles="Admin,Doctor,Patient">
+    <Authorized>
+        @if (IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <div class="main-wrapper">
+                <Header></Header>
+                <Sidebar></Sidebar>
+                <DoctorsTable Doctors="DoctorsList"></DoctorsTable>
+            </div>
+            <div class="sidebar-overlay" data-reff=""></div>
+        }
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private bool IsLoading { get; set; } = true;
+
+    [Parameter]
+    public List<DoctorInfo> DoctorsList { get; set; } = new List<DoctorInfo>();
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        IsLoading = false;
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}

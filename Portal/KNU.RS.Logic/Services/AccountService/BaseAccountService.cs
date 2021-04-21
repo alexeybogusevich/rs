@@ -62,6 +62,7 @@ namespace KNU.RS.Logic.Services.AccountService
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.MiddleName = model.MiddleName;
+                user.Gender = model.Gender;
                 user.Address = model.Address;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
@@ -104,12 +105,14 @@ namespace KNU.RS.Logic.Services.AccountService
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.MiddleName = model.MiddleName;
+                user.Gender = model.Gender;
                 user.Address = model.Address;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
 
                 doctor.QualificationId = model.QualificationId;
                 doctor.ClinicId = model.ClinicId;
+                doctor.Biography = model.Biography;
 
                 var result = await userManager.UpdateAsync(user);
             }

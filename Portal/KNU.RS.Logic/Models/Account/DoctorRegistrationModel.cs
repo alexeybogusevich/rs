@@ -6,5 +6,6 @@ namespace KNU.RS.Logic.Models.Account
     {
         public Guid QualificationId { get; set; }
         public Guid ClinicId { get; set; }
+        public string Biography { get; set; }
     }
 }

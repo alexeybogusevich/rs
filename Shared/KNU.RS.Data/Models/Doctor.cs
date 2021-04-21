@@ -16,6 +16,8 @@ namespace KNU.RS.Data.Models
         public Guid UserId { get; set; }
         public User User { get; set; }
 
+        public string Biography { get; set; }
+
         public IEnumerable<DoctorPatient> Patients { get; set; }
     }
 }

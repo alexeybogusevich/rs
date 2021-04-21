@@ -1,0 +1,164 @@
+﻿@page "/newdoctor"
+
+<AuthorizeView Roles="Admin,Doctor,Patient">
+    <Authorized>
+        @if (IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <div class="main-wrapper">
+                <Header></Header>
+                <Sidebar></Sidebar>
+                <div class="page-wrapper">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-lg-8 offset-lg-2">
+                                <h4 class="page-title">Додати лікаря</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 offset-lg-2">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Ім'я <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Прізвище</label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>По-батькові <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Email <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="email">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Дата народження</label>
+                                                <div class="cal-icon">
+                                                    <input type="text" class="form-control datetimepicker">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group gender-select">
+                                                <label class="gen-label">Стать:</label>
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input type="radio" name="gender" class="form-check-input">Чоловіча
+                                                    </label>
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <label class="form-check-label">
+                                                        <input type="radio" name="gender" class="form-check-input">Жіноча
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <label>Адреса</label>
+                                                        <input type="text" class="form-control ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Країна</label>
+                                                        <select class="form-control select">
+                                                            <option>USA</option>
+                                                            <option>United Kingdom</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Місто</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label>Postal Code</label>
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Phone </label>
+                                                <input class="form-control" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>Фото</label>
+                                                <div class="profile-upload">
+                                                    <div class="upload-img">
+                                                        <img alt="" src="assets/img/user.jpg">
+                                                    </div>
+                                                    <div class="upload-input">
+                                                        <input type="file" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Біографія</label>
+                                        <textarea class="form-control" rows="3" cols="30"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="display-block">Status</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status" id="doctor_active" value="option1" checked>
+                                            <label class="form-check-label" for="doctor_active">
+                                                Active
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="status" id="doctor_inactive" value="option2">
+                                            <label class="form-check-label" for="doctor_inactive">
+                                                Inactive
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="m-t-20 text-center">
+                                        <button class="btn btn-primary submit-btn">Create Doctor</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-overlay" data-reff=""></div>
+        }
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private bool IsLoading { get; set; } = true;
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        IsLoading = false;
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}

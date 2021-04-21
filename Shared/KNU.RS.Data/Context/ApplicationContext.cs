@@ -38,12 +38,14 @@ namespace KNU.RS.Data.Context
                 c.HasKey(e => e.Id);
             });
 
-            modelBuilder.Entity<Doctor>(dp =>
+            modelBuilder.Entity<Doctor>(d =>
             {
-                dp.HasKey(d => d.Id);
-                dp.HasOne(d => d.User).WithOne(u => u.Doctor).HasForeignKey<Doctor>(d => d.UserId).OnDelete(DeleteBehavior.ClientCascade);
-                dp.HasOne(d => d.Clinic).WithMany(c => c.Doctors).HasForeignKey(d => d.ClinicId);
-                dp.HasOne(d => d.Qualification).WithMany(q => q.Doctors).HasForeignKey(d => d.QualificationId);
+                d.HasKey(d => d.Id);
+                d.HasOne(d => d.User).WithOne(u => u.Doctor).HasForeignKey<Doctor>(d => d.UserId).OnDelete(DeleteBehavior.ClientCascade);
+                d.HasOne(d => d.Clinic).WithMany(c => c.Doctors).HasForeignKey(d => d.ClinicId);
+                d.HasOne(d => d.Qualification).WithMany(q => q.Doctors).HasForeignKey(d => d.QualificationId);
+
+                d.Property(d => d.Biography).HasMaxLength(200);
             });
 
             modelBuilder.Entity<DoctorPatient>(dp =>
