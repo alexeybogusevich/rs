@@ -1,5 +1,23 @@
-﻿@using KNU.RS.Logic.Models.Patient
+﻿@page "/patients"
+
+@using KNU.RS.Logic.Models.Patient
 @inject IJSRuntime JsRuntime  
+
+<AuthorizeView Roles="Admin,Doctor,Patient">
+    <Authorized>
+        @if (IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <div class="main-wrapper">
+                <PatientsTable Patients="PatientsList" />
+            </div>
+            <div class="sidebar-overlay" data-reff=""></div>
+        }
+    </Authorized>
+</AuthorizeView>
 
 @code { 
     private bool IsLoading { get; set; } = true;
@@ -10,10 +28,5 @@
     protected override void OnInitialized()
     {
         IsLoading = false;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await JsRuntime.InvokeVoidAsync("blazorSidebarExtensions.SET_PATIENTS_ACTIVE");
     }
 }

@@ -1,7 +1,6 @@
 ﻿@page "/main"
 @using KNU.RS.Logic.Models.Patient
 @using KNU.RS.Logic.Models.Doctor 
-@using KNU.RS.Logic.Models.Study 
 @using KNU.RS.Logic.Services.PatientService
 @using KNU.RS.Logic.Services.DoctorService
 @using KNU.RS.Logic.Services.StudyService
@@ -21,8 +20,6 @@
         else
         {
             <div class="main-wrapper">
-                <Header></Header>
-                <Sidebar></Sidebar>
                 <Panel Patients="Patients" NumberOfDoctors="Doctors.Count()" NumberOfStudies="StudyCount"></Panel>
             </div>
             <div class="sidebar-overlay" data-reff=""></div>
@@ -49,10 +46,5 @@
         Doctors = doctors?.ToList();
 
         IsLoading = false;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await JsRuntime.InvokeVoidAsync("blazorSidebarExtensions.SET_PANEL_ACTIVE");
     }
 }
