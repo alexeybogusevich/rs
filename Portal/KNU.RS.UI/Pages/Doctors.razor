@@ -1,5 +1,8 @@
-﻿@page "/doctors" 
-@using KNU.RS.Logic.Models.Doctor 
+﻿@page "/doctors"
+@using KNU.RS.Logic.Models.Doctor
+@inject IJSRuntime JsRuntime
+
+<Title value="Система реабілітації КНУ | Лікарі"></Title>
 
 <AuthorizeView Roles="Admin,Doctor,Patient">
     <Authorized>
@@ -25,9 +28,13 @@
     [Parameter]
     public List<DoctorInfo> DoctorsList { get; set; } = new List<DoctorInfo>();
 
-    protected override Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnInitialized()
     {
         IsLoading = false;
-        return base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("blazorSidebarExtensions.SET_DOCTORS_ACTIVE");
     }
 }

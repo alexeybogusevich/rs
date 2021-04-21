@@ -1,5 +1,19 @@
-﻿<h3>Patients</h3>
+﻿@using KNU.RS.Logic.Models.Patient
+@inject IJSRuntime JsRuntime  
 
-@code {
+@code { 
+    private bool IsLoading { get; set; } = true;
 
+    [Parameter]
+    public List<PatientInfo> PatientsList { get; set; } = new List<PatientInfo>();
+
+    protected override void OnInitialized()
+    {
+        IsLoading = false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("blazorSidebarExtensions.SET_PATIENTS_ACTIVE");
+    }
 }

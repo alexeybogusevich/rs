@@ -10,6 +10,8 @@
 @inject IStudyService studyService 
 @inject IJSRuntime JsRuntime 
 
+<Title value="Система реабілітації КНУ | Головна"></Title>
+
 <AuthorizeView Roles="Admin,Doctor,Patient">
     <Authorized>
         @if (IsLoading)
@@ -38,11 +40,19 @@
     protected override async Task OnInitializedAsync()
     {
         IsLoading = true;
+
         var patients = await patientService.GetInfoAsync();
         var doctors = await doctorService.GetInfoAsync();
+
         StudyCount = await studyService.GetCountAsync();
         Patients = patients?.ToList();
         Doctors = doctors?.ToList();
+
         IsLoading = false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JsRuntime.InvokeVoidAsync("blazorSidebarExtensions.SET_PANEL_ACTIVE");
     }
 }
