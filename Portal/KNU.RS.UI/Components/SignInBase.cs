@@ -30,7 +30,12 @@ namespace KNU.RS.UI.Components
                 return;
             }
 
-            await JsRuntime.InvokeVoidAsync(SignInJSMethods.Login, LoginModel.Email, LoginModel.Password);
+            var result = await JsRuntime.InvokeAsync<bool>(SignInJSMethods.Login, LoginModel.Email, LoginModel.Password);
+
+            if (!result)
+            {
+                NavigationManager.NavigateTo("/signin");
+            }
 
             NavigationManager.NavigateTo("/main");
         }

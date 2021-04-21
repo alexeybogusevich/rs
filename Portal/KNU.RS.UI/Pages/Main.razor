@@ -9,23 +9,23 @@
 @inject IStudyService studyService 
 @inject IJSRuntime JsRuntime 
 
+@attribute [Authorize]
+
 <Title value="Система реабілітації КНУ | Головна"></Title>
 
-<AuthorizeView Roles="Admin,Doctor,Patient">
-    <Authorized>
-        @if (IsLoading)
-        {
-            <div class="spinner"></div>
-        }
-        else
-        {
-            <div class="main-wrapper">
-                <Panel Patients="Patients" NumberOfDoctors="Doctors.Count()" NumberOfStudies="StudyCount"></Panel>
-            </div>
-            <div class="sidebar-overlay" data-reff=""></div>
-        }
-    </Authorized>
-</AuthorizeView>
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="main-wrapper">
+        <Header></Header>
+        <Sidebar></Sidebar>
+        <Panel Patients="Patients" NumberOfDoctors="Doctors.Count()" NumberOfStudies="StudyCount"></Panel>
+    </div>
+    <div class="sidebar-overlay" data-reff=""></div>
+}
 
 @code {
     private bool IsLoading { get; set; } = true;

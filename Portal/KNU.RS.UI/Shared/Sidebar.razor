@@ -6,17 +6,17 @@
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
                 <li class="menu-title">Головна</li>
-                <li id="side-li-panel" class="@panelClass">
+                <li class="@panelClass">
                     <a href="/main"><i class="fa fa-dashboard"></i> <span>Панель</span></a>
                 </li>
-                <li id="side-li-doctors" class="@doctorsClass">
+                <li class="@doctorsClass">
                     <a href="/doctors"><i class="fa fa-user-md"></i> <span>Лікарі</span></a>
                 </li>
-                <li id="side-li-patients" class="@patientsClass">
+                <li class="@patientsClass">
                     <a href="/patients"><i class="fa fa-wheelchair"></i> <span>Пацієнти</span></a>
                 </li>
-                <li id="side-li-settings" class="@settingsClass">
-                    <a href="settings.html"><i class="fa fa-cog"></i> <span>Налаштування</span></a>
+                <li class="@settingsClass">
+                    <a href="/settings"><i class="fa fa-cog"></i> <span>Налаштування</span></a>
                 </li>
             </ul>
         </div>
@@ -25,30 +25,8 @@
 
 @code {
     private string currentUri => navManager.ToBaseRelativePath(navManager.Uri);
-    private string panelClass => currentUri.Equals("/main") ? "active" : "";
-    private string doctorsClass => currentUri.Equals("/doctors") ? "active" : "";
-    private string patientsClass => currentUri.Equals("/patients") ? "active" : "";
-    private string settingsClass => currentUri.Equals("/settings") ? "active" : "";
-
-    private async Task SetPanelActive()
-    {
-        await JsRuntime.InvokeVoidAsync("blazorSidebarExtensions.SET_PANEL_ACTIVE");
-    }
-
-    private async Task SetDoctorsActive()
-    {
-        await JsRuntime.InvokeVoidAsync("blazorSidebarExtensions.SET_DOCTORS_ACTIVE");
-    }
-
-    private async Task SetPatientsActive()
-    {
-        await JsRuntime.InvokeVoidAsync("blazorSidebarExtensions.SET_PATIENTS_ACTIVE");
-    }
-
-    private async Task SetSettingsActive()
-    {
-        await JsRuntime.InvokeVoidAsync("blazorSidebarExtensions.SET_SETTINGS_ACTIVE");
-    }
-
-    override   
+    private string panelClass => currentUri.Equals("main") ? "active" : "";
+    private string doctorsClass => currentUri.Contains("doctor") ? "active" : "";
+    private string patientsClass => currentUri.Contains("patient") ? "active" : "";
+    private string settingsClass => currentUri.Contains("settings") ? "active" : "";
 }
