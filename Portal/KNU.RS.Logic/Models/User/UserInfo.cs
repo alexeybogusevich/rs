@@ -12,6 +12,8 @@ namespace KNU.RS.Logic.Models.User
         public string MiddleName { get; set; }
 
         public Gender Gender { get; set; }
+        public DateTime? Birthday { get; set; }
+        public string FormattedBirthday { get; set; }
 
         public string Address { get; set; }
         public string Email { get; set; }

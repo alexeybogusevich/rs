@@ -1,4 +1,6 @@
 ﻿using KNU.RS.Data.Enums;
+using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace KNU.RS.Logic.Models.Account
@@ -25,6 +27,9 @@ namespace KNU.RS.Logic.Models.Account
         public string Address { get; set; }
 
         [Required]
+        public DateTime Birthday { get; set; }
+
+        [Required]
         [EmailAddress]
         [MaxLength(100)]
         public string Email { get; set; }
@@ -32,5 +37,7 @@ namespace KNU.RS.Logic.Models.Account
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
+
+        public IBrowserFile Photo { get; set; }
     }
 }

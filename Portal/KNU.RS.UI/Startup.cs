@@ -27,6 +27,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Components.Server;
 using System.Globalization;
+using KNU.RS.Logic.Services.QualificationService;
 
 namespace KNU.RS.UI
 {
@@ -60,6 +61,7 @@ namespace KNU.RS.UI
             services.AddScoped<IRecoveryPlanService, BaseRecoveryPlanService>();
             services.AddScoped<IStudyService, BaseStudyService>();
             services.AddScoped<IUserService, BaseUserService>();
+            services.AddScoped<IQualificationService, BaseQualificationService>();
 
             services.Configure<EmailingConfiguration>
                 (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));

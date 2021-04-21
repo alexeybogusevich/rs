@@ -66,8 +66,9 @@ namespace KNU.RS.Logic.Services.AccountService
                 user.Address = model.Address;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
+                user.Birthday = model.Birthday;
 
-                patient.Birthday = model.BirthDay;
+                patient.Description = model.Description;
                 patient.Height = model.Height;
                 patient.Weight = model.Weight;
 

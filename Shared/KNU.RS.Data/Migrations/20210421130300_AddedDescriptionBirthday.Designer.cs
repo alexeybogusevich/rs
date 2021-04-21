@@ -4,14 +4,16 @@ using KNU.RS.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KNU.RS.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210421130300_AddedDescriptionBirthday")]
+    partial class AddedDescriptionBirthday
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,9 +44,9 @@ namespace KNU.RS.Data.Migrations
                         new
                         {
                             Id = new Guid("a6285a67-6f1b-4adb-8de1-ffb26050c36a"),
-                            Location = "вул. Госпітальна, 16",
-                            Name = "Військовий шпиталь",
-                            PhoneNumber = "044 521 8413"
+                            Location = "Локация",
+                            Name = "Военный госпиталь",
+                            PhoneNumber = "12345"
                         });
                 });
 
@@ -143,12 +145,7 @@ namespace KNU.RS.Data.Migrations
                         new
                         {
                             Id = new Guid("35b9add3-729d-41b9-8a8c-d74681d1d526"),
-                            Name = "Лаборант"
-                        },
-                        new
-                        {
-                            Id = new Guid("a2e2facf-6554-4bd1-9133-673e0fc45ed0"),
-                            Name = "Фізіотерапевт"
+                            Name = "Терапевт"
                         });
                 });
 
@@ -211,21 +208,21 @@ namespace KNU.RS.Data.Migrations
                         new
                         {
                             Id = new Guid("7322ebe8-cfc4-4bd8-8cf9-67a9ceeae0a3"),
-                            ConcurrencyStamp = "f938d00c-dac8-4887-9f51-8307ff2a566d",
+                            ConcurrencyStamp = "663a30c4-86d7-47f3-a489-7aa9c641da28",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("5ec23f46-4f31-457f-b9b7-16f4fb090ee3"),
-                            ConcurrencyStamp = "9fc248fb-50a2-42f6-904b-58c11eaa7945",
+                            ConcurrencyStamp = "3e2a953f-456f-410d-9989-28842e234f6e",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
                             Id = new Guid("c63e87f9-dee0-4ec5-911c-a8d2c591dc17"),
-                            ConcurrencyStamp = "8b1fece7-f0b8-41c3-bf37-5e3b9e173098",
+                            ConcurrencyStamp = "753f8ea0-b32e-42ed-8def-030bcd5f43ec",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });

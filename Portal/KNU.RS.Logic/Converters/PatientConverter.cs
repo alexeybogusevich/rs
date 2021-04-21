@@ -1,6 +1,7 @@
 ﻿using KNU.RS.Data.Enums;
 using KNU.RS.Data.Models;
 using KNU.RS.Logic.Models.Patient;
+using System;
 
 namespace KNU.RS.Logic.Converters
 {
@@ -18,9 +19,11 @@ namespace KNU.RS.Logic.Converters
                 PhoneNumber = patient.User?.PhoneNumber,
                 Email = patient.User?.Email,
                 Address = patient.User?.Address,
-                Birthday = patient.Birthday.ToString("dd.MM.yyyy"),
+                Birthday = patient.User?.Birthday,
+                FormattedBirthday = patient.User?.Birthday == null ? string.Empty : patient.User.Birthday.ToString("dd.MM.yyyy"),
                 Weight = patient.Weight,
-                Height = patient.Height
+                Height = patient.Height,
+                Description = patient.Description
             };
         }
     }
