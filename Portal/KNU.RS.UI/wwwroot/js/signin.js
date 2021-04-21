@@ -11,6 +11,14 @@
         document.getElementById('account-password-input').style.borderColor = null;
     },
 
+    DISABLE_BUTTON: function () {
+        document.getElementById('login-submit-button').disabled = true;
+    },
+
+    ENABLE_BUTTON: function () {
+        document.getElementById('login-submit-button').disabled = false;
+    },
+
     WRITE_COOKIE: function (name, value, days) {
 
         var expires;
@@ -31,8 +39,6 @@
             "Password": password
         };
 
-        var result = false;
-
         $.ajax({
             url: "api/login",
             type: 'POST',
@@ -41,15 +47,9 @@
             data: JSON.stringify(data),
             processData: false,
             success: function (resultData) {
-                console.log(resultData);
-                result = true;
-                console.log("result inside success: " + result);
+                window.location.href = "/main";
             }
         });
-
-        console.log("result outside success: " + result);
-
-        return result;
     },
 
     LOGOUT: function () {

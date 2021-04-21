@@ -1,4 +1,5 @@
-﻿@inject IJSRuntime JsRuntime
+﻿@using KNU.RS.UI.Constans 
+@inject IJSRuntime JsRuntime
 
 <div class="header">
     <div class="header-left">
@@ -37,6 +38,6 @@
 @code {
     private async Task LogoutAsync()
     {
-        await JsRuntime.InvokeVoidAsync("blazorSigninExtensions.LOGOUT");
+        await JsRuntime.InvokeVoidAsync(JSExtensionMethods.Logout);
     }
 } 

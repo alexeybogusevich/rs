@@ -22,27 +22,23 @@ namespace KNU.RS.UI.Components
 
         protected async Task LoginAsync()
         {
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.DisableSignIn);
+
             var passwordCheckSucceeded = await LoginService.CheckLoginAsync(LoginModel);
 
             if (!passwordCheckSucceeded)
             {
-                await JsRuntime.InvokeVoidAsync(SignInJSMethods.SetAuthFailed);
+                await JsRuntime.InvokeVoidAsync(JSExtensionMethods.SetAuthFailed);
+                await JsRuntime.InvokeVoidAsync(JSExtensionMethods.EnableSignIn);
                 return;
             }
 
-            var result = await JsRuntime.InvokeAsync<bool>(SignInJSMethods.Login, LoginModel.Email, LoginModel.Password);
-
-            if (!result)
-            {
-                NavigationManager.NavigateTo("/signin");
-            }
-
-            NavigationManager.NavigateTo("/main");
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.Login, LoginModel.Email, LoginModel.Password);
         }
 
         protected async Task ClearErrorsAsync()
         {
-            await JsRuntime.InvokeVoidAsync(SignInJSMethods.ClearAuthFailed);
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ClearAuthFailed);
         }
     }
 }
