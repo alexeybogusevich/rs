@@ -115,24 +115,8 @@ else
                             </div>
                             <div class="col-sm-6 col-md-6 col-lg-3">
                                 <div class="form-group">
-                                    <label>State/Province</label>
-                                    <select class="form-control select">
-                                        <option>California</option>
-                                        <option>Alaska</option>
-                                        <option>Alabama</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                <div class="form-group">
                                     <label>Посада<span class="text-danger">*</span></label>
-                                    @*<InputSelect class="form-control select" id="qualification-select" @bind-Value="@RegistrationModel.QualificationId">
-                                    @foreach (var qualification in Qualifications)
-                                        {
-                                        <option value="@qualification.Id">@qualification.Name</option>
-                                        }
-                                    </InputSelect>*@
-                                    <select class="form-control select" @bind="RegistrationModel.QualificationId" title="Оберіть...">
+                                    <select class="form-control select" @bind="RegistrationModel.QualificationId" title="Оберіть зі списку">
                                         @foreach (var qualification in Qualifications)
                                         {
                                             <option value="@qualification.Id">@qualification.Name</option>
@@ -160,11 +144,11 @@ else
 @code {
     private bool IsLoading { get; set; } = true;
 
-    private List<Qualification> Qualifications { get; set; } = new List<Qualification>(); 
+    private IEnumerable<Qualification> Qualifications { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var qualifications = await qualificationService.GetAsync();
+        Qualifications = await qualificationService.GetAsync();
         IsLoading = false;
     }
 
