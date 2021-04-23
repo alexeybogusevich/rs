@@ -15,6 +15,8 @@ namespace KNU.RS.Data.Models
         public string Address { get; set; }
         public DateTime Birthday { get; set; }
 
+        public Guid? PhotoId { get; set; }
+
         public Doctor Doctor { get; set; }
         public Patient Patient { get; set; }
     }

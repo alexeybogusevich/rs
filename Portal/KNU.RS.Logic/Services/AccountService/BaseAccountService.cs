@@ -6,6 +6,7 @@ using KNU.RS.Logic.Enums;
 using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.EmailingService;
 using KNU.RS.Logic.Services.PasswordService;
+using KNU.RS.Logic.Services.PhotoService;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,16 +25,19 @@ namespace KNU.RS.Logic.Services.AccountService
 
         private readonly IEmailingService emailingService;
         private readonly IPasswordService passwordService;
+        private readonly IPhotoService photoService;
 
         public BaseAccountService(ApplicationContext context, IMapper mapper,
             UserManager<User> userManager,
-            IEmailingService emailingService, IPasswordService passwordService)
+            IEmailingService emailingService, IPasswordService passwordService,
+            IPhotoService photoService)
         {
             this.context = context;
             this.mapper = mapper;
             this.userManager = userManager;
             this.emailingService = emailingService;
             this.passwordService = passwordService;
+            this.photoService = photoService;
         }
 
         public async Task RegisterAsync(PatientRegistrationModel model)
@@ -80,6 +84,8 @@ namespace KNU.RS.Logic.Services.AccountService
 
             await context.SaveChangesAsync();
             await emailingService.SendEmailAsync(user, EmailType.Registration, password);
+
+            await photoService.UploadAsync(user.Id, model.Photo);
         }
 
         public async Task RegisterAsync(DoctorRegistrationModel model)
@@ -123,6 +129,8 @@ namespace KNU.RS.Logic.Services.AccountService
 
             await context.SaveChangesAsync();
             await emailingService.SendEmailAsync(user, EmailType.Registration, password);
+
+            await photoService.UploadAsync(user.Id, model.Photo);
         }
 
         public async Task HandleForgotPasswordAsync(ForgotPasswordModel model)

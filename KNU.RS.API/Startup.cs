@@ -26,6 +26,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.Text;
+using KNU.RS.Logic.Services.PhotoService;
 
 namespace KNU.RS.API
 {
@@ -58,6 +59,7 @@ namespace KNU.RS.API
             services.AddScoped<IPasswordService, BasePasswordService>();
             services.AddScoped<IAccountService, BaseAccountService>();
             services.AddScoped<IPatientService, BasePatientService>();
+            services.AddScoped<IPhotoService, BasePhotoService>();
 
             services.Configure<EmailingConfiguration>
                 (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));

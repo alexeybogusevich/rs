@@ -1,9 +1,5 @@
 ﻿@page "/newdoctor"
 @using KNU.RS.Logic.Services.QualificationService
-@using KNU.RS.Data.Models 
-
-@inject IQualificationService qualificationService
-@inject IJSRuntime JsRuntime 
 
 @inherits NewDoctorBase
 
@@ -117,10 +113,21 @@ else
                             <div class="col-sm-6 col-md-6 col-lg-3">
                                 <div class="form-group">
                                     <label>Посада<span class="text-danger">*</span></label>
-                                    <select class="form-control select" @bind="RegistrationModel.QualificationId" title="Оберіть зі списку">
+                                    <select class="form-control select" @onchange="AssignQualification" title="Оберіть зі списку">
                                         @foreach (var qualification in Qualifications)
                                         {
                                             <option value="@qualification.Id">@qualification.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-3">
+                                <div class="form-group">
+                                    <label>Відділення<span class="text-danger">*</span></label>
+                                    <select class="form-control select" @bind="RegistrationModel.ClinicId" title="Оберіть зі списку">
+                                        @foreach (var clinic in Clinics)
+                                        {
+                                            <option value="@clinic.Id">@clinic.Name</option>
                                         }
                                     </select>
                                 </div>
@@ -140,26 +147,4 @@ else
         </div>
     </div>
     <div class="sidebar-overlay" data-reff=""></div>
-    }
-
-@code {
-    private bool IsLoading { get; set; } = true;
-
-    private IEnumerable<Qualification> Qualifications { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Qualifications = await qualificationService.GetAsync();
-        IsLoading = false;
-    }
-
-    private void AssignPhoto(InputFileChangeEventArgs e)
-    {
-        RegistrationModel.Photo = e.File;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await JsRuntime.InvokeVoidAsync(JSExtensionMethods.SetSelect2);
-    }
 }

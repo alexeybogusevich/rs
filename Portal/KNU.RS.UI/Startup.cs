@@ -28,6 +28,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Components.Server;
 using System.Globalization;
 using KNU.RS.Logic.Services.QualificationService;
+using KNU.RS.Logic.Services.PhotoService;
+using KNU.RS.Logic.Services.ClinicService;
 
 namespace KNU.RS.UI
 {
@@ -53,11 +55,13 @@ namespace KNU.RS.UI
             services.AddSingleton<IMapper>(service => new Mapper(mapperConfig));
 
             services.AddScoped<IAccountService, BaseAccountService>();
+            services.AddScoped<IClinicService, BaseClinicService>();
             services.AddScoped<IDoctorService, BaseDoctorService>();
             services.AddScoped<IEmailingService, BaseEmailingService>();
             services.AddScoped<ILoginService, BaseLoginService>();
             services.AddScoped<IPasswordService, BasePasswordService>();
             services.AddScoped<IPatientService, BasePatientService>();
+            services.AddScoped<IPhotoService, BasePhotoService>();
             services.AddScoped<IRecoveryPlanService, BaseRecoveryPlanService>();
             services.AddScoped<IStudyService, BaseStudyService>();
             services.AddScoped<IUserService, BaseUserService>();
@@ -65,6 +69,8 @@ namespace KNU.RS.UI
 
             services.Configure<EmailingConfiguration>
                 (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));
+            services.Configure<PhotoConfiguration>
+                (options => Configuration.GetSection(ConfigurationConstants.Photo).Bind(options));
 
             services.AddRouting(options =>
             {
