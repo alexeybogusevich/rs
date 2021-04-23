@@ -5,13 +5,16 @@ using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Constants;
 using KNU.RS.Logic.Mapper;
 using KNU.RS.Logic.Middleware;
-using KNU.RS.Logic.Services.LoginService;
+using KNU.RS.Logic.Services.AccountService;
+using KNU.RS.Logic.Services.ClinicService;
 using KNU.RS.Logic.Services.DoctorService;
 using KNU.RS.Logic.Services.EmailingService;
+using KNU.RS.Logic.Services.LoginService;
 using KNU.RS.Logic.Services.PasswordService;
 using KNU.RS.Logic.Services.PatientService;
+using KNU.RS.Logic.Services.PhotoService;
+using KNU.RS.Logic.Services.QualificationService;
 using KNU.RS.Logic.Services.RecoveryPlanService;
-using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.StudyService;
 using KNU.RS.Logic.Services.UserService;
 using KNU.RS.PlatformExtensions.Configuration;
@@ -19,17 +22,14 @@ using KNU.RS.PlatformExtensions.Enums;
 using KNU.RS.UI.Areas.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Components.Server;
 using System.Globalization;
-using KNU.RS.Logic.Services.QualificationService;
-using KNU.RS.Logic.Services.PhotoService;
-using KNU.RS.Logic.Services.ClinicService;
 
 namespace KNU.RS.UI
 {

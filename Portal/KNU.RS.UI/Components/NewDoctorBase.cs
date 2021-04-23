@@ -7,7 +7,6 @@ using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -47,11 +46,6 @@ namespace KNU.RS.UI.Components
             RegistrationModel.Photo = e.File;
         }
 
-        protected void AssignQualification(ChangeEventArgs e)
-        {
-            RegistrationModel.QualificationId = (Guid) e.Value;
-        }
-
         protected async Task SaveDoctorAsync()
         {
             IsLoading = true;
@@ -72,6 +66,13 @@ namespace KNU.RS.UI.Components
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await JsRuntime.InvokeVoidAsync(JSExtensionMethods.SetSelect2);
+
+            var dotNetReference = DotNetObjectReference.Create(this);
+            await JsRuntime.InvokeVoidAsync(
+                JSExtensionMethods.SetOnChangeSelect2, "select-clinic", dotNetReference, JSInvokableMethods.ChangeClinic);
+
+            await JsRuntime.InvokeVoidAsync(
+                JSExtensionMethods.SetOnChangeSelect2, "select-qualification", dotNetReference, JSInvokableMethods.ChangeQualification);
         }
     }
 }

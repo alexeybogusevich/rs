@@ -55,6 +55,12 @@
             minimumResultsForSearch: -1,
             width: '100%'
         });
+    },
+
+    ONCHANGE_SELECT2: function (id, dotnetHelper, nameFunc) {
+        $('#' + id).on('select2:select', function (e) {
+            dotnetHelper.invokeMethodAsync(nameFunc, $('#' + id).val());
+        });
     }
 }
 

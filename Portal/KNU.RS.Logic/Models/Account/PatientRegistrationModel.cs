@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace KNU.RS.Logic.Models.Account
+﻿namespace KNU.RS.Logic.Models.Account
 {
     public class PatientRegistrationModel : RegistrationModel
     {

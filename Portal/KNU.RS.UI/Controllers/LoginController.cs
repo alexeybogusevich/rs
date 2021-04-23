@@ -25,7 +25,7 @@ namespace KNU.RS.UI.Controllers
         public async Task<IActionResult> LoginAsync([FromBody] LoginModel loginModel)
         {
             var result = await signInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password, true, false);
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 return Unauthorized();
             }

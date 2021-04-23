@@ -5,12 +5,13 @@ using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Constants;
 using KNU.RS.Logic.Mapper;
 using KNU.RS.Logic.Middleware;
+using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.AuthenticationService;
 using KNU.RS.Logic.Services.EmailingService;
 using KNU.RS.Logic.Services.JWTGenerator;
 using KNU.RS.Logic.Services.PasswordService;
 using KNU.RS.Logic.Services.PatientService;
-using KNU.RS.Logic.Services.AccountService;
+using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.PlatformExtensions.Configuration;
 using KNU.RS.PlatformExtensions.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -26,7 +27,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.Text;
-using KNU.RS.Logic.Services.PhotoService;
 
 namespace KNU.RS.API
 {

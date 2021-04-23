@@ -1,8 +1,8 @@
 ﻿using KNU.RS.Data.Constants;
 using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Models.Patient;
-using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.Logic.Services.AccountService;
+using KNU.RS.Logic.Services.PatientService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

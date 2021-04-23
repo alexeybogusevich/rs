@@ -35,7 +35,7 @@ else
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Прізвище<span class="text-danger">*</span></label>
+                                        <label>Прізвище <span class="text-danger">*</span></label>
                                         <InputText @bind-Value="RegistrationModel.LastName" autofocus="" class="form-control" />
                                         <ValidationMessage For="@(() => RegistrationModel.LastName)" />
                                     </div>
@@ -56,7 +56,7 @@ else
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Дата народження</label>
+                                        <label>Дата народження <span class="text-danger">*</span></label>
                                         <div class="cal-icon">
                                             <InputDate @bind-Value="RegistrationModel.Birthday" autofocus="" class="form-control datetimepicker" />
                                             <ValidationMessage For="@(() => RegistrationModel.Birthday)" />
@@ -65,15 +65,15 @@ else
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group gender-select">
-                                        <label class="gen-label">Стать:<span class="text-danger">*</span></label>
+                                        <label class="gen-label">Стать: <span class="text-danger">*</span></label>
                                         <div class="form-check-inline">
                                             <label class="form-check-label">
-                                                <input type="radio" name="gender" class="form-check-input">Чоловіча
+                                                <input type="radio" name="gender" class="form-check-input" @onclick="@ChangeGenderMale" checked>Чоловіча
                                             </label>
                                         </div>
                                         <div class="form-check-inline">
                                             <label class="form-check-label">
-                                                <input type="radio" name="gender" class="form-check-input">Жіноча
+                                                <input type="radio" name="gender" class="form-check-input" @onclick="@ChangeGenderFemale">Жіноча
                                             </label>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@ else
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label>Адреса</label>
+                                                <label>Адреса <span class="text-danger">*</span></label>
                                                 <InputText @bind-Value="RegistrationModel.Address" autofocus="" class="form-control" />
                                                 <ValidationMessage For="@(() => RegistrationModel.Address)" />
                                             </div>
@@ -91,7 +91,7 @@ else
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Номер телефону </label>
+                                        <label>Номер телефону <span class="text-danger">*</span></label>
                                         <InputText @bind-Value="RegistrationModel.PhoneNumber" autofocus="" class="form-control" />
                                         <ValidationMessage For="@(() => RegistrationModel.PhoneNumber)" />
                                     </div>
@@ -109,27 +109,31 @@ else
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                <div class="form-group">
-                                    <label>Посада<span class="text-danger">*</span></label>
-                                    <select class="form-control select" @onchange="AssignQualification" title="Оберіть зі списку">
-                                        @foreach (var qualification in Qualifications)
-                                        {
-                                            <option value="@qualification.Id">@qualification.Name</option>
-                                        }
-                                    </select>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Посада <span class="text-danger">*</span></label>
+                                        <select id="select-qualification" class="form-control select" title="Оберіть зі списку">
+                                            <option selected disabled>Оберіть зі списку</option>
+                                            @foreach (var qualification in Qualifications)
+                                            {
+                                                <option value="@qualification.Id">@qualification.Name</option>
+                                            }
+                                        </select>
+                                        <ValidationMessage For="@(() => RegistrationModel.QualificationId)" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-6 col-lg-3">
-                                <div class="form-group">
-                                    <label>Відділення<span class="text-danger">*</span></label>
-                                    <select class="form-control select" @bind="RegistrationModel.ClinicId" title="Оберіть зі списку">
-                                        @foreach (var clinic in Clinics)
-                                        {
-                                            <option value="@clinic.Id">@clinic.Name</option>
-                                        }
-                                    </select>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Відділення <span class="text-danger">*</span></label>
+                                        <select id="select-clinic" class="form-control select" title="Оберіть зі списку">
+                                            <option selected disabled>Оберіть зі списку</option>
+                                            @foreach (var clinic in Clinics)
+                                            {
+                                                <option value="@clinic.Id">@clinic.Name</option>
+                                            }
+                                        </select>
+                                        <ValidationMessage For="@(() => RegistrationModel.ClinicId)" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -148,3 +152,31 @@ else
     </div>
     <div class="sidebar-overlay" data-reff=""></div>
 }
+
+@code
+{
+    [JSInvokable("Select2_ChangeClinic")]
+    public void ChangeClinic(string stringId)
+    {
+        var id = new Guid(stringId);
+        RegistrationModel.ClinicId = id;
+    }
+
+    [JSInvokable("Select2_ChangeQualification")]
+    public void ChangeQualification(string stringId)
+    {
+        var id = new Guid(stringId);
+        RegistrationModel.QualificationId = id;
+    }
+
+    private void ChangeGenderFemale()
+    {
+        RegistrationModel.Gender = Data.Enums.Gender.Female;
+    }
+
+    private void ChangeGenderMale()
+    {
+        RegistrationModel.Gender = Data.Enums.Gender.Male;
+    }
+}
+

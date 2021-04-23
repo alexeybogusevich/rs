@@ -1,4 +1,5 @@
 ﻿using KNU.RS.Data.Enums;
+using KNU.RS.Logic.Validation;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -7,35 +8,35 @@ namespace KNU.RS.Logic.Models.Account
 {
     public class RegistrationModel
     {
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Будь-ласка, вкажіть ім'я")]
+        [MaxLength(100, ErrorMessage = "Будь-ласка, вкажіть не більше, ніж 100 символів")]
         public string FirstName { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Будь-ласка, вкажіть прізвище")]
+        [MaxLength(100, ErrorMessage = "Будь-ласка, вкажіть не більше, ніж 100 символів")]
         public string LastName { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Будь-ласка, вкажіть по-батькові")]
+        [MaxLength(100, ErrorMessage = "Будь-ласка, вкажіть не більше, ніж 100 символів")]
         public string MiddleName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Будь-ласка, вкажіть стать")]
         public Gender Gender { get; set; }
 
-        [Required]
-        [MaxLength(200)]
+        [Required(ErrorMessage = "Будь-ласка, вкажіть адресу")]
+        [MaxLength(200, ErrorMessage = "Будь-ласка, вкажіть не більше, ніж 200 символів")]
         public string Address { get; set; }
 
-        [Required]
+        [ValidBirthday(ErrorMessage = "Будь-ласка, вкажіть валідну дату народження")]
         public DateTime Birthday { get; set; }
 
-        [Required]
-        [EmailAddress]
-        [MaxLength(100)]
+        [Required(ErrorMessage = "Будь-ласка, вкажіть поштову адресу")]
+        [EmailAddress(ErrorMessage = "Будь-ласка, введіть валідну email адресу")]
+        [MaxLength(100, ErrorMessage = "Будь-ласка, вкажіть не більше, ніж 100 символів")]
         public string Email { get; set; }
 
-        [Required]
-        [Phone]
+        [Required(ErrorMessage = "Будь-ласка, вкажіть номер телефону")]
+        [Phone(ErrorMessage = "Будь-ласка, введіть валідний номер телефону")]
         public string PhoneNumber { get; set; }
 
         public IBrowserFile Photo { get; set; }

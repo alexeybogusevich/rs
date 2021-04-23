@@ -1,7 +1,6 @@
 ﻿using KNU.RS.Data.Enums;
 using KNU.RS.Data.Models;
 using KNU.RS.Logic.Models.Patient;
-using System;
 
 namespace KNU.RS.Logic.Converters
 {
