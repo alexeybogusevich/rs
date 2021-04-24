@@ -1,7 +1,7 @@
 ﻿@page "/doctors"
-@using KNU.RS.Logic.Models.Doctor
-@inject IJSRuntime JsRuntime
 @attribute [Authorize]
+
+@inherits DoctorsBase
 
 <Title value="Система реабілітації КНУ | Лікарі"></Title>
 
@@ -16,21 +16,9 @@
             <div class="main-wrapper">
                 <Header></Header>
                 <Sidebar></Sidebar>
-                <DoctorsTable Doctors="DoctorsList"></DoctorsTable>
+                <DoctorsGrid Doctors="DoctorsList"></DoctorsGrid>
             </div>
             <div class="sidebar-overlay" data-reff=""></div>
         }
     </Authorized>
 </AuthorizeView>
-
-@code {
-    private bool IsLoading { get; set; } = true;
-
-    [Parameter]
-    public List<DoctorInfo> DoctorsList { get; set; } = new List<DoctorInfo>();
-
-    protected override void OnInitialized()
-    {
-        IsLoading = false;
-    }
-}

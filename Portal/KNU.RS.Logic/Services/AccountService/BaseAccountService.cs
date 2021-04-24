@@ -82,14 +82,14 @@ namespace KNU.RS.Logic.Services.AccountService
             var password = passwordService.GeneratePassword(userManager.Options.Password);
             await SetPasswordAsync(user, password);
 
-            await context.SaveChangesAsync();
-            await emailingService.SendEmailAsync(user, EmailType.Registration, password);
-
             if (model.Photo != null)
             {
-                await photoService.UploadAsync(user.Id, model.Photo);
                 user.HasPhoto = true;
+                await SetPhotoAsync(user, model.Photo);
             }
+
+            await context.SaveChangesAsync();
+            await emailingService.SendEmailAsync(user, EmailType.Registration, password);
         }
 
         public async Task RegisterAsync(DoctorRegistrationModel model)
@@ -133,14 +133,14 @@ namespace KNU.RS.Logic.Services.AccountService
             var password = passwordService.GeneratePassword(userManager.Options.Password);
             await SetPasswordAsync(user, password);
 
-            await context.SaveChangesAsync();
-            await emailingService.SendEmailAsync(user, EmailType.Registration, password);
-
             if (model.Photo != null)
             {
-                await photoService.UploadAsync(user.Id, model.Photo);
                 user.HasPhoto = true;
+                await SetPhotoAsync(user, model.Photo);
             }
+
+            await context.SaveChangesAsync();
+            await emailingService.SendEmailAsync(user, EmailType.Registration, password);
         }
 
         public async Task HandleForgotPasswordAsync(ForgotPasswordModel model)
@@ -180,6 +180,18 @@ namespace KNU.RS.Logic.Services.AccountService
             }
 
             context.Entry(user).State = EntityState.Modified;
+        }
+
+        private async Task SetPhotoAsync(User user, byte[] photo)
+        {
+            try
+            {
+                await photoService.UploadAsync(user.Id, photo);
+            }
+            catch(Exception)
+            {
+                user.HasPhoto = false;
+            }
         }
     }
 }

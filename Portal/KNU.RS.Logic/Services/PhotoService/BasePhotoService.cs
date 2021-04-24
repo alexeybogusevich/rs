@@ -31,8 +31,7 @@ namespace KNU.RS.Logic.Services.PhotoService
 
         public async Task UploadAsync(Guid id, byte[] bytes)
         {
-            var imageExtension = configuration.Format.Split('/').Last();
-            using var fileStream = File.Create($"{configuration.BasePath}{id}.{imageExtension}");
+            using var fileStream = File.Create($"{configuration.BasePath}{id}.{configuration.Extension}");
             await fileStream.WriteAsync(bytes);
         }
     }

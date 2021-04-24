@@ -1,5 +1,6 @@
 ﻿using KNU.RS.Data.Models;
 using KNU.RS.Logic.Models.Doctor;
+using System;
 
 namespace KNU.RS.Logic.Converters
 {
@@ -9,7 +10,7 @@ namespace KNU.RS.Logic.Converters
         {
             return new DoctorInfo
             {
-                Id = doctor.Id,
+                Id = doctor.UserId,
                 FirstName = doctor.User?.FirstName,
                 LastName = doctor.User?.LastName,
                 MiddleName = doctor.User?.MiddleName,

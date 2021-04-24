@@ -20,6 +20,7 @@ using KNU.RS.Logic.Services.UserService;
 using KNU.RS.PlatformExtensions.Configuration;
 using KNU.RS.PlatformExtensions.Enums;
 using KNU.RS.UI.Areas.Identity;
+using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
@@ -28,8 +29,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using System.Globalization;
+using System.IO;
 
 namespace KNU.RS.UI
 {
@@ -112,6 +116,14 @@ namespace KNU.RS.UI
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            var photoOptions = app.ApplicationServices.GetService<IOptions<PhotoConfiguration>>();
+            var absoluteBasePathToPhotos = Path.GetFullPath(photoOptions.Value.BasePath);
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(absoluteBasePathToPhotos),
+                RequestPath = StaticFileConstants.PhotosRequestPath
+            });
 
             app.UseRouting();
 
