@@ -20,6 +20,7 @@ namespace KNU.RS.Logic.Converters
                 Address = patient.User?.Address,
                 Birthday = patient.User?.Birthday,
                 FormattedBirthday = patient.User?.Birthday == null ? string.Empty : patient.User.Birthday.ToString("dd.MM.yyyy"),
+                HasPhoto = patient.User?.HasPhoto ?? false,
                 Weight = patient.Weight,
                 Height = patient.Height,
                 Description = patient.Description

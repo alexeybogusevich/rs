@@ -2,6 +2,7 @@
 using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.ClinicService;
+using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.Logic.Services.QualificationService;
 using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
@@ -19,6 +20,9 @@ namespace KNU.RS.UI.Components
 
         [Inject]
         protected IClinicService ClinicService { get; set; }
+
+        [Inject]
+        protected IPhotoService PhotoService { get; set; }
 
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
@@ -41,9 +45,9 @@ namespace KNU.RS.UI.Components
         protected DoctorRegistrationModel RegistrationModel { get; set; } = new DoctorRegistrationModel();
 
 
-        protected void AssignPhoto(InputFileChangeEventArgs e)
+        protected async Task AssignPhotoAsync(InputFileChangeEventArgs e)
         {
-            RegistrationModel.Photo = e.File;
+            RegistrationModel.Photo = await PhotoService.ValidateAndGetBytesAsync(e.File);
         }
 
         protected async Task SaveDoctorAsync()

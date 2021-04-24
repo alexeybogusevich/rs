@@ -28,7 +28,7 @@ namespace KNU.RS.Logic.Models.Account
         public string Address { get; set; }
 
         [ValidBirthday(ErrorMessage = "Будь-ласка, вкажіть валідну дату народження")]
-        public DateTime Birthday { get; set; }
+        public DateTime Birthday { get; set; } = new DateTime(1982, 12, 31);
 
         [Required(ErrorMessage = "Будь-ласка, вкажіть поштову адресу")]
         [EmailAddress(ErrorMessage = "Будь-ласка, введіть валідну email адресу")]
@@ -39,6 +39,6 @@ namespace KNU.RS.Logic.Models.Account
         [Phone(ErrorMessage = "Будь-ласка, введіть валідний номер телефону")]
         public string PhoneNumber { get; set; }
 
-        public IBrowserFile Photo { get; set; }
+        public byte[] Photo { get; set; }
     }
 }

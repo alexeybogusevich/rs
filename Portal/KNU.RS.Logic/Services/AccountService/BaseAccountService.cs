@@ -85,7 +85,11 @@ namespace KNU.RS.Logic.Services.AccountService
             await context.SaveChangesAsync();
             await emailingService.SendEmailAsync(user, EmailType.Registration, password);
 
-            await photoService.UploadAsync(user.Id, model.Photo);
+            if (model.Photo != null)
+            {
+                await photoService.UploadAsync(user.Id, model.Photo);
+                user.HasPhoto = true;
+            }
         }
 
         public async Task RegisterAsync(DoctorRegistrationModel model)
@@ -106,6 +110,8 @@ namespace KNU.RS.Logic.Services.AccountService
                 doctor.UserId = user.Id;
 
                 await userManager.CreateAsync(user);
+                await userManager.AddToRoleAsync(user, RoleName.Doctor);
+                await context.Doctors.AddAsync(doctor);
             }
             else
             {
@@ -130,7 +136,11 @@ namespace KNU.RS.Logic.Services.AccountService
             await context.SaveChangesAsync();
             await emailingService.SendEmailAsync(user, EmailType.Registration, password);
 
-            await photoService.UploadAsync(user.Id, model.Photo);
+            if (model.Photo != null)
+            {
+                await photoService.UploadAsync(user.Id, model.Photo);
+                user.HasPhoto = true;
+            }
         }
 
         public async Task HandleForgotPasswordAsync(ForgotPasswordModel model)

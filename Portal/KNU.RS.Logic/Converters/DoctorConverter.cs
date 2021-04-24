@@ -18,6 +18,7 @@ namespace KNU.RS.Logic.Converters
                 Birthday = doctor.User?.Birthday,
                 FormattedBirthday = doctor.User?.Birthday == null ? string.Empty : doctor.User.Birthday.ToString("dd.MM.yyyy"),
                 Gender = doctor.User?.Gender ?? Data.Enums.Gender.Male,
+                HasPhoto = doctor.User?.HasPhoto ?? false,
                 Biography = doctor.Biography,
                 QualificationId = doctor.QualificationId,
                 QualificationName = doctor.Qualification?.Name,

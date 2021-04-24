@@ -6,6 +6,7 @@ namespace KNU.RS.Logic.Services.PhotoService
 {
     public interface IPhotoService
     {
-        Task UploadAsync(Guid id, IBrowserFile image);
+        Task<byte[]> ValidateAndGetBytesAsync(IBrowserFile file);
+        Task UploadAsync(Guid id, byte[] bytes);
     }
 }
