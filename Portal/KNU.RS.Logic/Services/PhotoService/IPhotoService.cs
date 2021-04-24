@@ -8,5 +8,6 @@ namespace KNU.RS.Logic.Services.PhotoService
     {
         Task<byte[]> ValidateAndGetBytesAsync(IBrowserFile file);
         Task UploadAsync(Guid id, byte[] bytes);
+        void DeleteAsync(Guid id);
     }
 }

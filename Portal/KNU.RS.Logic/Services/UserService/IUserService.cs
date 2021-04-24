@@ -9,5 +9,6 @@ namespace KNU.RS.Logic.Services.UserService
     {
         Task<FooterInfo> GetFooterAsync(Guid id);
         Task<IEnumerable<string>> GetRolesAsync(string email);
+        Task DeleteAsync(Guid id);
     }
 }

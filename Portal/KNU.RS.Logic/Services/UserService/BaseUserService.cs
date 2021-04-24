@@ -35,5 +35,11 @@ namespace KNU.RS.Logic.Services.UserService
             var user = await userManager.FindByEmailAsync(email);
             return await userManager.GetRolesAsync(user);
         }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
+            await userManager.DeleteAsync(user);
+        }
     }
 }

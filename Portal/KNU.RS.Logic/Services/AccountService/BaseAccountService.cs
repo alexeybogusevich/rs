@@ -92,6 +92,48 @@ namespace KNU.RS.Logic.Services.AccountService
             await emailingService.SendEmailAsync(user, EmailType.Registration, password);
         }
 
+        public async Task EditAsync(PatientRegistrationModel model)
+        {
+            var user = await context.Users
+                .Include(u => u.Patient)
+                .FirstOrDefaultAsync(u => u.Email.Equals(model.Email));
+
+            var patient = user?.Patient;
+
+            if (user == null)
+            {
+                throw new ArgumentException($"Користувача не знайдено. Email: {model.Email}");
+            }
+            else if (patient == null)
+            {
+                throw new ArgumentException($"Користувач не є пацієнтом. Email: {model.Email}");
+            }
+            else
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.MiddleName = model.MiddleName;
+                user.Gender = model.Gender;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Birthday = model.Birthday;
+
+                patient.Description = model.Description;
+                patient.Height = model.Height;
+                patient.Weight = model.Weight;
+
+                var result = await userManager.UpdateAsync(user);
+            }
+
+            if (model.Photo != null)
+            {
+                user.HasPhoto = true;
+                await SetPhotoAsync(user, model.Photo);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task RegisterAsync(DoctorRegistrationModel model)
         {
             var user = await context.Users
@@ -106,12 +148,7 @@ namespace KNU.RS.Logic.Services.AccountService
                 user.Id = Guid.NewGuid();
                 user.UserName = model.Email;
 
-                doctor = mapper.Map<Doctor>(model);
-                doctor.UserId = user.Id;
-
                 await userManager.CreateAsync(user);
-                await userManager.AddToRoleAsync(user, RoleName.Doctor);
-                await context.Doctors.AddAsync(doctor);
             }
             else
             {
@@ -122,12 +159,24 @@ namespace KNU.RS.Logic.Services.AccountService
                 user.Address = model.Address;
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
+                user.Birthday = model.Birthday;
 
+                var result = await userManager.UpdateAsync(user);
+            }
+
+            if (doctor == null)
+            {
+                doctor = mapper.Map<Doctor>(model);
+                doctor.UserId = user.Id;
+
+                await userManager.AddToRoleAsync(user, RoleName.Doctor);
+                await context.Doctors.AddAsync(doctor);
+            }
+            else
+            {
                 doctor.QualificationId = model.QualificationId;
                 doctor.ClinicId = model.ClinicId;
                 doctor.Biography = model.Biography;
-
-                var result = await userManager.UpdateAsync(user);
             }
 
             var password = passwordService.GeneratePassword(userManager.Options.Password);
@@ -141,6 +190,48 @@ namespace KNU.RS.Logic.Services.AccountService
 
             await context.SaveChangesAsync();
             await emailingService.SendEmailAsync(user, EmailType.Registration, password);
+        }
+
+        public async Task EditAsync(DoctorRegistrationModel model)
+        {
+            var user = await context.Users
+                .Include(u => u.Doctor)
+                .FirstOrDefaultAsync(u => u.Email.Equals(model.Email));
+
+            var doctor = user?.Doctor;
+
+            if (user == null)
+            {
+                throw new ArgumentException($"Користувача не знайдено. Email: {model.Email}");
+            }
+            else if (doctor == null)
+            {
+                throw new ArgumentException($"Користувач не є лікарем. Email: {model.Email}");
+            }
+            else
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.MiddleName = model.MiddleName;
+                user.Gender = model.Gender;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Birthday = model.Birthday;
+
+                doctor.QualificationId = model.QualificationId;
+                doctor.ClinicId = model.ClinicId;
+                doctor.Biography = model.Biography;
+
+                var result = await userManager.UpdateAsync(user);
+            }
+
+            if (model.Photo != null)
+            {
+                user.HasPhoto = true;
+                await SetPhotoAsync(user, model.Photo);
+            }
+
+            await context.SaveChangesAsync();
         }
 
         public async Task HandleForgotPasswordAsync(ForgotPasswordModel model)
