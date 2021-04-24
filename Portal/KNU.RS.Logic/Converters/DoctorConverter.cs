@@ -1,6 +1,5 @@
 ﻿using KNU.RS.Data.Models;
 using KNU.RS.Logic.Models.Doctor;
-using System;
 
 namespace KNU.RS.Logic.Converters
 {
