@@ -10,6 +10,7 @@ namespace KNU.RS.Data.Models
         public string Name { get; set; }
         public string PhoneNumber { get; set; }
         public string Location { get; set; }
+        public string WorkingHours { get; set; }
 
         public List<Doctor> Doctors { get; set; }
     }

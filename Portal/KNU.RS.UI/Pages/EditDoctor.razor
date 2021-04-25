@@ -15,7 +15,7 @@ else
             <div class="content">
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2">
-                        <h4 class="page-title">Новий лікар</h4>
+                        <h4 class="page-title">Редагування лікаря</h4>
                     </div>
                 </div>
                 <div class="row">
@@ -47,7 +47,7 @@ else
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Email <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="EditModel.Email" autofocus="" class="form-control" disabled/>
+                                        <InputText @bind-Value="EditModel.Email" autofocus="" class="form-control" disabled />
                                         <ValidationMessage For="@(() => EditModel.Email)" />
                                     </div>
                                 </div>
@@ -104,7 +104,7 @@ else
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Посада <span class="text-danger">*</span></label>
                                         <select id="select-qualification" class="form-control select" title="Оберіть зі списку">
@@ -117,7 +117,7 @@ else
                                         <ValidationMessage For="@(() => EditModel.QualificationId)" />
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Відділення <span class="text-danger">*</span></label>
                                         <select id="select-clinic" class="form-control select" title="Оберіть зі списку">
@@ -130,6 +130,25 @@ else
                                         <ValidationMessage For="@(() => EditModel.ClinicId)" />
                                     </div>
                                 </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Номер аудиторії <span class="text-danger">*</span></label>
+                                        <InputNumber @bind-Value="EditModel.Room" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.Room)" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Науковий ступінь <span class="text-danger">*</span></label>
+                                        <InputText @bind-Value="EditModel.Degree" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.Degree)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Карта компетенцій</label>
+                                <InputTextArea @bind-Value="EditModel.Competencies" autofocus="" class="form-control" rows="3" cols="30" />
+                                <ValidationMessage For="@(() => EditModel.Competencies)" />
                             </div>
                             <div class="form-group">
                                 <label>Біографія</label>

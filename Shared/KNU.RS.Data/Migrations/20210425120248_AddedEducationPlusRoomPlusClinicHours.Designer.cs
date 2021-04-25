@@ -4,14 +4,16 @@ using KNU.RS.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KNU.RS.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210425120248_AddedEducationPlusRoomPlusClinicHours")]
+    partial class AddedEducationPlusRoomPlusClinicHours
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,10 +69,6 @@ namespace KNU.RS.Data.Migrations
                     b.Property<string>("Competencies")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Degree")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<Guid>("QualificationId")
                         .HasColumnType("uniqueidentifier");
@@ -253,21 +251,21 @@ namespace KNU.RS.Data.Migrations
                         new
                         {
                             Id = new Guid("7322ebe8-cfc4-4bd8-8cf9-67a9ceeae0a3"),
-                            ConcurrencyStamp = "6f4eb3c8-5354-4d82-885e-51c4d74e6fa5",
+                            ConcurrencyStamp = "19fd00bc-d43b-40f5-b32b-db014e4c7d59",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("5ec23f46-4f31-457f-b9b7-16f4fb090ee3"),
-                            ConcurrencyStamp = "80bc6e57-a985-4018-abfd-8efdadb88810",
+                            ConcurrencyStamp = "edff9ae8-7211-49d3-9d89-6872bf01c2e3",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
                             Id = new Guid("c63e87f9-dee0-4ec5-911c-a8d2c591dc17"),
-                            ConcurrencyStamp = "145d5003-6542-4846-b333-d5659e7e2023",
+                            ConcurrencyStamp = "7850d752-928b-4bbd-8115-61bf12d05b3c",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });

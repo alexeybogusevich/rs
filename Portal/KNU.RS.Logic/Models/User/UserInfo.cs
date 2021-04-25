@@ -13,6 +13,7 @@ namespace KNU.RS.Logic.Models.User
 
         public Gender Gender { get; set; }
         public DateTime? Birthday { get; set; }
+        public int? Age { get; set; }
         public string FormattedBirthday { get; set; }
 
         public string Address { get; set; }

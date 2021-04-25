@@ -106,7 +106,7 @@ else
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Посада <span class="text-danger">*</span></label>
                                         <select id="select-qualification" class="form-control select" title="Оберіть зі списку">
@@ -119,7 +119,7 @@ else
                                         <ValidationMessage For="@(() => RegistrationModel.QualificationId)" />
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Відділення <span class="text-danger">*</span></label>
                                         <select id="select-clinic" class="form-control select" title="Оберіть зі списку">
@@ -132,6 +132,25 @@ else
                                         <ValidationMessage For="@(() => RegistrationModel.ClinicId)" />
                                     </div>
                                 </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Номер аудиторії <span class="text-danger">*</span></label>
+                                        <InputNumber @bind-Value="RegistrationModel.Room" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => RegistrationModel.Room)" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Науковий ступінь <span class="text-danger">*</span></label>
+                                        <InputText @bind-Value="RegistrationModel.Degree" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => RegistrationModel.Degree)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Карта компетенцій</label>
+                                <InputTextArea @bind-Value="RegistrationModel.Competencies" autofocus="" class="form-control" rows="3" cols="30" />
+                                <ValidationMessage For="@(() => RegistrationModel.Competencies)" />
                             </div>
                             <div class="form-group">
                                 <label>Біографія</label>

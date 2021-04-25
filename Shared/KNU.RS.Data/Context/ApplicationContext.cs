@@ -10,6 +10,7 @@ namespace KNU.RS.Data.Context
     {
         public DbSet<Clinic> Clinics { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Education> Educations { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Qualification> Qualifications { get; set; }
         public DbSet<RecoveryDailyPlan> RecoveryDailyPlans { get; set; }
@@ -45,7 +46,9 @@ namespace KNU.RS.Data.Context
                 d.HasOne(d => d.Clinic).WithMany(c => c.Doctors).HasForeignKey(d => d.ClinicId);
                 d.HasOne(d => d.Qualification).WithMany(q => q.Doctors).HasForeignKey(d => d.QualificationId);
 
-                d.Property(d => d.Biography).HasMaxLength(200);
+                d.Property(d => d.Biography).HasMaxLength(500);
+                d.Property(d => d.Competencies).HasMaxLength(500);
+                d.Property(d => d.Degree).HasMaxLength(100);
             });
 
             modelBuilder.Entity<DoctorPatient>(dp =>
@@ -54,6 +57,12 @@ namespace KNU.RS.Data.Context
 
                 dp.HasOne(dp => dp.Doctor).WithMany(d => d.Patients).HasForeignKey(dp => dp.DoctorId);
                 dp.HasOne(dp => dp.Patient).WithMany(d => d.Doctors).HasForeignKey(dp => dp.PatientId);
+            });
+
+            modelBuilder.Entity<Education>(e =>
+            {
+                e.HasKey(e => e.Id);
+                e.HasOne(e => e.Doctor).WithMany(d => d.Educations).HasForeignKey(e => e.DoctorId);
             });
 
             modelBuilder.Entity<Patient>(p =>

@@ -26,6 +26,16 @@ namespace KNU.RS.Logic.Services.DoctorService
                 .FirstOrDefaultAsync(d => d.UserId.Equals(userId));
         }
 
+        public async Task<DoctorInfo> GetInfoAsync(Guid userId)
+        {
+            return await context.Doctors
+                .Include(d => d.Clinic)
+                .Include(d => d.Qualification)
+                .Include(d => d.User)
+                .Select(d => DoctorConverter.Convert(d))
+                .FirstOrDefaultAsync(d => d.UserId.Equals(userId));
+        }
+
         public async Task<IEnumerable<DoctorInfo>> GetInfoAsync()
         {
             return await context.Doctors

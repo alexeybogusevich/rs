@@ -50,8 +50,7 @@ namespace KNU.RS.UI.Components
 
         private void InitializeDisplayedDoctors()
         {
-            //DisplayedDoctors.AddRange(Doctors.Skip((Batches - 1) * BatchSize).Take(BatchSize).ToList());
-            DisplayedDoctors = Doctors.Take(Batches * BatchSize).ToList();
+            DisplayedDoctors = Doctors.Take(Batches * BatchSize).OrderBy(d => d.LastName).ToList();
         }
 
         protected void LoadMore()

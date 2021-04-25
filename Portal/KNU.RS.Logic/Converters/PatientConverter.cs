@@ -1,5 +1,6 @@
 ﻿using KNU.RS.Data.Enums;
 using KNU.RS.Data.Models;
+using KNU.RS.Logic.Helpers;
 using KNU.RS.Logic.Models.Patient;
 
 namespace KNU.RS.Logic.Converters
@@ -19,6 +20,7 @@ namespace KNU.RS.Logic.Converters
                 Email = patient.User?.Email,
                 Address = patient.User?.Address,
                 Birthday = patient.User?.Birthday,
+                Age = patient.User?.Birthday == null ? null : DateTimeHelper.GetAge(patient.User.Birthday),
                 FormattedBirthday = patient.User?.Birthday == null ? string.Empty : patient.User.Birthday.ToString("dd.MM.yyyy"),
                 HasPhoto = patient.User?.HasPhoto ?? false,
                 Weight = patient.Weight,

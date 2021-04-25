@@ -177,6 +177,9 @@ namespace KNU.RS.Logic.Services.AccountService
                 doctor.QualificationId = model.QualificationId;
                 doctor.ClinicId = model.ClinicId;
                 doctor.Biography = model.Biography;
+                doctor.Competencies = model.Competencies;
+                doctor.Degree = model.Degree;
+                doctor.Room = model.Room;
             }
 
             var password = passwordService.GeneratePassword(userManager.Options.Password);
@@ -221,6 +224,9 @@ namespace KNU.RS.Logic.Services.AccountService
                 doctor.QualificationId = model.QualificationId;
                 doctor.ClinicId = model.ClinicId;
                 doctor.Biography = model.Biography;
+                doctor.Competencies = model.Competencies;
+                doctor.Degree = model.Degree;
+                doctor.Room = model.Room;
 
                 var result = await userManager.UpdateAsync(user);
             }

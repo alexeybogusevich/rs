@@ -1,0 +1,159 @@
+﻿@using KNU.RS.Logic.Models.Doctor
+@using KNU.RS.Data.Enums 
+
+<div class="page-wrapper">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-7 col-6">
+                <h4 class="page-title">Профіль</h4>
+            </div>
+
+            <div class="col-sm-5 col-6 text-right m-b-30">
+                <a href="edit-profile.html" class="btn btn-primary btn-rounded"><i class="fa fa-plus"></i> Редагувати</a>
+            </div>
+        </div>
+        <div class="card-box profile-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-img-wrap">
+                            <div class="profile-img">
+                                <a href="#"><img class="avatar" src="assets/img/doctor-03.jpg" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="profile-basic">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="profile-info-left">
+                                        <br />
+                                        <br />
+                                        <h3 class="user-name m-t-0 mb-0">@Doctor.ToString()</h3>
+                                        <span class="text-muted">@Doctor.QualificationName</span>
+                                        <br />
+                                        <br />
+                                        <br />
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <span class="title">Вік:</span>
+                                            <span class="text">@Doctor.Age</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Стать:</span>
+                                            <span class="text">@(Doctor.Gender.Equals(Gender.Female) ? "Жіноча" : "Чоловіча")</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Телефон:</span>
+                                            <span class="text"><a href="#">@Doctor.PhoneNumber</a></span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Адреса:</span>
+                                            <span class="text">@Doctor.Address</span>
+                                        </li>
+                                        <li>
+                                            <span class="title">Науковий ступінь:</span>
+                                            <span class="text">Кандидат біологічних наук</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-tabs">
+            <ul class="nav nav-tabs nav-tabs-bottom">
+                <li class="nav-item"><a class="nav-link active" href="#about-cont" data-toggle="tab">Деталі</a></li>
+                <li class="nav-item"><a class="nav-link" href="#bottom-tab2" data-toggle="tab">Біографія</a></li>
+                <li class="nav-item"><a class="nav-link" href="#bottom-tab3" data-toggle="tab">Пацієнти</a></li>
+                <li class="nav-item"><a class="nav-link" href="#bottom-tab4" data-toggle="tab">Запис до лікаря</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane show active" id="about-cont">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h3 class="card-title">Карта компетенцій</h3>
+                                <div class="experience-box">
+                                    @Doctor.Competencies
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h3 class="card-title">Освіта</h3>
+                                <div class="experience-box">
+                                    <ul class="experience-list">
+                                        <li>
+                                            <div class="experience-user">
+                                                <div class="before-circle"></div>
+                                            </div>
+                                            <div class="experience-content">
+                                                <div class="timeline-content">
+                                                    <a href="#/" class="name">КНУ імені Тараса Шевченка</a>
+                                                    <div>Бакалавр</div>
+                                                    <span class="time">2017 - 2021</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="bottom-tab2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h3 class="card-title">Біографія</h3>
+                                <div class="experience-box">
+                                    @Doctor.Biography
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="bottom-tab3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                СПИСОК ПАЦІЄНТІВ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="bottom-tab4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <h5>
+                                            <strong>@Doctor.ClinicName</strong>
+                                        </h5>
+                                    </li>
+                                    <li class="text">Госпітальна вулиця, 17, Печерський район, Київ</li>
+                                    <li class="text" style="margin-top: 12px;"><a href="#">226-13-17</a> (Пн.-Пт.: 8:00 - 18:00)</li>
+                                    <li class="text">Аудиторія 204</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public DoctorInfo Doctor { get; set; }
+}

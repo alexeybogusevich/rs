@@ -10,6 +10,8 @@ namespace KNU.RS.Logic.Services.DoctorService
     {
         Task<Doctor> GetAsync(Guid userId);
         Task<IEnumerable<DoctorInfo>> GetInfoAsync();
+        Task<DoctorInfo> GetInfoAsync(Guid userId);
         Task<Doctor> CreateAsync(Doctor doctor);
+        Task<Doctor> UpdateAsync(Doctor doctor);
     }
 }
