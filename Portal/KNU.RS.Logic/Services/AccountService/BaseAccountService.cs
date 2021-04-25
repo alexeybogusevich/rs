@@ -72,9 +72,19 @@ namespace KNU.RS.Logic.Services.AccountService
                 user.PhoneNumber = model.PhoneNumber;
                 user.Birthday = model.Birthday;
 
-                patient.Description = model.Description;
-                patient.Height = model.Height;
                 patient.Weight = model.Weight;
+                patient.Height = model.Height;
+                patient.MaritalStatus = model.MaritalStatus;
+                patient.EducationStatus = model.EducationStatus;
+                patient.Occupation = model.Occupation;
+                patient.Job = model.Job;
+                patient.Position = model.Position;
+                patient.HealthInsuranse = model.HealthInsuranse;
+                patient.HealthInsuranseCompany = model.HealthInsuranseCompany;
+                patient.Passport = model.Passport;
+                patient.Complaints = model.Complaints;
+                patient.Diagnosis = model.Diagnosis;
+                patient.RegistrationDate = DateTime.Now;
 
                 var result = await userManager.UpdateAsync(user);
             }
@@ -118,9 +128,18 @@ namespace KNU.RS.Logic.Services.AccountService
                 user.PhoneNumber = model.PhoneNumber;
                 user.Birthday = model.Birthday;
 
-                patient.Description = model.Description;
-                patient.Height = model.Height;
                 patient.Weight = model.Weight;
+                patient.Height = model.Height;
+                patient.MaritalStatus = model.MaritalStatus;
+                patient.EducationStatus = model.EducationStatus;
+                patient.Occupation = model.Occupation;
+                patient.Job = model.Job;
+                patient.Position = model.Position;
+                patient.HealthInsuranse = model.HealthInsuranse;
+                patient.HealthInsuranseCompany = model.HealthInsuranseCompany;
+                patient.Passport = model.Passport;
+                patient.Complaints = model.Complaints;
+                patient.Diagnosis = model.Diagnosis;
 
                 var result = await userManager.UpdateAsync(user);
             }

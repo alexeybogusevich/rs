@@ -25,7 +25,17 @@ namespace KNU.RS.Logic.Converters
                 HasPhoto = patient.User?.HasPhoto ?? false,
                 Weight = patient.Weight,
                 Height = patient.Height,
-                Description = patient.Description
+                MaritalStatus = patient.MaritalStatus,
+                EducationStatus = patient.EducationStatus,
+                Occupation = patient.Occupation,
+                Job = patient.Job,
+                Position = patient.Position,
+                HealthInsuranse = patient.HealthInsuranse,
+                HealthInsuranseCompany = patient.HealthInsuranseCompany,
+                Passport = patient.Passport,
+                Complaints = patient.Complaints,
+                Diagnosis = patient.Diagnosis,
+                RegistrationDate = patient.RegistrationDate
             };
         }
     }

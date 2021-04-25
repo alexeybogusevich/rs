@@ -6,7 +6,7 @@
         <h4 class="page-title">Пацієнти</h4>
     </div>
     <div class="col-sm-8 col-9 text-right m-b-20">
-        <a href="add-patient.html" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Додати</a>
+        <a href="/newpatient" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Додати</a>
     </div>
 </div>
 <div class="row">
@@ -58,7 +58,7 @@
         </li>
         @foreach (var pageNo in AvailablePages)
         {
-            <li class="page-item @(pageNo == PatientsPage.PageIndex ? "active" : string.Empty)"><a class="page-link" href="#" @onclick="() => GoToPage(pageNo)">@pageNo</a></li>
+            <li class="page-item @(pageNo == PatientsPage.PageIndex ? "active" : string.Empty)"><a class="page-link" href="javascript:void(0)" @onclick="() => GoToPage(pageNo)">@pageNo</a></li>
         }
         <li class="page-item">
             <a class="page-link" href="javascript:void(0)" aria-label="Далі" @onclick="() => GoToPage(PatientsPage.TotalPages)">

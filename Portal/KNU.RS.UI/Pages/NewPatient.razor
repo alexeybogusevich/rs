@@ -1,0 +1,272 @@
+﻿@page "/newpatient"
+@using KNU.RS.Data.Enums
+@using EnumsNET
+@inherits NewPatientBase
+@attribute [Authorize]
+
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+<div class="main-wrapper">
+    <Header></Header>
+    <Sidebar></Sidebar>
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <h4 class="page-title">Новий лікар</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <EditForm Model="@RegistrationModel" OnValidSubmit="@SavePatientAsync">
+                        <DataAnnotationsValidator />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Ім'я <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="RegistrationModel.FirstName" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => RegistrationModel.FirstName)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Прізвище <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="RegistrationModel.LastName" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => RegistrationModel.LastName)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>По-батькові <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="RegistrationModel.MiddleName" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => RegistrationModel.MiddleName)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="RegistrationModel.Email" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => RegistrationModel.Email)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Дата народження <span class="text-danger">*</span></label>
+                                    <InputDate @bind-Value="RegistrationModel.Birthday" class="form-control" />
+                                    <ValidationMessage For="@(() => RegistrationModel.Birthday)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group gender-select">
+                                    <label class="gen-label">Стать: <span class="text-danger">*</span></label>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" name="gender" class="form-check-input" @onclick="@ChangeGenderMale" checked>Чоловіча
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" name="gender" class="form-check-input" @onclick="@ChangeGenderFemale">Жіноча
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Адреса <span class="text-danger">*</span></label>
+                                            <InputText @bind-Value="RegistrationModel.Address" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => RegistrationModel.Address)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Номер телефону <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="RegistrationModel.PhoneNumber" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => RegistrationModel.PhoneNumber)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Фото</label>
+                                    <div class="profile-upload">
+                                        <div class="upload-img">
+                                            <img alt="" src="img/user.jpg">
+                                        </div>
+                                        <div class="upload-input">
+                                            <InputFile OnChange="@AssignPhotoAsync" autofocus="" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Зріст</label>
+                                    <InputNumber @bind-Value="RegistrationModel.Height" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => RegistrationModel.Height)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Вага</label>
+                                    <InputNumber @bind-Value="RegistrationModel.Weight" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => RegistrationModel.Weight)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Сімейний стан <span class="text-danger">*</span></label>
+                                    <select id="select-marital" class="form-control select" title="Оберіть зі списку">
+                                        <option selected disabled>Інформація відсутня</option>
+                                        @foreach (var status in Enum.GetValues(typeof(MaritalStatus)))
+                                        {
+                                            <option value="@((int)status)">@(((MaritalStatus)status).AsString(EnumFormat.Description))</option>
+                                        }
+                                    </select>
+                                    <ValidationMessage For="@(() => RegistrationModel.MaritalStatus)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Освіта <span class="text-danger">*</span></label>
+                                    <select id="select-education" class="form-control select" title="Оберіть зі списку">
+                                        <option selected disabled>Інформація відсутня</option>
+                                        @foreach (var status in Enum.GetValues(typeof(EducationStatus)))
+                                        {
+                                            <option value="@((int)status)">@(((EducationStatus)status).AsString(EnumFormat.Description))</option>
+                                        }
+                                    </select>
+                                    <ValidationMessage For="@(() => RegistrationModel.EducationStatus)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Зайнятість <span class="text-danger">*</span></label>
+                                    <select id="select-occupation" class="form-control select" title="Оберіть зі списку">
+                                        <option selected disabled>Інформація відсутня</option>
+                                        @foreach (var status in Enum.GetValues(typeof(Occupation)))
+                                        {
+                                            <option value="@((int)status)">@(((Occupation)status).AsString(EnumFormat.Description))</option>
+                                        }
+                                    </select>
+                                    <ValidationMessage For="@(() => RegistrationModel.Occupation)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Місце роботи</label>
+                                            <InputText @bind-Value="RegistrationModel.Job" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => RegistrationModel.Job)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Посада</label>
+                                            <InputText @bind-Value="RegistrationModel.Position" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => RegistrationModel.Position)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Поліс медичного страхування</label>
+                                            <InputText @bind-Value="RegistrationModel.HealthInsuranse" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => RegistrationModel.HealthInsuranse)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Назва страхової компанії</label>
+                                            <InputText @bind-Value="RegistrationModel.HealthInsuranseCompany" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => RegistrationModel.HealthInsuranseCompany)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Документ, що посвідчує особу</label>
+                                            <InputText @bind-Value="RegistrationModel.Passport" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => RegistrationModel.Passport)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Скарги</label>
+                            <InputTextArea @bind-Value="RegistrationModel.Complaints" autofocus="" class="form-control" rows="3" cols="30" />
+                            <ValidationMessage For="@(() => RegistrationModel.Complaints)" />
+                        </div>
+                        <div class="form-group">
+                            <label>Діагноз</label>
+                            <InputTextArea @bind-Value="RegistrationModel.Diagnosis" autofocus="" class="form-control" rows="3" cols="30" />
+                            <ValidationMessage For="@(() => RegistrationModel.Diagnosis)" />
+                        </div>
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary submit-btn">Зберегти</button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="sidebar-overlay" data-reff=""></div>
+}
+
+
+@code {
+    private void ChangeGenderFemale()
+    {
+        RegistrationModel.Gender = Data.Enums.Gender.Female;
+    }
+
+    private void ChangeGenderMale()
+    {
+        RegistrationModel.Gender = Data.Enums.Gender.Male;
+    }
+
+    [JSInvokable("Select2_ChangeMaritalStatus")]
+    public void ChangeMaritalStatus(string value)
+    {
+        var status = (MaritalStatus)int.Parse(value);
+        RegistrationModel.MaritalStatus = status;
+    }
+
+    [JSInvokable("Select2_ChangeEducationStatus")]
+    public void ChangeEducationStatus(string value)
+    {
+        var status = (EducationStatus)int.Parse(value);
+        RegistrationModel.EducationStatus = status;
+    }
+
+    [JSInvokable("Select2_ChangeOccupation")]
+    public void ChangeOccupation(string value)
+    {
+        var status = (Occupation)int.Parse(value);
+        RegistrationModel.Occupation = status;
+    }
+}

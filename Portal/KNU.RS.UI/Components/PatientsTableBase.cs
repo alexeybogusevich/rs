@@ -22,7 +22,7 @@ namespace KNU.RS.UI.Components
 
         protected int Counter = 1;
 
-        private int PageSize = 10;
+        private int PageSize = 1;
         private int PagesForReference = 5;
 
         protected List<int> AvailablePages { get; set; } = new List<int>();
