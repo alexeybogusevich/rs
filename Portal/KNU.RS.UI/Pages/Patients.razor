@@ -1,7 +1,5 @@
 ﻿@page "/patients"
-
-@using KNU.RS.Logic.Models.Patient
-@inject IJSRuntime JsRuntime  
+@inherits PatientsBase
 
 <AuthorizeView Roles="Admin,Doctor,Patient">
     <Authorized>
@@ -14,21 +12,17 @@
             <div class="main-wrapper">
                 <Header></Header>
                 <Sidebar></Sidebar>
-                <PatientsTable Patients="PatientsList" />
+                <div class="page-wrapper">
+                    <div class="content">
+                        <PatientsTable Patients="PatientsList" />
+                    </div>
+                </div>
             </div>
             <div class="sidebar-overlay" data-reff=""></div>
-        }
+            }
     </Authorized>
 </AuthorizeView>
 
 @code { 
-    private bool IsLoading { get; set; } = true;
 
-    [Parameter]
-    public List<PatientInfo> PatientsList { get; set; } = new List<PatientInfo>();
-
-    protected override void OnInitialized()
-    {
-        IsLoading = false;
-    }
 }

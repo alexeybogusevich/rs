@@ -1,58 +1,51 @@
 ﻿@using KNU.RS.Logic.Models.Patient
+@inherits PatientsTableBase 
 
-<div class="page-wrapper">
-    <div class="content">
-        <div class="row">
-            <div class="col-sm-4 col-3">
-                <h4 class="page-title">Patients</h4>
-            </div>
-            <div class="col-sm-8 col-9 text-right m-b-20">
-                <a href="add-patient.html" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Add Patient</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-border table-striped custom-table datatable mb-0">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Age</th>
-                                <th>Address</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th class="text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><img width="28" height="28" src="assets/img/user.jpg" class="rounded-circle m-r-5" alt=""> Jennifer Robinson</td>
-                                <td>35</td>
-                                <td>1545 Dorsey Ln NE, Leland, NC, 28451</td>
-                                <td>(207) 808 8863</td>
-                                <td>jenniferrobinson@example.com</td>
-                                <td class="text-right">
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="edit-patient.html"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                        </div>
+<div class="row">
+    <div class="col-sm-4 col-3">
+        <h4 class="page-title">Пацієнти</h4>
+    </div>
+    <div class="col-sm-8 col-9 text-right m-b-20">
+        <a href="add-patient.html" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Додати</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-border table-striped custom-table datatable mb-0">
+                <thead>
+                    <tr>
+                        <th>Повне ім'я</th>
+                        <th>Вік</th>
+                        <th>Адреса</th>
+                        <th>Номер телефону</th>
+                        <th>Email</th>
+                        <th class="text-right">Дія</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var patient in Patients)
+                    {
+                        <tr>
+                            <td><img src="@GetPhotoURI(patient)" class="avatar" alt="" style="height:28px; width: 28px;"> @patient.ToString()</td>
+                            <td>@patient.Age</td>
+                            <td>@patient.Address</td>
+                            <td>@patient.PhoneNumber</td>
+                            <td>@patient.Email</td>
+                            <td class="text-right">
+                                <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" href="edit-patient.html"><i class="fa fa-pencil m-r-5"></i> Редагувати</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient"><i class="fa fa-trash-o m-r-5"></i> Видалити</a>
                                     </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
-
-@code {
-    private int Counter = 1;
-
-    [Parameter]
-    public List<PatientInfo> Patients { get; set; } = new List<PatientInfo>();
-}
