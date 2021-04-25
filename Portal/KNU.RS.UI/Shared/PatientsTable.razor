@@ -1,5 +1,5 @@
 ﻿@using KNU.RS.Logic.Models.Patient
-@inherits PatientsTableBase 
+@inherits PatientsTableBase
 
 <div class="row">
     <div class="col-sm-4 col-3">
@@ -24,10 +24,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var patient in Patients)
+                    @foreach (var patient in PatientsPage.Items)
                     {
                         <tr>
-                            <td><img src="@GetPhotoURI(patient)" class="avatar" alt="" style="height:28px; width: 28px;"> @patient.ToString()</td>
+                            <td><img width="28" height="28" class="rounded-circle" src="@GetPhotoURI(patient)" alt=""> @patient.ToString()</td>
                             <td>@patient.Age</td>
                             <td>@patient.Address</td>
                             <td>@patient.PhoneNumber</td>
@@ -47,5 +47,25 @@
             </table>
         </div>
     </div>
+</div>
+<div>
+    <ul class="pagination" style="justify-content: flex-end;">
+        <li class="page-item">
+            <a class="page-link" href="javascript:void(0)" aria-label="Previous" @onclick="() => GoToPage(1)">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Назад</span>
+            </a>
+        </li>
+        @foreach (var pageNo in AvailablePages)
+        {
+            <li class="page-item @(pageNo == PatientsPage.PageIndex ? "active" : string.Empty)"><a class="page-link" href="#" @onclick="() => GoToPage(pageNo)">@pageNo</a></li>
+        }
+        <li class="page-item">
+            <a class="page-link" href="javascript:void(0)" aria-label="Далі" @onclick="() => GoToPage(PatientsPage.TotalPages)">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Далі</span>
+            </a>
+        </li>
+    </ul>
 </div>
 
