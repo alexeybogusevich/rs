@@ -33,7 +33,8 @@ namespace KNU.RS.Logic.Converters
                 ClinicId = doctor.ClinicId,
                 ClinicName = doctor.Clinic?.Name,
                 ClinicAddress = doctor.Clinic?.Location,
-                ClinicPhoneNumber = doctor.Clinic?.PhoneNumber
+                ClinicPhoneNumber = doctor.Clinic?.PhoneNumber,
+                ClinicWorkingHours = doctor.Clinic?.WorkingHours
             };
         }
 

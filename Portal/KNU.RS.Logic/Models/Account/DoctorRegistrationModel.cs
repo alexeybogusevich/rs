@@ -16,6 +16,7 @@ namespace KNU.RS.Logic.Models.Account
         public string Biography { get; set; }
 
         [MaxLength(500, ErrorMessage = "Будь-ласка, введіть не більше, ніж 500 символів")]
+        [Required(ErrorMessage = "Будь-ласка, вкажіть професійні компетенції")]
         public string Competencies { get; set; }
 
         [MaxLength(100, ErrorMessage = "Будь-ласка, введіть не більше, ніж 100 символів")]

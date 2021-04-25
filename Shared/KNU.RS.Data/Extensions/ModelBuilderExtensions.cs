@@ -15,7 +15,8 @@ namespace KNU.RS.Data.Extensions
                     Id = new Guid("a6285a67-6f1b-4adb-8de1-ffb26050c36a"),
                     Name = "Військовий шпиталь",
                     Location = "вул. Госпітальна, 16",
-                    PhoneNumber = "044 521 8413"
+                    PhoneNumber = "044 521 8413",
+                    WorkingHours = "Пн.-Пт.: 8:00 - 18:00"
                 });
 
             modelBuilder.Entity<Qualification>().HasData(
