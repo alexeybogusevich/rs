@@ -1,7 +1,9 @@
 ﻿using KNU.RS.Data.Enums;
 using KNU.RS.Data.Models;
 using KNU.RS.Logic.Helpers;
+using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Models.Patient;
+using System;
 
 namespace KNU.RS.Logic.Converters
 {
@@ -36,6 +38,33 @@ namespace KNU.RS.Logic.Converters
                 Complaints = patient.Complaints,
                 Diagnosis = patient.Diagnosis,
                 RegistrationDate = patient.RegistrationDate
+            };
+        }
+
+        public static PatientRegistrationModel ConvertProfile(Patient patient)
+        {
+            return new PatientRegistrationModel
+            {
+                Address = patient.User?.Address,
+                Birthday = patient.User?.Birthday ?? DateTime.MinValue,
+                Email = patient.User?.Email,
+                FirstName = patient.User?.FirstName,
+                LastName = patient.User?.LastName,
+                MiddleName = patient.User?.MiddleName,
+                Gender = patient.User?.Gender ?? Gender.Male,
+                PhoneNumber = patient.User?.PhoneNumber,
+                Height = patient.Height,
+                Weight = patient.Weight,
+                MaritalStatus = patient.MaritalStatus,
+                EducationStatus = patient.EducationStatus,
+                Occupation = patient.Occupation,
+                Job = patient.Job,
+                Position = patient.Position,
+                HealthInsuranse = patient.HealthInsuranse,
+                HealthInsuranseCompany = patient.HealthInsuranseCompany,
+                Passport = patient.Passport,
+                Complaints = patient.Complaints,
+                Diagnosis = patient.Diagnosis
             };
         }
     }

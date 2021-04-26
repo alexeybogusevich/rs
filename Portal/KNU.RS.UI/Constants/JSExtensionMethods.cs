@@ -11,5 +11,6 @@
         public const string SetSelect2 = "blazorExtensions.SET_SELECT2";
         public const string SetOnChangeSelect2 = "blazorExtensions.ONCHANGE_SELECT2";
         public const string CloseSidebar = "blazorExtensions.RESET_SIDEBAR_OPENED";
+        public const string RefreshImage = "blazorExtensions.REFRESH_IMAGE";
     }
 }

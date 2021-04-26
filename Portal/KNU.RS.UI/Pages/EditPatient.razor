@@ -1,7 +1,7 @@
-﻿@page "/newpatient"
+﻿@page "/editpatient/{Id:guid}"
 @using KNU.RS.Data.Enums
 @using EnumsNET
-@inherits NewPatientBase
+@inherits EditPatientBase
 @attribute [Authorize]
 
 @if (IsLoading)
@@ -17,47 +17,47 @@ else
             <div class="content">
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2">
-                        <h4 class="page-title">Новий пацієнт</h4>
+                        <h4 class="page-title">Редагування пацієнта</h4>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-8 offset-lg-2">
-                        <EditForm Model="@RegistrationModel" OnValidSubmit="@SavePatientAsync">
+                        <EditForm Model="@EditModel" OnValidSubmit="@SavePatientAsync">
                             <DataAnnotationsValidator />
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Ім'я <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="RegistrationModel.FirstName" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => RegistrationModel.FirstName)" />
+                                        <InputText @bind-Value="EditModel.FirstName" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.FirstName)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Прізвище <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="RegistrationModel.LastName" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => RegistrationModel.LastName)" />
+                                        <InputText @bind-Value="EditModel.LastName" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.LastName)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>По-батькові <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="RegistrationModel.MiddleName" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => RegistrationModel.MiddleName)" />
+                                        <InputText @bind-Value="EditModel.MiddleName" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.MiddleName)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Email <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="RegistrationModel.Email" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => RegistrationModel.Email)" />
+                                        <InputText @bind-Value="EditModel.Email" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.Email)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Дата народження <span class="text-danger">*</span></label>
-                                        <InputDate @bind-Value="RegistrationModel.Birthday" class="form-control" />
-                                        <ValidationMessage For="@(() => RegistrationModel.Birthday)" />
+                                        <InputDate @bind-Value="EditModel.Birthday" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.Birthday)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -80,8 +80,8 @@ else
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Адреса <span class="text-danger">*</span></label>
-                                                <InputText @bind-Value="RegistrationModel.Address" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => RegistrationModel.Address)" />
+                                                <InputText @bind-Value="EditModel.Address" autofocus="" class="form-control" />
+                                                <ValidationMessage For="@(() => EditModel.Address)" />
                                             </div>
                                         </div>
                                     </div>
@@ -89,8 +89,8 @@ else
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Номер телефону <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="RegistrationModel.PhoneNumber" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => RegistrationModel.PhoneNumber)" />
+                                        <InputText @bind-Value="EditModel.PhoneNumber" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.PhoneNumber)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
@@ -109,54 +109,51 @@ else
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Зріст</label>
-                                        <InputNumber @bind-Value="RegistrationModel.Height" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => RegistrationModel.Height)" />
+                                        <InputNumber @bind-Value="EditModel.Height" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.Height)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Вага</label>
-                                        <InputNumber @bind-Value="RegistrationModel.Weight" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => RegistrationModel.Weight)" />
+                                        <InputNumber @bind-Value="EditModel.Weight" autofocus="" class="form-control" />
+                                        <ValidationMessage For="@(() => EditModel.Weight)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Сімейний стан <span class="text-danger">*</span></label>
                                         <select id="select-marital" class="form-control select" title="Оберіть зі списку">
-                                            <option selected disabled>Інформація відсутня</option>
                                             @foreach (var status in Enum.GetValues(typeof(MaritalStatus)))
                                             {
-                                                <option value="@((int)status)">@(((MaritalStatus)status).AsString(EnumFormat.Description))</option>
+                                                <option value="@((int)status)" selected="@(status.Equals(EditModel.MaritalStatus))">@(((MaritalStatus)status).AsString(EnumFormat.Description))</option>
                                             }
                                         </select>
-                                        <ValidationMessage For="@(() => RegistrationModel.MaritalStatus)" />
+                                        <ValidationMessage For="@(() => EditModel.MaritalStatus)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Освіта <span class="text-danger">*</span></label>
                                         <select id="select-education" class="form-control select" title="Оберіть зі списку">
-                                            <option selected disabled>Інформація відсутня</option>
                                             @foreach (var status in Enum.GetValues(typeof(EducationStatus)))
                                             {
-                                                <option value="@((int)status)">@(((EducationStatus)status).AsString(EnumFormat.Description))</option>
+                                                <option value="@((int)status)" selected="@(status.Equals(EditModel.EducationStatus))">@(((EducationStatus)status).AsString(EnumFormat.Description))</option>
                                             }
                                         </select>
-                                        <ValidationMessage For="@(() => RegistrationModel.EducationStatus)" />
+                                        <ValidationMessage For="@(() => EditModel.EducationStatus)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Зайнятість <span class="text-danger">*</span></label>
                                         <select id="select-occupation" class="form-control select" title="Оберіть зі списку">
-                                            <option selected disabled>Інформація відсутня</option>
                                             @foreach (var status in Enum.GetValues(typeof(Occupation)))
                                             {
-                                                <option value="@((int)status)">@(((Occupation)status).AsString(EnumFormat.Description))</option>
+                                                <option value="@((int)status)" selected="@(status.Equals(EditModel.Occupation))">@(((Occupation)status).AsString(EnumFormat.Description))</option>
                                             }
                                         </select>
-                                        <ValidationMessage For="@(() => RegistrationModel.Occupation)" />
+                                        <ValidationMessage For="@(() => EditModel.Occupation)" />
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
@@ -164,8 +161,8 @@ else
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Місце роботи</label>
-                                                <InputText @bind-Value="RegistrationModel.Job" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => RegistrationModel.Job)" />
+                                                <InputText @bind-Value="EditModel.Job" autofocus="" class="form-control" />
+                                                <ValidationMessage For="@(() => EditModel.Job)" />
                                             </div>
                                         </div>
                                     </div>
@@ -175,8 +172,8 @@ else
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Посада</label>
-                                                <InputText @bind-Value="RegistrationModel.Position" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => RegistrationModel.Position)" />
+                                                <InputText @bind-Value="EditModel.Position" autofocus="" class="form-control" />
+                                                <ValidationMessage For="@(() => EditModel.Position)" />
                                             </div>
                                         </div>
                                     </div>
@@ -186,8 +183,8 @@ else
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Поліс медичного страхування</label>
-                                                <InputText @bind-Value="RegistrationModel.HealthInsuranse" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => RegistrationModel.HealthInsuranse)" />
+                                                <InputText @bind-Value="EditModel.HealthInsuranse" autofocus="" class="form-control" />
+                                                <ValidationMessage For="@(() => EditModel.HealthInsuranse)" />
                                             </div>
                                         </div>
                                     </div>
@@ -197,8 +194,8 @@ else
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Назва страхової компанії</label>
-                                                <InputText @bind-Value="RegistrationModel.HealthInsuranseCompany" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => RegistrationModel.HealthInsuranseCompany)" />
+                                                <InputText @bind-Value="EditModel.HealthInsuranseCompany" autofocus="" class="form-control" />
+                                                <ValidationMessage For="@(() => EditModel.HealthInsuranseCompany)" />
                                             </div>
                                         </div>
                                     </div>
@@ -208,8 +205,8 @@ else
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Документ, що посвідчує особу</label>
-                                                <InputText @bind-Value="RegistrationModel.Passport" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => RegistrationModel.Passport)" />
+                                                <InputText @bind-Value="EditModel.Passport" autofocus="" class="form-control" />
+                                                <ValidationMessage For="@(() => EditModel.Passport)" />
                                             </div>
                                         </div>
                                     </div>
@@ -217,13 +214,13 @@ else
                             </div>
                             <div class="form-group">
                                 <label>Скарги</label>
-                                <InputTextArea @bind-Value="RegistrationModel.Complaints" autofocus="" class="form-control" rows="3" cols="30" />
-                                <ValidationMessage For="@(() => RegistrationModel.Complaints)" />
+                                <InputTextArea @bind-Value="EditModel.Complaints" autofocus="" class="form-control" rows="3" cols="30" />
+                                <ValidationMessage For="@(() => EditModel.Complaints)" />
                             </div>
                             <div class="form-group">
                                 <label>Діагноз</label>
-                                <InputTextArea @bind-Value="RegistrationModel.Diagnosis" autofocus="" class="form-control" rows="3" cols="30" />
-                                <ValidationMessage For="@(() => RegistrationModel.Diagnosis)" />
+                                <InputTextArea @bind-Value="EditModel.Diagnosis" autofocus="" class="form-control" rows="3" cols="30" />
+                                <ValidationMessage For="@(() => EditModel.Diagnosis)" />
                             </div>
                             <div class="m-t-20 text-center">
                                 <button class="btn btn-primary submit-btn">Зберегти</button>
@@ -241,32 +238,32 @@ else
 @code {
     private void ChangeGenderFemale()
     {
-        RegistrationModel.Gender = Data.Enums.Gender.Female;
+        EditModel.Gender = Data.Enums.Gender.Female;
     }
 
     private void ChangeGenderMale()
     {
-        RegistrationModel.Gender = Data.Enums.Gender.Male;
+        EditModel.Gender = Data.Enums.Gender.Male;
     }
 
     [JSInvokable("Select2_ChangeMaritalStatus")]
     public void ChangeMaritalStatus(string value)
     {
         var status = (MaritalStatus)int.Parse(value);
-        RegistrationModel.MaritalStatus = status;
+        EditModel.MaritalStatus = status;
     }
 
     [JSInvokable("Select2_ChangeEducationStatus")]
     public void ChangeEducationStatus(string value)
     {
         var status = (EducationStatus)int.Parse(value);
-        RegistrationModel.EducationStatus = status;
+        EditModel.EducationStatus = status;
     }
 
     [JSInvokable("Select2_ChangeOccupation")]
     public void ChangeOccupation(string value)
     {
         var status = (Occupation)int.Parse(value);
-        RegistrationModel.Occupation = status;
+        EditModel.Occupation = status;
     }
 }

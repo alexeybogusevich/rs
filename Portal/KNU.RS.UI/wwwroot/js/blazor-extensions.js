@@ -69,6 +69,16 @@
         $('html').removeClass('menu-opened');
         var $wrapper = $('.main-wrapper');
         $wrapper.removeClass('slide-nav');
+    },
+
+    REFRESH_IMAGE: function (imgElement, imgURL) {
+        var timestamp = new Date().getTime();
+
+        var el = document.getElementById(imgElement);   
+
+        var queryString = "?t=" + timestamp;
+
+        el.src = imgURL + queryString;
     }
 }
 

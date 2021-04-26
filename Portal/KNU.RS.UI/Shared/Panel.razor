@@ -51,16 +51,16 @@
                         <div class="table-responsive">
                             <table class="table mb-0 new-patient-table">
                                 <tbody>
-                                    <tr>
-                                        @foreach (var patient in Patients.Take(5))
-                                        {
+                                    @foreach (var patient in Patients.Take(5))
+                                    {
+                                        <tr>
                                             <td>
                                                 <img width="28" height="28" class="rounded-circle" src="img/user.jpg" alt="">
                                             </td>
                                             <td>@patient.ToString()</td>
                                             <td>@patient.Email</td>
-                                        }
-                                    </tr>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
