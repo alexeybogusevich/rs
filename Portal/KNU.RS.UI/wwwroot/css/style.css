@@ -894,6 +894,9 @@ textarea.form-control {
 	color: #009efb;
 	text-decoration: underline;
 }
+.sidebar-mobile-opened {
+	margin-left: 0;
+}
 .mobile-user-menu {
 	color: #fff;
 	display: none;
@@ -3228,6 +3231,10 @@ html.menu-opened body {
 	line-height: 80px;
 	margin: 0;
 	width: 80px;
+}
+.img-profile {
+	object-fit: cover;
+	background-color: transparent;
 }
 .doc-prof {
 	color: #777;

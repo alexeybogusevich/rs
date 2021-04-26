@@ -10,5 +10,6 @@
         public const string ClearAuthFailed = "blazorExtensions.CLEAR_AUTHN_FAILED";
         public const string SetSelect2 = "blazorExtensions.SET_SELECT2";
         public const string SetOnChangeSelect2 = "blazorExtensions.ONCHANGE_SELECT2";
+        public const string CloseSidebar = "blazorExtensions.RESET_SIDEBAR_OPENED";
     }
 }

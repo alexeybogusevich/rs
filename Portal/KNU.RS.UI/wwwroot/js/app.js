@@ -50,11 +50,19 @@ $(document).ready(function ($) {
 	// Mobile menu sidebar overlay
 	$(document).on('click', '#mobile_btn', function () {
 		var $target = $($(this).attr('href'));
-		console.log(this);
-		console.log($target);
 		sidebar_overlay($target);
 		$wrapper.toggleClass('slide-nav');
 		$('#chat_sidebar').removeClass('opened');
+		var sidebar = document.getElementById('sidebar');
+		if (sidebar.hasAttribute('style')) {
+			sidebar.removeAttribute('style');
+			$target.removeClass('opened');
+			$('html').removeClass('menu-opened');
+			$(this).removeClass('opened');
+			$wrapper.removeClass('slide-nav');
+		} else {
+			sidebar.setAttribute('style', 'margin-left: 0;');
+        }
 		return false;
 	});
 

@@ -61,6 +61,14 @@
         $('#' + id).on('select2:select', function (e) {
             dotnetHelper.invokeMethodAsync(nameFunc, $('#' + id).val());
         });
+    },
+
+    RESET_SIDEBAR_OPENED: function () {
+        document.getElementById('sidebar').removeAttribute('style');
+        $('#mobile_btn').removeClass('opened');
+        $('html').removeClass('menu-opened');
+        var $wrapper = $('.main-wrapper');
+        $wrapper.removeClass('slide-nav');
     }
 }
 

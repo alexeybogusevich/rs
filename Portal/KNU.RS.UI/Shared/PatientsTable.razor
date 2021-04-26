@@ -27,7 +27,7 @@
                     @foreach (var patient in PatientsPage.Items)
                     {
                         <tr>
-                            <td><img width="28" height="28" class="rounded-circle" src="@GetPhotoURI(patient)" alt=""> @patient.ToString()</td>
+                            <td><img width="28" height="28" class="rounded-circle img-profile" src="@GetPhotoURI(patient)" alt=""> @patient.ToString()</td>
                             <td>@patient.Age</td>
                             <td>@patient.Address</td>
                             <td>@patient.PhoneNumber</td>
