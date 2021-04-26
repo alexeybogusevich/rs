@@ -37,7 +37,7 @@
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="/editpatient/@patient.UserId"><i class="fa fa-pencil m-r-5"></i> Редагувати</a>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient"><i class="fa fa-trash-o m-r-5"></i> Видалити</a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_patient" @onclick="() => AssignPatientToDelete(patient)"><i class="fa fa-trash-o m-r-5"></i> Видалити</a>
                                     </div>
                                 </div>
                             </td>
@@ -67,5 +67,19 @@
             </a>
         </li>
     </ul>
+</div>
+<div id="delete_patient" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="img/sent.png" alt="" width="50" height="46">
+                <h3>Ви впевнені, що бажаєте видалити цього пацієнта з системи?</h3>
+                <div class="m-t-20">
+                    <a href="#" class="btn btn-white" data-dismiss="modal" @onclick="ClearPatientToDelete">Ні</a>
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal" @onclick="DeleteAsync">Так</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

@@ -1,15 +1,25 @@
 ﻿using KNU.RS.Logic.Collections;
 using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Models.Patient;
+using KNU.RS.Logic.Services.PhotoService;
+using KNU.RS.Logic.Services.UserService;
 using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
     public class PatientsTableBase : ComponentBase
     {
+        [Inject]
+        protected IPhotoService PhotoService { get; set; }
+
+        [Inject]
+        protected IUserService UserService { get; set; }
+
         [Inject]
         protected IOptions<PhotoConfiguration> Options { get; set; }
 
@@ -19,6 +29,7 @@ namespace KNU.RS.UI.Components
 
         protected PaginatedList<PatientInfo> PatientsPage { get; set; }
 
+        protected PatientInfo PatientToDelete { get; set; }
 
         protected int Counter = 1;
 
@@ -64,6 +75,39 @@ namespace KNU.RS.UI.Components
             }
 
             return "img/user.jpg";
+        }
+
+        protected void AssignPatientToDelete(PatientInfo patient)
+        {
+            PatientToDelete = patient;
+        }
+
+        protected void ClearPatientToDelete()
+        {
+            PatientToDelete = null;
+        }
+
+        protected async Task DeleteAsync()
+        {
+            if (PatientToDelete == null)
+            {
+                return;
+            }
+
+            if (PatientToDelete.HasPhoto)
+            {
+                PhotoService.DeleteAsync(PatientToDelete.UserId);
+            }
+
+            await UserService.DeleteAsync(PatientToDelete.UserId);
+
+            var deletedDoctor = Patients.FirstOrDefault(d => d.UserId.Equals(PatientToDelete.UserId));
+            Patients.Remove(deletedDoctor);
+
+            PatientsPage = PaginatedList<PatientInfo>.Create(Patients, PatientsPage.PageIndex, PageSize);
+            SetAvailablePages();
+
+            PatientToDelete = null;
         }
     }
 }

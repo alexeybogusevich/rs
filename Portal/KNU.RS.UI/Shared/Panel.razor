@@ -1,4 +1,5 @@
 ﻿@using KNU.RS.Logic.Models.Patient 
+@inherits PanelBase
 
 <div class="page-wrapper">
     <div class="content">
@@ -55,7 +56,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                <img width="28" height="28" class="rounded-circle" src="img/user.jpg" alt="">
+                                                <img width="28" height="28" class="rounded-circle" src="@GetPhotoURI(patient)" alt="">
                                             </td>
                                             <td>@patient.ToString()</td>
                                             <td>@patient.Email</td>
