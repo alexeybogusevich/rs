@@ -27,6 +27,15 @@ namespace KNU.RS.Logic.Services.PatientService
                 .ToListAsync();
         }
 
+        public async Task<PatientInfo> GetInfoAsync(Guid userId)
+        {
+            var patient = await context.Patients
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(d => d.UserId.Equals(userId));
+
+            return PatientConverter.Convert(patient);
+        }
+
         public async Task<Patient> GetAsync(Guid userId)
         {
             return await context.Patients

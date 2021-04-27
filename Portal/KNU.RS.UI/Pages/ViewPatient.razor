@@ -1,0 +1,44 @@
+﻿@page "/viewpatient/{Id:guid}"
+@using KNU.RS.Logic.Models.Patient
+@using KNU.RS.Logic.Services.PatientService
+
+@inject IPatientService patientService
+
+@inherits ViewPatientBase
+@attribute [Authorize]
+
+<Title value="Система реабілітації КНУ | Профіль пацієнта"></Title>
+
+<AuthorizeView Roles="Admin,Doctor,Patient">
+    <Authorized>
+        @if (IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <div class="main-wrapper">
+                <Header></Header>
+                <Sidebar></Sidebar>
+                <PatientProfile></PatientProfile>
+            </div>
+            <div class="sidebar-overlay" data-reff=""></div>
+        }
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    protected PatientInfo Patient { get; set; }
+
+    protected bool IsLoading { get; set; } = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsLoading = true;
+        Patient = await patientService.GetInfoAsync(Id);
+        IsLoading = false;
+    }
+}

@@ -1,0 +1,100 @@
+﻿@inherits PatientProfileBase
+
+<div class="page-wrapper">
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-7 col-6">
+                <h4 class="page-title">Пацієнт</h4>
+            </div>
+
+            <div class="col-sm-5 col-6 text-right m-b-30">
+                <a href="/editpatient/@Patient.UserId" class="btn btn-primary btn-rounded"><i class="fa fa-edit"></i> Редагувати</a>
+            </div>
+        </div>
+        <div class="card-box profile-header">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="profile-view">
+                        <div class="profile-patient">
+                            <div class="profile-img">
+                                <a href="#"><img class="avatar" src="@GetPhotoURI()" alt=""></a>
+                            </div>
+                        </div>
+                        <br>
+                        <h3 class="user-name m-t-0 mb-0" style="text-align:center;">Іванова Іванна Іванівна</h3>
+                        <div>
+                            <ul class="personal-info" style="text-align:center;">
+                                <li></li>
+                                <li>
+                                    <span class="text">Київ, Україна</span>
+                                </li>
+                                <li>
+                                    <span class="text">42</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-tabs">
+            <ul class="nav nav-tabs nav-tabs-bottom">
+                <li class="nav-item"><a class="nav-link active" href="#about-cont" data-toggle="tab">Інформація</a></li>
+                <li class="nav-item"><a class="nav-link" href="#bottom-tab2" data-toggle="tab">Обстеження</a></li>
+                <li class="nav-item"><a class="nav-link" href="#bottom-tab3" data-toggle="tab">Прогрес</a></li>
+                <li class="nav-item"><a class="nav-link" href="#bottom-tab4" data-toggle="tab">Вправи</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane show active" id="about-cont">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h3 class="card-title"></h3>
+                                <div class="experience-box">
+                                    x
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="bottom-tab2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h3 class="card-title">Біографія</h3>
+                                <div class="experience-box">
+                                    W
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="bottom-tab3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                Z
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="bottom-tab4">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <h5>
+                                            <strong>X</strong>
+                                        </h5>
+                                    </li>
+                                    <li class="text">Y</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

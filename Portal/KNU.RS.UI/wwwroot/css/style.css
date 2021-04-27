@@ -1713,6 +1713,10 @@ ul.chat-user-total li i.old-users {
 .profile-basic {
 	margin-left: 140px;
 }
+.profile-patient {
+	margin-left: 0;
+	margin-top: -90px;
+}
 .profile-img-wrap img {
 	width: 120px;
 	height: 120px;
