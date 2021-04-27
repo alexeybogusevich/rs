@@ -102,57 +102,6 @@ namespace KNU.RS.Logic.Services.AccountService
             await emailingService.SendEmailAsync(user, EmailType.Registration, password);
         }
 
-        public async Task EditAsync(PatientRegistrationModel model)
-        {
-            var user = await context.Users
-                .Include(u => u.Patient)
-                .FirstOrDefaultAsync(u => u.Email.Equals(model.Email));
-
-            var patient = user?.Patient;
-
-            if (user == null)
-            {
-                throw new ArgumentException($"Користувача не знайдено. Email: {model.Email}");
-            }
-            else if (patient == null)
-            {
-                throw new ArgumentException($"Користувач не є пацієнтом. Email: {model.Email}");
-            }
-            else
-            {
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.MiddleName = model.MiddleName;
-                user.Gender = model.Gender;
-                user.Address = model.Address;
-                user.PhoneNumber = model.PhoneNumber;
-                user.Birthday = model.Birthday;
-
-                patient.Weight = model.Weight;
-                patient.Height = model.Height;
-                patient.MaritalStatus = model.MaritalStatus;
-                patient.EducationStatus = model.EducationStatus;
-                patient.Occupation = model.Occupation;
-                patient.Job = model.Job;
-                patient.Position = model.Position;
-                patient.HealthInsuranse = model.HealthInsuranse;
-                patient.HealthInsuranseCompany = model.HealthInsuranseCompany;
-                patient.Passport = model.Passport;
-                patient.Complaints = model.Complaints;
-                patient.Diagnosis = model.Diagnosis;
-
-                var result = await userManager.UpdateAsync(user);
-            }
-
-            if (model.Photo != null)
-            {
-                user.HasPhoto = true;
-                await SetPhotoAsync(user, model.Photo);
-            }
-
-            await context.SaveChangesAsync();
-        }
-
         public async Task RegisterAsync(DoctorRegistrationModel model)
         {
             var user = await context.Users
@@ -214,6 +163,57 @@ namespace KNU.RS.Logic.Services.AccountService
             await emailingService.SendEmailAsync(user, EmailType.Registration, password);
         }
 
+        public async Task EditAsync(PatientRegistrationModel model)
+        {
+            var user = await context.Users
+                .Include(u => u.Patient)
+                .FirstOrDefaultAsync(u => u.Email.Equals(model.Email));
+
+            var patient = user?.Patient;
+
+            if (user == null)
+            {
+                throw new ArgumentException($"Користувача не знайдено. Email: {model.Email}");
+            }
+            else if (patient == null)
+            {
+                throw new ArgumentException($"Користувач не є пацієнтом. Email: {model.Email}");
+            }
+            else
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.MiddleName = model.MiddleName;
+                user.Gender = model.Gender;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Birthday = model.Birthday;
+
+                patient.Weight = model.Weight;
+                patient.Height = model.Height;
+                patient.MaritalStatus = model.MaritalStatus;
+                patient.EducationStatus = model.EducationStatus;
+                patient.Occupation = model.Occupation;
+                patient.Job = model.Job;
+                patient.Position = model.Position;
+                patient.HealthInsuranse = model.HealthInsuranse;
+                patient.HealthInsuranseCompany = model.HealthInsuranseCompany;
+                patient.Passport = model.Passport;
+                patient.Complaints = model.Complaints;
+                patient.Diagnosis = model.Diagnosis;
+
+                var result = await userManager.UpdateAsync(user);
+            }
+
+            if (model.Photo != null)
+            {
+                user.HasPhoto = true;
+                await SetPhotoAsync(user, model.Photo);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task EditAsync(DoctorRegistrationModel model)
         {
             var user = await context.Users
@@ -246,6 +246,37 @@ namespace KNU.RS.Logic.Services.AccountService
                 doctor.Competencies = model.Competencies;
                 doctor.Degree = model.Degree;
                 doctor.Room = model.Room;
+
+                var result = await userManager.UpdateAsync(user);
+            }
+
+            if (model.Photo != null)
+            {
+                user.HasPhoto = true;
+                await SetPhotoAsync(user, model.Photo);
+            }
+
+            await context.SaveChangesAsync();
+        }
+
+        public async Task EditAsync(RegistrationModel model)
+        {
+            var user = await context.Users
+                .FirstOrDefaultAsync(u => u.Email.Equals(model.Email));
+
+            if (user == null)
+            {
+                throw new ArgumentException($"Користувача не знайдено. Email: {model.Email}");
+            }
+            else
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.MiddleName = model.MiddleName;
+                user.Gender = model.Gender;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Birthday = model.Birthday;
 
                 var result = await userManager.UpdateAsync(user);
             }

@@ -22,11 +22,16 @@ namespace KNU.RS.Logic.Services.UserService
             this.userManager = userManager;
         }
 
+        public async Task<User> GetAsync(Guid id)
+        {
+            return await context.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
+        }
+
         public async Task<FooterInfo> GetFooterAsync(Guid id)
         {
             return await context.Users
                 .Where(u => u.Id.Equals(id))
-                .Select(u => UserConverter.Convert(u))
+                .Select(u => UserConverter.ConvertFooter(u))
                 .FirstOrDefaultAsync();
         }
 

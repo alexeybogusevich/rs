@@ -71,6 +71,8 @@ namespace KNU.RS.UI
             services.AddScoped<IUserService, BaseUserService>();
             services.AddScoped<IQualificationService, BaseQualificationService>();
 
+            services.AddHttpContextAccessor();
+
             services.Configure<EmailingConfiguration>
                 (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));
             services.Configure<PhotoConfiguration>
