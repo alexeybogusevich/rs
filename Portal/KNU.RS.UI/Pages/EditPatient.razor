@@ -10,228 +10,223 @@
 }
 else
 {
-    <div class="main-wrapper">
-        <Header></Header>
-        <Sidebar></Sidebar>
-        <div class="page-wrapper">
-            <div class="content">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2">
-                        <h4 class="page-title">Редагування пацієнта</h4>
-                    </div>
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <h4 class="page-title">Редагування пацієнта</h4>
                 </div>
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2">
-                        <EditForm Model="@EditModel" OnValidSubmit="@SavePatientAsync">
-                            <DataAnnotationsValidator />
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Ім'я <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="EditModel.FirstName" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => EditModel.FirstName)" />
+            </div>
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <EditForm Model="@EditModel" OnValidSubmit="@SavePatientAsync">
+                        <DataAnnotationsValidator />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Ім'я <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="EditModel.FirstName" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.FirstName)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Прізвище <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="EditModel.LastName" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.LastName)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>По-батькові <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="EditModel.MiddleName" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.MiddleName)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="EditModel.Email" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.Email)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Дата народження <span class="text-danger">*</span></label>
+                                    <InputDate @bind-Value="EditModel.Birthday" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.Birthday)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group gender-select">
+                                    <label class="gen-label">Стать: <span class="text-danger">*</span></label>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" name="gender" class="form-check-input" @onclick="@ChangeGenderMale" checked>Чоловіча
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" name="gender" class="form-check-input" @onclick="@ChangeGenderFemale">Жіноча
+                                        </label>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Прізвище <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="EditModel.LastName" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => EditModel.LastName)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>По-батькові <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="EditModel.MiddleName" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => EditModel.MiddleName)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Email <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="EditModel.Email" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => EditModel.Email)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Дата народження <span class="text-danger">*</span></label>
-                                        <InputDate @bind-Value="EditModel.Birthday" class="form-control" />
-                                        <ValidationMessage For="@(() => EditModel.Birthday)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group gender-select">
-                                        <label class="gen-label">Стать: <span class="text-danger">*</span></label>
-                                        <div class="form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="radio" name="gender" class="form-check-input" @onclick="@ChangeGenderMale" checked>Чоловіча
-                                            </label>
-                                        </div>
-                                        <div class="form-check-inline">
-                                            <label class="form-check-label">
-                                                <input type="radio" name="gender" class="form-check-input" @onclick="@ChangeGenderFemale">Жіноча
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Адреса <span class="text-danger">*</span></label>
-                                                <InputText @bind-Value="EditModel.Address" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => EditModel.Address)" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Номер телефону <span class="text-danger">*</span></label>
-                                        <InputText @bind-Value="EditModel.PhoneNumber" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => EditModel.PhoneNumber)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Фото</label>
-                                        <div class="profile-upload">
-                                            <div class="upload-img">
-                                                <img alt="" src="img/user.jpg">
-                                            </div>
-                                            <div class="upload-input">
-                                                <InputFile OnChange="@AssignPhotoAsync" autofocus="" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Зріст</label>
-                                        <InputNumber @bind-Value="EditModel.Height" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => EditModel.Height)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Вага</label>
-                                        <InputNumber @bind-Value="EditModel.Weight" autofocus="" class="form-control" />
-                                        <ValidationMessage For="@(() => EditModel.Weight)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Сімейний стан <span class="text-danger">*</span></label>
-                                        <select id="select-marital" class="form-control select" title="Оберіть зі списку">
-                                            @foreach (var status in Enum.GetValues(typeof(MaritalStatus)))
-                                            {
-                                                <option value="@((int)status)" selected="@(status.Equals(EditModel.MaritalStatus))">@(((MaritalStatus)status).AsString(EnumFormat.Description))</option>
-                                            }
-                                        </select>
-                                        <ValidationMessage For="@(() => EditModel.MaritalStatus)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Освіта <span class="text-danger">*</span></label>
-                                        <select id="select-education" class="form-control select" title="Оберіть зі списку">
-                                            @foreach (var status in Enum.GetValues(typeof(EducationStatus)))
-                                            {
-                                                <option value="@((int)status)" selected="@(status.Equals(EditModel.EducationStatus))">@(((EducationStatus)status).AsString(EnumFormat.Description))</option>
-                                            }
-                                        </select>
-                                        <ValidationMessage For="@(() => EditModel.EducationStatus)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <label>Зайнятість <span class="text-danger">*</span></label>
-                                        <select id="select-occupation" class="form-control select" title="Оберіть зі списку">
-                                            @foreach (var status in Enum.GetValues(typeof(Occupation)))
-                                            {
-                                                <option value="@((int)status)" selected="@(status.Equals(EditModel.Occupation))">@(((Occupation)status).AsString(EnumFormat.Description))</option>
-                                            }
-                                        </select>
-                                        <ValidationMessage For="@(() => EditModel.Occupation)" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Місце роботи</label>
-                                                <InputText @bind-Value="EditModel.Job" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => EditModel.Job)" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Посада</label>
-                                                <InputText @bind-Value="EditModel.Position" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => EditModel.Position)" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Поліс медичного страхування</label>
-                                                <InputText @bind-Value="EditModel.HealthInsuranse" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => EditModel.HealthInsuranse)" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Назва страхової компанії</label>
-                                                <InputText @bind-Value="EditModel.HealthInsuranseCompany" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => EditModel.HealthInsuranseCompany)" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <label>Документ, що посвідчує особу</label>
-                                                <InputText @bind-Value="EditModel.Passport" autofocus="" class="form-control" />
-                                                <ValidationMessage For="@(() => EditModel.Passport)" />
-                                            </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Адреса <span class="text-danger">*</span></label>
+                                            <InputText @bind-Value="EditModel.Address" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => EditModel.Address)" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Скарги</label>
-                                <InputTextArea @bind-Value="EditModel.Complaints" autofocus="" class="form-control" rows="3" cols="30" />
-                                <ValidationMessage For="@(() => EditModel.Complaints)" />
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Номер телефону <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="EditModel.PhoneNumber" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.PhoneNumber)" />
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Діагноз</label>
-                                <InputTextArea @bind-Value="EditModel.Diagnosis" autofocus="" class="form-control" rows="3" cols="30" />
-                                <ValidationMessage For="@(() => EditModel.Diagnosis)" />
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Фото</label>
+                                    <div class="profile-upload">
+                                        <div class="upload-img">
+                                            <img alt="" src="img/user.jpg">
+                                        </div>
+                                        <div class="upload-input">
+                                            <InputFile OnChange="@AssignPhotoAsync" autofocus="" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="m-t-20 text-center">
-                                <button class="btn btn-primary submit-btn">Зберегти</button>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Зріст</label>
+                                    <InputNumber @bind-Value="EditModel.Height" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.Height)" />
+                                </div>
                             </div>
-                        </EditForm>
-                    </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Вага</label>
+                                    <InputNumber @bind-Value="EditModel.Weight" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.Weight)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Сімейний стан <span class="text-danger">*</span></label>
+                                    <select id="select-marital" class="form-control select" title="Оберіть зі списку">
+                                        @foreach (var status in Enum.GetValues(typeof(MaritalStatus)))
+                                        {
+                                            <option value="@((int)status)" selected="@(status.Equals(EditModel.MaritalStatus))">@(((MaritalStatus)status).AsString(EnumFormat.Description))</option>
+                                        }
+                                    </select>
+                                    <ValidationMessage For="@(() => EditModel.MaritalStatus)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Освіта <span class="text-danger">*</span></label>
+                                    <select id="select-education" class="form-control select" title="Оберіть зі списку">
+                                        @foreach (var status in Enum.GetValues(typeof(EducationStatus)))
+                                        {
+                                            <option value="@((int)status)" selected="@(status.Equals(EditModel.EducationStatus))">@(((EducationStatus)status).AsString(EnumFormat.Description))</option>
+                                        }
+                                    </select>
+                                    <ValidationMessage For="@(() => EditModel.EducationStatus)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Зайнятість <span class="text-danger">*</span></label>
+                                    <select id="select-occupation" class="form-control select" title="Оберіть зі списку">
+                                        @foreach (var status in Enum.GetValues(typeof(Occupation)))
+                                        {
+                                            <option value="@((int)status)" selected="@(status.Equals(EditModel.Occupation))">@(((Occupation)status).AsString(EnumFormat.Description))</option>
+                                        }
+                                    </select>
+                                    <ValidationMessage For="@(() => EditModel.Occupation)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Місце роботи</label>
+                                            <InputText @bind-Value="EditModel.Job" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => EditModel.Job)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Посада</label>
+                                            <InputText @bind-Value="EditModel.Position" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => EditModel.Position)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Поліс медичного страхування</label>
+                                            <InputText @bind-Value="EditModel.HealthInsuranse" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => EditModel.HealthInsuranse)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Назва страхової компанії</label>
+                                            <InputText @bind-Value="EditModel.HealthInsuranseCompany" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => EditModel.HealthInsuranseCompany)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label>Документ, що посвідчує особу</label>
+                                            <InputText @bind-Value="EditModel.Passport" autofocus="" class="form-control" />
+                                            <ValidationMessage For="@(() => EditModel.Passport)" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Скарги</label>
+                            <InputTextArea @bind-Value="EditModel.Complaints" autofocus="" class="form-control" rows="3" cols="30" />
+                            <ValidationMessage For="@(() => EditModel.Complaints)" />
+                        </div>
+                        <div class="form-group">
+                            <label>Діагноз</label>
+                            <InputTextArea @bind-Value="EditModel.Diagnosis" autofocus="" class="form-control" rows="3" cols="30" />
+                            <ValidationMessage For="@(() => EditModel.Diagnosis)" />
+                        </div>
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary submit-btn">Зберегти</button>
+                        </div>
+                    </EditForm>
                 </div>
             </div>
         </div>
     </div>
-    <div class="sidebar-overlay" data-reff=""></div>
 }
 
 

@@ -2,8 +2,13 @@
 
 <AuthorizeView>
     <Authorized>
-        @Body
-    </Authorized>
+        <div class="main-wrapper">
+            <Header></Header>
+            <Sidebar></Sidebar>
+            @Body
+        </div>
+        <div class="sidebar-overlay" data-reff=""></div>
+</Authorized>
     <NotAuthorized>
         <RedirectToSignIn></RedirectToSignIn>
     </NotAuthorized>
