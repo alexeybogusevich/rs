@@ -46,8 +46,10 @@ namespace KNU.RS.Logic.Converters
         {
             return new FooterInfo
             {
+                Id = user.Id,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                HasPhoto = user.HasPhoto
             };
         }
     }
