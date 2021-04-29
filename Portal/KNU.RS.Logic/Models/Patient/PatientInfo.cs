@@ -6,6 +6,8 @@ namespace KNU.RS.Logic.Models.Patient
 {
     public class PatientInfo : UserInfo
     {
+        public Guid PatientId { get; set; }
+
         public decimal? Weight { get; set; }
         public decimal? Height { get; set; }
 

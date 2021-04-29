@@ -12,6 +12,7 @@ using KNU.RS.Logic.Services.JWTGenerator;
 using KNU.RS.Logic.Services.PasswordService;
 using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.Logic.Services.PhotoService;
+using KNU.RS.Logic.Services.StudyService;
 using KNU.RS.PlatformExtensions.Configuration;
 using KNU.RS.PlatformExtensions.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -60,6 +61,7 @@ namespace KNU.RS.API
             services.AddScoped<IAccountService, BaseAccountService>();
             services.AddScoped<IPatientService, BasePatientService>();
             services.AddScoped<IPhotoService, BasePhotoService>();
+            services.AddScoped<IStudyService, BaseStudyService>();
 
             services.Configure<EmailingConfiguration>
                 (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));

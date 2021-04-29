@@ -43,11 +43,13 @@ namespace KNU.RS.Logic.Services.PatientService
                 .FirstOrDefaultAsync(p => p.UserId.Equals(userId));
         }
 
-        public async Task<IEnumerable<PatientInfo>> GetInfoByDoctorAsync(Guid doctorId)
+        public async Task<IEnumerable<PatientInfo>> GetInfoByDoctorAsync(Guid userId)
         {
             return await context.Patients
                 .Include(p => p.User)
-                .Where(p => p.Doctors.Select(d => d.DoctorId).Contains(doctorId))
+                .Include(p => p.Doctors)
+                    .ThenInclude(d => d.Doctor)
+                .Where(p => p.Doctors.Select(d => d.Doctor.UserId).Contains(userId))
                 .Select(p => PatientConverter.Convert(p))
                 .ToListAsync();
         }

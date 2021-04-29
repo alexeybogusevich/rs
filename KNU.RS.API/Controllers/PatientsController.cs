@@ -5,14 +5,16 @@ using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.PatientService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace KNU.RS.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = RoleName.Patient)]
+    [Authorize(Roles = RoleName.Doctor)]
     public class PatientsController : ControllerBase
     {
         private readonly IPatientService patientService;
@@ -30,7 +32,14 @@ namespace KNU.RS.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<PatientInfo>), 200)]
         public async Task<ActionResult<IEnumerable<PatientInfo>>> GetAsync()
         {
-            var patients = await patientService.GetInfoAsync();
+            if (!Guid.TryParse(
+                HttpContext.User.FindFirstValue(ClaimTypes.Name),
+                out var userId))
+            {
+                return BadRequest();
+            }
+
+            var patients = await patientService.GetInfoByDoctorAsync(userId);
             return Ok(patients);
         }
 

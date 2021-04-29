@@ -14,6 +14,7 @@ namespace KNU.RS.Logic.Converters
             return new PatientInfo
             {
                 UserId = patient.UserId,
+                PatientId = patient.Id,
                 FirstName = patient.User?.FirstName,
                 LastName = patient.User?.LastName,
                 MiddleName = patient.User?.MiddleName,
