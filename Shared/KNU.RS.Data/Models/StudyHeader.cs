@@ -7,10 +7,6 @@ namespace KNU.RS.Data.Models
     {
         public Guid Id { get; set; }
 
-        public string Complaints { get; set; }
-        public string Diagnosis { get; set; }
-        public string Notes { get; set; }
-
         public DateTime DateTime { get; set; }
 
         public Guid DoctorPatientId { get; set; }

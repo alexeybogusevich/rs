@@ -50,6 +50,33 @@ namespace KNU.RS.Data.Extensions
                     Name = RoleName.Patient,
                     NormalizedName = RoleName.Patient.ToUpper()
                 });
+
+            modelBuilder.Entity<StudyType>().HasData(
+                new StudyType
+                {
+                    Id = new Guid("568342a7-cc8b-476d-a76b-f6519a9e2b42"),
+                    Name = "Обстеження шийного відділу"
+                });
+
+            modelBuilder.Entity<StudySubtype>().HasData(
+                new StudySubtype
+                {
+                    Id = new Guid("89e5b4be-aef1-4107-a7ed-32e05efb864b"),
+                    StudyTypeId = new Guid("568342a7-cc8b-476d-a76b-f6519a9e2b42"),
+                    Name = "Поворот по осі крену"
+                },
+                new StudySubtype
+                {
+                    Id = new Guid("b492fb11-5e11-4a4a-9ab9-575c9eaa1be6"),
+                    StudyTypeId = new Guid("568342a7-cc8b-476d-a76b-f6519a9e2b42"),
+                    Name = "Поворот по осі рискання"
+                },
+                new StudySubtype
+                {
+                    Id = new Guid("d785a91d-18ba-40f4-ad5a-c353ecf81bed"),
+                    StudyTypeId = new Guid("568342a7-cc8b-476d-a76b-f6519a9e2b42"),
+                    Name = "Поворот по осі тангажу"
+                });
         }
     }
 }

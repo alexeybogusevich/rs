@@ -4,14 +4,16 @@ using KNU.RS.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KNU.RS.Data.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210429165439_SimplifiedStudyHeader")]
+    partial class SimplifiedStudyHeader
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -284,21 +286,21 @@ namespace KNU.RS.Data.Migrations
                         new
                         {
                             Id = new Guid("7322ebe8-cfc4-4bd8-8cf9-67a9ceeae0a3"),
-                            ConcurrencyStamp = "4e8082ec-fbce-4eb8-95dd-eade06f47706",
+                            ConcurrencyStamp = "6d383ac4-bc51-4282-a243-ead2441e8bc8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("5ec23f46-4f31-457f-b9b7-16f4fb090ee3"),
-                            ConcurrencyStamp = "6ccd9114-77de-48f0-81c8-984bea147de9",
+                            ConcurrencyStamp = "d132a71b-d3cf-4e31-a428-fbbe957e1fa0",
                             Name = "Doctor",
                             NormalizedName = "DOCTOR"
                         },
                         new
                         {
                             Id = new Guid("c63e87f9-dee0-4ec5-911c-a8d2c591dc17"),
-                            ConcurrencyStamp = "ff328c51-6ecd-458e-b602-473fa508d5e8",
+                            ConcurrencyStamp = "2e63918c-3451-4056-8102-62de24c68cec",
                             Name = "Patient",
                             NormalizedName = "PATIENT"
                         });
@@ -367,26 +369,6 @@ namespace KNU.RS.Data.Migrations
                     b.HasIndex("StudyTypeId");
 
                     b.ToTable("StudySubtypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("89e5b4be-aef1-4107-a7ed-32e05efb864b"),
-                            Name = "Поворот по осі крену",
-                            StudyTypeId = new Guid("568342a7-cc8b-476d-a76b-f6519a9e2b42")
-                        },
-                        new
-                        {
-                            Id = new Guid("b492fb11-5e11-4a4a-9ab9-575c9eaa1be6"),
-                            Name = "Поворот по осі рискання",
-                            StudyTypeId = new Guid("568342a7-cc8b-476d-a76b-f6519a9e2b42")
-                        },
-                        new
-                        {
-                            Id = new Guid("d785a91d-18ba-40f4-ad5a-c353ecf81bed"),
-                            Name = "Поворот по осі тангажу",
-                            StudyTypeId = new Guid("568342a7-cc8b-476d-a76b-f6519a9e2b42")
-                        });
                 });
 
             modelBuilder.Entity("KNU.RS.Data.Models.StudyType", b =>
@@ -401,13 +383,6 @@ namespace KNU.RS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("StudyTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("568342a7-cc8b-476d-a76b-f6519a9e2b42"),
-                            Name = "Обстеження шийного відділу"
-                        });
                 });
 
             modelBuilder.Entity("KNU.RS.Data.Models.User", b =>
