@@ -31,6 +31,7 @@ namespace KNU.RS.API.Controllers
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<PatientInfo>), 200)]
+        [ProducesResponseType(typeof(string), 400)]
         public async Task<ActionResult<IEnumerable<PatientInfo>>> GetAsync()
         {
             if (!Guid.TryParse(
@@ -45,8 +46,8 @@ namespace KNU.RS.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(202)]
+        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
         public async Task<IActionResult> RegisterAsync([FromBody] PatientRegistrationModel registrationModel)
         {
             if (!ModelState.IsValid)

@@ -2,6 +2,7 @@
 using KNU.RS.Logic.Services.AuthenticationService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,8 +22,8 @@ namespace KNU.RS.API.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(string), 200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(401)]
+        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
+        [ProducesResponseType(typeof(string), 401)]
         public async Task<ActionResult<string>> LoginAsync([FromBody] LoginModel loginModel)
         {
             if (!ModelState.IsValid)
@@ -34,7 +35,7 @@ namespace KNU.RS.API.Controllers
 
             if (token == null)
             {
-                return Unauthorized();
+                return Unauthorized("Помилка аутентифікації.");
             }
 
             return Ok(token);

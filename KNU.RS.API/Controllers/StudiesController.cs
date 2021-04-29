@@ -32,8 +32,8 @@ namespace KNU.RS.API.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
         public async Task<ActionResult<StudyHeader>> SaveAsync([FromBody] StudyModel study)
         {
             if (!Guid.TryParse(
