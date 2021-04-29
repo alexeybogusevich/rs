@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -36,7 +37,7 @@ namespace KNU.RS.API.Controllers
                 HttpContext.User.FindFirstValue(ClaimTypes.Name),
                 out var userId))
             {
-                return BadRequest();
+                return BadRequest("Користувача не знайдено.");
             }
 
             var patients = await patientService.GetInfoByDoctorAsync(userId);
@@ -50,7 +51,7 @@ namespace KNU.RS.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState.Values.Select(v => v.Errors));
             }
 
             await registrationService.RegisterAsync(registrationModel);

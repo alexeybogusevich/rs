@@ -40,7 +40,7 @@ namespace KNU.RS.Logic.Services.StudyService
             return await context.StudyHeaders.CountAsync();
         }
 
-        public async Task SaveAsync(StudyModel study, Guid userId)
+        public async Task<StudyHeader> SaveAsync(StudyModel study, Guid userId)
         {
             var doctorPatient = await context.DoctorPatients
                 .Include(d => d.Doctor)
@@ -50,7 +50,7 @@ namespace KNU.RS.Logic.Services.StudyService
 
             if (doctorPatient == null)
             {
-                return;
+                return null;
             }
 
             var studyHeader = new StudyHeader
@@ -73,6 +73,8 @@ namespace KNU.RS.Logic.Services.StudyService
 
             await context.StudyDetails.AddRangeAsync(studyDetails);
             await context.SaveChangesAsync();
+
+            return studyHeader;
         }
     }
 }

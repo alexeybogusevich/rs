@@ -34,17 +34,22 @@ namespace KNU.RS.API.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> SaveAsync([FromBody] StudyModel study)
+        public async Task<ActionResult<StudyHeader>> SaveAsync([FromBody] StudyModel study)
         {
             if (!Guid.TryParse(
                 HttpContext.User.FindFirstValue(ClaimTypes.Name),
                 out var userId))
             {
-                return BadRequest();
+                return BadRequest("Користувача не знайдено.");
             }
 
-            await studyService.SaveAsync(study, userId);
-            return Ok();
+            var studyHeader = await studyService.SaveAsync(study, userId);
+            if (studyHeader == null)
+            {
+                return BadRequest("Вказаного пацієнта не закріплено за лікарем.");
+            }
+
+            return Ok($"Результат збережено. Запис від {studyHeader.DateTime:dd.MM.yyyy HH:mm:ss}");
         }
     }
 }

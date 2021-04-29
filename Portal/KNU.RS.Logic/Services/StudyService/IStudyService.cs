@@ -11,6 +11,6 @@ namespace KNU.RS.Logic.Services.StudyService
         Task<IEnumerable<StudyInfo>> GetInfoAsync(Guid patientId);
         Task<IEnumerable<StudySubtype>> GetSubtypesAsync();
         Task<int> GetCountAsync();
-        Task SaveAsync(StudyModel study, Guid doctorId);
+        Task<StudyHeader> SaveAsync(StudyModel study, Guid userId);
     }
 }

@@ -2,6 +2,7 @@
 using KNU.RS.Logic.Services.AuthenticationService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace KNU.RS.API.Controllers
@@ -26,7 +27,7 @@ namespace KNU.RS.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState.Values.Select(v => v.Errors));
             }
 
             var token = await authenticationService.AuthenticateAsync(loginModel);
