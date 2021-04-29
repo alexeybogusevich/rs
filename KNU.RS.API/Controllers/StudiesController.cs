@@ -25,6 +25,7 @@ namespace KNU.RS.API.Controllers
 
         [HttpGet("subtypes")]
         [ProducesResponseType(typeof(IEnumerable<StudySubtype>), 200)]
+        [ResponseCache(Duration = 3600)]
         public async Task<ActionResult<StudySubtype>> GetTypesAsync()
         {
             var subtypes = await studyService.GetSubtypesAsync();

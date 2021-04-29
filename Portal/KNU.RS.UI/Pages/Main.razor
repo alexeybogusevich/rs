@@ -1,6 +1,7 @@
 ﻿@page "/main"
 @using KNU.RS.Logic.Models.Patient
 @using KNU.RS.Logic.Models.Doctor
+@using KNU.RS.Logic.Models.Study
 @using KNU.RS.Logic.Services.PatientService
 @using KNU.RS.Logic.Services.DoctorService
 @using KNU.RS.Logic.Services.StudyService
@@ -19,7 +20,7 @@
 }
 else
 {
-    <Panel Patients="Patients" NumberOfDoctors="Doctors.Count()" NumberOfStudies="StudyCount"></Panel>
+    <Panel Patients="Patients" NumberOfDoctors="Doctors.Count()" Studies="Studies"></Panel>
 }
 
 @code {
@@ -27,7 +28,7 @@ else
 
     private List<PatientInfo> Patients { get; set; } = new List<PatientInfo>();
     private List<DoctorInfo> Doctors { get; set; } = new List<DoctorInfo>();
-    private int StudyCount { get; set; } = 0;
+    private List<StudyInfo> Studies { get; set; } = new List<StudyInfo>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,9 +36,10 @@ else
 
         var patients = await patientService.GetInfoAsync();
         var doctors = await doctorService.GetInfoAsync();
+        var studies = await studyService.GetInfoAsync();
 
-        StudyCount = await studyService.GetCountAsync();
-        Patients = patients?.ToList();
+        Studies = studies?.ToList();
+        Patients = patients?.OrderByDescending(p => p.RegistrationDate)?.ToList();
         Doctors = doctors?.ToList();
 
         IsLoading = false;

@@ -11,6 +11,7 @@ namespace KNU.RS.Logic.Converters
             return new StudyInfo
             {
                 Id = studyHeader.Id,
+                DateTime = studyHeader.DateTime,
                 StudyTypeId = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.StudyTypeId,
                 StudyTypeName = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.StudyType?.Name,
                 StudySubtypeId = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtypeId,

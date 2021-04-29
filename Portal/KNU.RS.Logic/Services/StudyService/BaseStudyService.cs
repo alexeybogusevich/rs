@@ -19,6 +19,16 @@ namespace KNU.RS.Logic.Services.StudyService
             this.context = context;
         }
 
+        public async Task<IEnumerable<StudyInfo>> GetInfoAsync()
+        {
+            return await context.StudyHeaders
+                .Include(s => s.StudyDetails)
+                    .ThenInclude(s => s.StudySubtype)
+                        .ThenInclude(s => s.StudyType)
+                .Select(s => StudyConverter.Convert(s))
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<StudyInfo>> GetInfoAsync(Guid patientId)
         {
             return await context.StudyHeaders

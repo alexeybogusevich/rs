@@ -6,9 +6,7 @@ namespace KNU.RS.Logic.Models.Study
     {
         public Guid Id { get; set; }
 
-        public string Complaints { get; set; }
-        public string Diagnosis { get; set; }
-        public string Notes { get; set; }
+        public DateTime DateTime { get; set; }
 
         public Guid? StudyTypeId { get; set; }
         public string StudyTypeName { get; set; }

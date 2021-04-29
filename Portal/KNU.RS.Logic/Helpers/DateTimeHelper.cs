@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace KNU.RS.Logic.Helpers
 {
@@ -15,6 +16,11 @@ namespace KNU.RS.Logic.Helpers
             }
 
             return age;
+        }
+
+        public static string GetLocalMonthName(int month, CultureInfo cultureInfo)
+        {
+            return cultureInfo.DateTimeFormat.GetMonthName(month);
         }
     }
 }

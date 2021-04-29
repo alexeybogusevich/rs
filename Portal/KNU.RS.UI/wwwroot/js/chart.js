@@ -1,5 +1,5 @@
 window.chartExtensions = {
-	FILL_CHART: function (labels, data) {
+	FILL_BARCHART: function (labels, data) {
 		var barChartData = {
 			labels: labels,
 			datasets: [{
@@ -19,6 +19,33 @@ window.chartExtensions = {
 				responsive: true,
 				legend: {
 					display: false,
+				}
+			}
+		});
+	},
+
+	FILL_LINECHART: function (groupedStudies) {
+		var lineChartData = {
+			labels: groupedStudies.Date,
+			datasets: [{
+				label: "Зареєстровано",
+				backgroundColor: "rgba(0, 158, 251, 0.5)",
+				data: groupedStudies.Count
+			}]
+		};
+
+		var linectx = document.getElementById('linegraph').getContext('2d');
+		window.myLine = new Chart(linectx, {
+			type: 'line',
+			data: lineChartData,
+			options: {
+				responsive: true,
+				legend: {
+					display: false,
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
 				}
 			}
 		});

@@ -1,5 +1,4 @@
-﻿@using KNU.RS.Logic.Models.Patient 
-@inherits PanelBase
+﻿@inherits PanelBase
 
 <div class="page-wrapper">
     <div class="content">
@@ -17,7 +16,7 @@
                 <div class="dash-widget">
                     <span class="dash-widget-bg2"><i class="fa fa-user-o"></i></span>
                     <div class="dash-widget-info text-right">
-                        <h3>@Patients.Count()</h3>
+                        <h3>@Patients?.Count</h3>
                         <span class="widget-title2">Пацієнти <i class="fa fa-check" aria-hidden="true"></i></span>
                     </div>
                 </div>
@@ -26,7 +25,7 @@
                 <div class="dash-widget">
                     <span class="dash-widget-bg4"><i class="fa fa-heartbeat" aria-hidden="true"></i></span>
                     <div class="dash-widget-info text-right">
-                        <h3>@NumberOfStudies</h3>
+                        <h3>@Studies?.Count</h3>
                         <span class="widget-title4">Обстеження <i class="fa fa-check" aria-hidden="true"></i></span>
                     </div>
                 </div>
@@ -39,7 +38,7 @@
                         <div class="chart-title">
                             <h4>Обстеження</h4>
                         </div>
-                        <canvas id="bargraph"></canvas>
+                        <canvas id="linegraph"></canvas>
                     </div>
                 </div>
             </div>
@@ -59,7 +58,7 @@
                                                 <img width="28" height="28" class="rounded-circle" src="@GetPhotoURI(patient)" alt="">
                                             </td>
                                             <td>@patient.ToString()</td>
-                                            <td>@patient.Email</td>
+                                            <td>Зареєстровано @patient.RegistrationDate.ToString("dd.MM.yyyy HH:mm")</td>
                                         </tr>
                                     }
                                 </tbody>
@@ -71,14 +70,3 @@
         </div>
     </div>
 </div>
-
-@code {
-    [Parameter]
-    public List<PatientInfo> Patients { get; set; } = new List<PatientInfo>();
-
-    [Parameter]
-    public int NumberOfStudies { get; set; }
-
-    [Parameter]
-    public int NumberOfDoctors { get; set; }
-}
