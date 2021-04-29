@@ -1,4 +1,7 @@
-﻿@inherits PatientProfileBase
+﻿@using KNU.RS.Data.Enums
+@using EnumsNET
+
+@inherits PatientProfileBase
 
 <div class="page-wrapper">
     <div class="content">
@@ -6,9 +9,8 @@
             <div class="col-sm-7 col-6">
                 <h4 class="page-title">Пацієнт</h4>
             </div>
-
-            <div class="col-sm-5 col-6 text-right m-b-30">
-                <a href="/editpatient/@Patient.UserId" class="btn btn-primary btn-rounded"><i class="fa fa-edit"></i> Редагувати</a>
+            <div class="col-sm-5 col-6 text-right m-b-20 super-btn">
+                <a href="/editpatient/@Patient.UserId" class="btn btn-primary btn-rounded float-right"><i class="fa fa-edit"></i> Редагувати</a>
             </div>
         </div>
         <div class="card-box profile-header">
@@ -17,20 +19,14 @@
                     <div class="profile-view">
                         <div class="profile-patient">
                             <div class="profile-img">
-                                <a href="#"><img class="avatar" src="@GetPhotoURI()" alt=""></a>
+                                <a href="#"><img class="avatar" src="@GetPhotoURI()" alt="" style="object-fit:cover;"></a>
                             </div>
                         </div>
                         <br>
-                        <h3 class="user-name m-t-0 mb-0" style="text-align:center;">Іванова Іванна Іванівна</h3>
+                        <h3 class="user-name m-t-0 mb-0" style="text-align:center;">@Patient.ToString()</h3>
                         <div>
                             <ul class="personal-info" style="text-align:center;">
                                 <li></li>
-                                <li>
-                                    <span class="text">Київ, Україна</span>
-                                </li>
-                                <li>
-                                    <span class="text">42</span>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -49,9 +45,194 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-box">
-                                <h3 class="card-title"></h3>
+                                <h3 class="card-title">Основні відомості</h3>
                                 <div class="experience-box">
-                                    x
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Стать:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@(Patient.Gender.Equals(Gender.Male) ? "Чоловіча" : "Жіноча")</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Дата народження:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@Patient.FormattedBirthday</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Вага:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@Patient.Weight</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6" style="width:100%">
+                                                    <span class="title">Зріст:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@Patient.Height</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Сімейний стан:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@(((MaritalStatus)Patient.MaritalStatus).AsString(EnumFormat.Description))</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Освіта:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@(((EducationStatus)Patient.EducationStatus).AsString(EnumFormat.Description))</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Зайнятість:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@(((Occupation)Patient.Occupation).AsString(EnumFormat.Description))</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Місце роботи:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@Patient.Job</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Посада:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@Patient.Position</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Номер полісу медичного страхування:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@Patient.HealthInsuranse</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Назва компанії медичного страхування:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@Patient.HealthInsuranseCompany</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%">Документ, що посвідчує особу:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%">@Patient.Passport</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-box">
+                                <h3 class="card-title">Контакти</h3>
+                                <div class="experience-box">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%;">Телефон:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%;"><a href="#">@Patient.PhoneNumber</a></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title" style="width:100%;">Email:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text" style="width:100%;"><a href="#">@Patient.Email</a></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <span class="title">Адреса:</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="text">@Patient.Address</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-box">
+                                <h3 class="card-title">Вади</h3>
+                                <div class="experience-box">
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <span class="title">Скарги:</span>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <span class="text">@Patient.Complaints</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <span class="title">Діагноз:</span>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <span class="text">@Patient.Diagnosis</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +242,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-box">
-                                <h3 class="card-title">Біографія</h3>
+                                <h3 class="card-title">Обстеження</h3>
                                 <div class="experience-box">
                                     W
                                 </div>
@@ -73,7 +254,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-box">
-                                Z
+                                <h3 class="card-title">Прогрес</h3>
+                                <div class="experience-box">
+                                    W
+                                </div>
                             </div>
                         </div>
                     </div>

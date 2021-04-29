@@ -12,5 +12,10 @@
         public const string SetOnChangeSelect2 = "blazorExtensions.ONCHANGE_SELECT2";
         public const string CloseSidebar = "blazorExtensions.RESET_SIDEBAR_OPENED";
         public const string RefreshImage = "blazorExtensions.REFRESH_IMAGE";
+        public const string SetChangePasswordCurrentFailed = "blazorExtensions.SET_CHANGE_PASSWORD_CURRENT_FAILED";
+        public const string ClearChangePasswordCurrentFailed = "blazorExtensions.CLEAR_CHANGE_PASSWORD_CURRENT_FAILED";
+        public const string SetChangePasswordConfirmFailed = "blazorExtensions.SET_CHANGE_PASSWORD_CONFIRM_FAILED";
+        public const string ClearChangePasswordConfirmFailed = "blazorExtensions.CLEAR_CHANGE_PASSWORD_CONFIRM_FAILED";
+        public const string ToggleModal = "blazorExtensions.TOGGLE_MODAL";
     }
 }

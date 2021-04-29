@@ -11,6 +11,22 @@
         document.getElementById('account-password-input').style.borderColor = null;
     },
 
+    SET_CHANGE_PASSWORD_CURRENT_FAILED: function () {
+        document.getElementById('changepassword-error-current').style.display = 'block';
+    },
+
+    CLEAR_CHANGE_PASSWORD_CURRENT_FAILED: function () {
+        document.getElementById('changepassword-error-current').style.display = 'none';
+    },
+
+    SET_CHANGE_PASSWORD_CONFIRM_FAILED: function () {
+        document.getElementById('changepassword-error-confirm').style.display = 'block';
+    },
+
+    CLEAR_CHANGE_PASSWORD_CONFIRM_FAILED: function () {
+        document.getElementById('changepassword-error-confirm').style.display = 'none';
+    },
+
     DISABLE_LOGIN_BUTTON: function () {
         document.getElementById('login-submit-button').disabled = true;
     },
@@ -79,6 +95,10 @@
         var queryString = "?t=" + timestamp;
 
         el.src = imgURL + queryString;
+    },
+
+    TOGGLE_MODAL: function (modalId) {
+        $('#' + modalId).modal('toggle');
     }
 }
 
