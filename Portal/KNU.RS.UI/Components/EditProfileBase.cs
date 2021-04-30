@@ -51,25 +51,11 @@ namespace KNU.RS.UI.Components
 
         protected async Task SaveUserAsync()
         {
-            var validPhoneNumber = await JsRuntime.InvokeAsync<bool>(
-                JSExtensionMethods.CheckPhoneNumber, EditModel.PhoneNumber);
-
-            if (!validPhoneNumber)
-            {
-                await JsRuntime.InvokeVoidAsync(JSExtensionMethods.SetInvalidPhoneNumber);
-                return;
-            }
-
             IsLoading = true;
             await AccountService.EditAsync(EditModel);
             IsLoading = false;
 
             NavigationManager.NavigateTo("/main");
-        }
-
-        protected async Task ClearInvalidPhoneNumber()
-        {
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ClearInvalidPhoneNumber);
         }
 
         protected override async Task OnInitializedAsync()

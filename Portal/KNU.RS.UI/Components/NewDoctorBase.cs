@@ -52,15 +52,6 @@ namespace KNU.RS.UI.Components
 
         protected async Task SaveDoctorAsync()
         {
-            var validPhoneNumber = await JsRuntime.InvokeAsync<bool>(
-                JSExtensionMethods.CheckPhoneNumber, RegistrationModel.PhoneNumber);
-
-            if (!validPhoneNumber)
-            {
-                await JsRuntime.InvokeVoidAsync(JSExtensionMethods.SetInvalidPhoneNumber);
-                return;
-            }
-
             IsLoading = true;
             await AccountService.RegisterAsync(RegistrationModel);
             IsLoading = false;
@@ -74,11 +65,6 @@ namespace KNU.RS.UI.Components
             Qualifications = await QualificationService.GetAsync();
             Clinics = await ClinicService.GetAsync();
             IsLoading = false;
-        }
-
-        protected async Task ClearInvalidPhoneNumber()
-        {
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ClearInvalidPhoneNumber);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

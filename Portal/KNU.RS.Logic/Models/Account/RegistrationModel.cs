@@ -36,6 +36,7 @@ namespace KNU.RS.Logic.Models.Account
 
         [Required(ErrorMessage = "Будь-ласка, вкажіть номер телефону")]
         [Phone(ErrorMessage = "Будь-ласка, введіть валідний номер телефону")]
+        [ValidPhoneNumber(ErrorMessage = "Будь-ласка, введіть валідний номер телефону")]
         public string PhoneNumber { get; set; }
 
         public byte[] Photo { get; set; }

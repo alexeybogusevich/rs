@@ -43,25 +43,11 @@ namespace KNU.RS.UI.Components
 
         protected async Task SavePatientAsync()
         {
-            var validPhoneNumber = await JsRuntime.InvokeAsync<bool>(
-                JSExtensionMethods.CheckPhoneNumber, RegistrationModel.PhoneNumber);
-
-            if (!validPhoneNumber)
-            {
-                await JsRuntime.InvokeVoidAsync(JSExtensionMethods.SetInvalidPhoneNumber);
-                return;
-            }
-
             IsLoading = true;
             await AccountService.RegisterAsync(RegistrationModel);
             IsLoading = false;
             
             NavigationManager.NavigateTo("/patients");
-        }
-
-        protected async Task ClearInvalidPhoneNumber()
-        {
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ClearInvalidPhoneNumber);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
