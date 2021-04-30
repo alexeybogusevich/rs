@@ -24,17 +24,26 @@ window.chartExtensions = {
 		});
 	},
 
-	FILL_LINECHART: function (groupedStudies) {
+	FILL_LINECHART: function (months, studyCounts, label) {
+
+		console.log(months);
+		console.log(studyCounts);
+
 		var lineChartData = {
-			labels: groupedStudies.Date,
+			labels: months,
 			datasets: [{
-				label: "Зареєстровано",
+				label: label,
 				backgroundColor: "rgba(0, 158, 251, 0.5)",
-				data: groupedStudies.Count
+				data: studyCounts
 			}]
 		};
 
+		console.log(lineChartData);
+
 		var linectx = document.getElementById('linegraph').getContext('2d');
+
+		console.log(linectx);
+
 		window.myLine = new Chart(linectx, {
 			type: 'line',
 			data: lineChartData,
@@ -46,6 +55,14 @@ window.chartExtensions = {
 				tooltips: {
 					mode: 'index',
 					intersect: false,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true,
+							callback: function (value) { if (value % 1 === 0) { return value; } }
+						}
+					}]
 				}
 			}
 		});

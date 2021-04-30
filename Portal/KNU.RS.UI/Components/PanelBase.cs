@@ -40,18 +40,21 @@ namespace KNU.RS.UI.Components
             return "img/user.jpg";
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             var cultureInfo = CultureInfo.CurrentCulture;
             var groupedStudies = Studies
                 .GroupBy(s => (s.DateTime.Year, s.DateTime.Month))
-                .OrderByDescending(g => g.Key.Year).ThenByDescending(g => g.Key.Month)
+                .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
                 .Take(12)
                 .Select(g => new { 
                     Date = $"{DateTimeHelper.GetLocalMonthName(g.Key.Month, cultureInfo)} {g.Key.Year}", 
-                    Count = g.Count() }).ToList();
+                    Count = g.Count() });
 
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.FillLinechart, groupedStudies);
+            var months = groupedStudies.Select(s => s.Date).ToList();
+            var studyCounts = groupedStudies.Select(s => s.Count).ToList();
+
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.FillLinechart, months, studyCounts, "Проведено");
         }
     }
 }
