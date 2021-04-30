@@ -86,8 +86,11 @@ else
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Номер телефону <span class="text-danger">*</span></label>
-                                    <InputText @bind-Value="EditModel.PhoneNumber" autofocus="" class="form-control" />
+                                    <InputText @bind-Value="EditModel.PhoneNumber" autofocus="" class="form-control" @oninput="ClearInvalidPhoneNumber"/>
                                     <ValidationMessage For="@(() => EditModel.PhoneNumber)" />
+                                    <div class="col-sm-12 login-error" id="phonenumber-error">
+                                        Будь-ласка, вкажіть валідний номер телефону у форматі +380.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-sm-6">

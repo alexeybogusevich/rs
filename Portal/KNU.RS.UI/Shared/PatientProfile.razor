@@ -19,7 +19,7 @@
                     <div class="profile-view">
                         <div class="profile-patient">
                             <div class="profile-img">
-                                <a href="#"><img class="avatar" src="@GetPhotoURI()" alt="" style="object-fit:cover;"></a>
+                                <a href="javascript:void(0)"><img class="avatar" src="@GetPhotoURI()" alt="" style="object-fit:cover;"></a>
                             </div>
                         </div>
                         <br>
@@ -181,7 +181,7 @@
                                                     <span class="title" style="width:100%;">Телефон:</span>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <span class="text" style="width:100%;"><a href="#">@Patient.PhoneNumber</a></span>
+                                                    <span class="text" style="width:100%;"><a href="javascript:void(0)">@Patient.PhoneNumber</a></span>
                                                 </div>
                                             </div>
                                         </li>
@@ -191,7 +191,7 @@
                                                     <span class="title" style="width:100%;">Email:</span>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <span class="text" style="width:100%;"><a href="#">@Patient.Email</a></span>
+                                                    <span class="text" style="width:100%;"><a href="javascript:void(0)">@Patient.Email</a></span>
                                                 </div>
                                             </div>
                                         </li>
@@ -239,33 +239,56 @@
                     </div>
                 </div>
                 <div class="tab-pane" id="bottom-tab2">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card-box">
-                                <h3 class="card-title">Обстеження</h3>
-                                <div class="experience-box">
-                                    W
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="bottom-tab3">
-                    <div class="row">
-                        @foreach (var studiesOfSubtype in Studies.GroupBy(s => new { s.SerialNumber, s.StudySubtypeName, s.StudyTypeName}))
+                    @if (IsLoading)
+                    {
+                        <div class="spinner"></div>
+                    }
+                    else
+                    {
+                        @if (Studies.Count() > 0)
                         {
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="chart-title">
-                                            <h4>@($"{studiesOfSubtype.Key.StudyTypeName} : {studiesOfSubtype.Key.StudySubtypeName}")</h4>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card-box">
+                                        <div class="experience-box">
+                                            <StudiesTable Studies="Studies"></StudiesTable>
                                         </div>
-                                        <canvas id="@($"studylinegraph{studiesOfSubtype.Key.SerialNumber}")"></canvas>
                                     </div>
                                 </div>
                             </div>
                         }
-                    </div>
+                    }
+                </div>
+                <div class="tab-pane" id="bottom-tab3">
+                    @if (IsLoading)
+                    {
+                        <div class="spinner"></div>
+                    }
+                    else
+                    {
+                        @if (Studies.Count() > 1)
+                        {
+                            <div class="row">
+                                @foreach (var studiesOfSubtype in StudyDetails.GroupBy(s => new { s.SerialNumber, s.StudySubtypeName, s.StudyTypeName }))
+                                {
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="chart-title">
+                                                    <h4>@($"{studiesOfSubtype.Key.StudyTypeName} : {studiesOfSubtype.Key.StudySubtypeName}")</h4>
+                                                </div>
+                                                <canvas id="@($"studylinegraph{studiesOfSubtype.Key.SerialNumber}")"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <h5>Необхідно провести принаймні два дослідження для відображення інформації про прогрес.</h5>
+                        }
+                    }
                 </div>
                 <div class="tab-pane" id="bottom-tab4">
                     <div class="row">

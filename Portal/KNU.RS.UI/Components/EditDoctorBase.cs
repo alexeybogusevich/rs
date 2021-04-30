@@ -63,6 +63,15 @@ namespace KNU.RS.UI.Components
 
         protected async Task SaveDoctorAsync()
         {
+            var validPhoneNumber = await JsRuntime.InvokeAsync<bool>(
+                JSExtensionMethods.CheckPhoneNumber, EditModel.PhoneNumber);
+
+            if (!validPhoneNumber)
+            {
+                await JsRuntime.InvokeVoidAsync(JSExtensionMethods.SetInvalidPhoneNumber);
+                return;
+            }
+
             IsLoading = true;
             await AccountService.EditAsync(EditModel);
             IsLoading = false;
@@ -82,6 +91,11 @@ namespace KNU.RS.UI.Components
             IsMaleGender = EditModel.Gender.Equals(Gender.Male);
 
             IsLoading = false;
+        }
+
+        protected async Task ClearInvalidPhoneNumber()
+        {
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ClearInvalidPhoneNumber);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

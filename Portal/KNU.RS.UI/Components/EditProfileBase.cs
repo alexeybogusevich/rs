@@ -4,6 +4,7 @@ using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.Logic.Services.UserService;
+using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
@@ -50,11 +51,25 @@ namespace KNU.RS.UI.Components
 
         protected async Task SaveUserAsync()
         {
+            var validPhoneNumber = await JsRuntime.InvokeAsync<bool>(
+                JSExtensionMethods.CheckPhoneNumber, EditModel.PhoneNumber);
+
+            if (!validPhoneNumber)
+            {
+                await JsRuntime.InvokeVoidAsync(JSExtensionMethods.SetInvalidPhoneNumber);
+                return;
+            }
+
             IsLoading = true;
             await AccountService.EditAsync(EditModel);
             IsLoading = false;
 
             NavigationManager.NavigateTo("/main");
+        }
+
+        protected async Task ClearInvalidPhoneNumber()
+        {
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ClearInvalidPhoneNumber);
         }
 
         protected override async Task OnInitializedAsync()

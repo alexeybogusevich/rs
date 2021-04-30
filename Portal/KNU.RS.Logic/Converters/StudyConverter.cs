@@ -1,6 +1,5 @@
 ﻿using KNU.RS.Data.Models;
 using KNU.RS.Logic.Models.Study;
-using System;
 using System.Linq;
 
 namespace KNU.RS.Logic.Converters
@@ -9,14 +8,22 @@ namespace KNU.RS.Logic.Converters
     {
         public static StudyInfo Convert(StudyHeader studyHeader)
         {
+            var doctor = studyHeader.DoctorPatient?.Doctor?.User;
             return new StudyInfo
             {
                 Id = studyHeader.Id,
                 DateTime = studyHeader.DateTime,
+                DoctorId = studyHeader.DoctorPatient.DoctorId,
+                DoctorFullName = $"{doctor?.LastName} {doctor?.FirstName} {doctor?.MiddleName}",
                 StudyTypeId = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.StudyTypeId,
                 StudyTypeName = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.StudyType?.Name,
-                StudySubtypeId = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtypeId,
-                StudySubtypeName = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.Name
+                StudyDetails = studyHeader.StudyDetails?.Select(s => 
+                    new StudyDetailsShort 
+                    { 
+                        StudySubtypeName = s.StudySubtype?.Name, 
+                        ClockwiseDegrees = s.ClockwiseDegrees, 
+                        CounterClockwiseDegrees = s.CounterClockwiseDegrees
+                    })
             };
         }
 

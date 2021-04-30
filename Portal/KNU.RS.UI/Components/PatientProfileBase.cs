@@ -30,17 +30,32 @@ namespace KNU.RS.UI.Components
         [Parameter]
         public PatientInfo Patient { get; set; }
 
-        protected List<StudyDetailsInfo> Studies { get; set; } = new List<StudyDetailsInfo>();
+        protected List<StudyInfo> Studies { get; set; } = new List<StudyInfo>();
+        protected List<StudyDetailsInfo> StudyDetails { get; set; } = new List<StudyDetailsInfo>();
+
+        protected bool IsLoading { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
-            var studies = await StudyService.GetDetailsInfoAsync(Patient.PatientId);
-            Studies = studies.OrderBy(s => s.DateTime).ToList();
+            IsLoading = true;
+
+            var studyDetails = await StudyService.GetDetailsInfoAsync(Patient.PatientId);
+            StudyDetails = studyDetails.OrderBy(s => s.DateTime).Take(15).ToList();
+
+            var studies = await StudyService.GetInfoAsync(Patient.PatientId);
+            Studies = studies.OrderByDescending(s => s.DateTime).ToList();
+
+            IsLoading = false;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            var groupedStudies = Studies.GroupBy(s => new { s.SerialNumber, Name = s.StudySubtypeName });
+            if (Studies.Count() < 2)
+            {
+                return;
+            }
+
+            var groupedStudies = StudyDetails.GroupBy(s => new { s.SerialNumber, Name = s.StudySubtypeName });
 
             foreach (var studiesOfSubtype in groupedStudies)
             {

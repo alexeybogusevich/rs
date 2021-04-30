@@ -19,5 +19,9 @@
         public const string ToggleModal = "blazorExtensions.TOGGLE_MODAL";
         public const string FillMainBarchart = "chartExtensions.FILL_MAIN_BARCHART";
         public const string FillStudyLinechart = "chartExtensions.FILL_STUDY_LINECHART";
+        public const string CheckPhoneNumber = "blazorExtensions.CHECK_PHONE_NUMBER";
+        public const string SetInvalidPhoneNumber = "blazorExtensions.SET_CHANGE_INVALID_PHONE_NUMBER";
+        public const string ClearInvalidPhoneNumber = "blazorExtensions.CLEAR_CHANGE_INVALID_PHONE_NUMBER";
+
     }
 }

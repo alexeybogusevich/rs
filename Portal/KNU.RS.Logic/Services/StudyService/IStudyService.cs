@@ -9,6 +9,7 @@ namespace KNU.RS.Logic.Services.StudyService
     public interface IStudyService
     {
         Task<IEnumerable<StudyInfo>> GetInfoAsync();
+        Task<IEnumerable<StudyInfo>> GetInfoAsync(Guid patientId);
         Task<IEnumerable<StudyDetailsInfo>> GetDetailsInfoAsync(Guid patientId);
         Task<IEnumerable<StudySubtype>> GetSubtypesAsync();
         Task<int> GetCountAsync();

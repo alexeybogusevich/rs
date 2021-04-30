@@ -19,12 +19,25 @@
         document.getElementById('changepassword-error-current').style.display = 'none';
     },
 
+    SET_CHANGE_INVALID_PHONE_NUMBER: function () {
+        document.getElementById('phonenumber-error').style.display = 'block';
+    },
+
+    CLEAR_CHANGE_INVALID_PHONE_NUMBER: function () {
+        document.getElementById('phonenumber-error').style.display = 'none';
+    },
+
     SET_CHANGE_PASSWORD_CONFIRM_FAILED: function () {
         document.getElementById('changepassword-error-confirm').style.display = 'block';
     },
 
     CLEAR_CHANGE_PASSWORD_CONFIRM_FAILED: function () {
         document.getElementById('changepassword-error-confirm').style.display = 'none';
+    },
+
+    CHECK_PHONE_NUMBER: function (number) {
+        number = number.replace(/[\s\-]/g, '');
+        return number.match(/^((\+?3)?8)?((0\(\d{2}\)?)|(\(0\d{2}\))|(0\d{2}))\d{7}$/) != null;
     },
 
     DISABLE_LOGIN_BUTTON: function () {
