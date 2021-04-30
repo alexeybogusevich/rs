@@ -17,7 +17,7 @@
         public const string SetChangePasswordConfirmFailed = "blazorExtensions.SET_CHANGE_PASSWORD_CONFIRM_FAILED";
         public const string ClearChangePasswordConfirmFailed = "blazorExtensions.CLEAR_CHANGE_PASSWORD_CONFIRM_FAILED";
         public const string ToggleModal = "blazorExtensions.TOGGLE_MODAL";
-        public const string FillBarchart = "chartExtensions.FILL_BARCHART";
-        public const string FillLinechart = "chartExtensions.FILL_LINECHART";
+        public const string FillMainBarchart = "chartExtensions.FILL_MAIN_BARCHART";
+        public const string FillStudyLinechart = "chartExtensions.FILL_STUDY_LINECHART";
     }
 }

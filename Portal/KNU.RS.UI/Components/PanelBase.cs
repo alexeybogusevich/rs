@@ -54,7 +54,7 @@ namespace KNU.RS.UI.Components
             var months = groupedStudies.Select(s => s.Date).ToList();
             var studyCounts = groupedStudies.Select(s => s.Count).ToList();
 
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.FillLinechart, months, studyCounts, "Проведено");
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.FillMainBarchart, months, studyCounts, "Проведено");
         }
     }
 }

@@ -7,6 +7,8 @@ namespace KNU.RS.Data.Models
     {
         public Guid Id { get; set; }
 
+        public int SerialNumber { get; set; }
+
         public string Name { get; set; }
 
         public Guid StudyTypeId { get; set; }

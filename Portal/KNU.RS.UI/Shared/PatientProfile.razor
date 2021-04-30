@@ -252,14 +252,19 @@
                 </div>
                 <div class="tab-pane" id="bottom-tab3">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="card-box">
-                                <h3 class="card-title">Прогрес</h3>
-                                <div class="experience-box">
-                                    W
+                        @foreach (var studiesOfSubtype in Studies.GroupBy(s => new { s.SerialNumber, s.StudySubtypeName, s.StudyTypeName}))
+                        {
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="chart-title">
+                                            <h4>@($"{studiesOfSubtype.Key.StudyTypeName} : {studiesOfSubtype.Key.StudySubtypeName}")</h4>
+                                        </div>
+                                        <canvas id="@($"studylinegraph{studiesOfSubtype.Key.SerialNumber}")"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 </div>
                 <div class="tab-pane" id="bottom-tab4">

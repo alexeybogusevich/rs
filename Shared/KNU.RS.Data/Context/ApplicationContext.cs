@@ -100,6 +100,7 @@ namespace KNU.RS.Data.Context
             modelBuilder.Entity<StudySubtype>(ss =>
             {
                 ss.HasKey(s => s.Id);
+                ss.Property(s => s.SerialNumber).ValueGeneratedOnAdd();
                 ss.HasOne(s => s.StudyType).WithMany(s => s.StudySubtypes).HasForeignKey(s => s.StudyTypeId);
             });
 
