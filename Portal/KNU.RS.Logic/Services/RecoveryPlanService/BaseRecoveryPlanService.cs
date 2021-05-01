@@ -30,11 +30,17 @@ namespace KNU.RS.Logic.Services.RecoveryPlanService
                 .ToListAsync();
         }
 
-        public async Task MarkAsCompletedAsync(Guid id)
+        public async Task<bool> MarkAsCompletedAsync(Guid id)
         {
             var plan = await context.RecoveryDailyPlans.FindAsync(id);
+            if (plan.Completed || (plan.Day < DateTime.Today) || (plan.Day > DateTime.Today.AddDays(1)))
+            {
+                return false;
+            }
+
             plan.Completed = true;
             await context.SaveChangesAsync();
+            return true;
         }
 
         public async Task CreateAsync(RecoveryDailyPlanModel model, Guid doctorUserId, Guid patientId)
@@ -59,6 +65,18 @@ namespace KNU.RS.Logic.Services.RecoveryPlanService
             };
 
             await context.RecoveryDailyPlans.AddAsync(dailyPlan);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var plan = await context.RecoveryDailyPlans.FindAsync(id);
+            if (plan == null)
+            {
+                return;
+            }
+
+            context.RecoveryDailyPlans.Remove(plan);
             await context.SaveChangesAsync();
         }
     }

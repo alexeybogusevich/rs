@@ -8,17 +8,18 @@ namespace KNU.RS.Logic.Converters
     {
         public static RecoveryDailyPlanInfo Convert(RecoveryDailyPlan plan)
         {
-            var doctor = plan.DoctorPatient?.Doctor?.User;
+            var doctorUser = plan.DoctorPatient?.Doctor?.User;
             return new RecoveryDailyPlanInfo
             {
                 Id = plan.Id,
-                DoctorId = plan.DoctorPatient?.DoctorId,
+                Completed = plan.Completed,
+                DoctorId = doctorUser?.Id,
                 SerialNumber = plan.SerialNumber,
                 Name = plan.Name,
                 Description = plan.Description,
                 Times = plan.Times,
                 DateTime = plan.Day,
-                DoctorName = $"{doctor.LastName} {doctor.FirstName?.FirstOrDefault()}. {doctor.MiddleName?.FirstOrDefault()}."
+                DoctorName = $"{doctorUser.LastName} {doctorUser.FirstName?.FirstOrDefault()}. {doctorUser.MiddleName?.FirstOrDefault()}."
             };
         }
     }

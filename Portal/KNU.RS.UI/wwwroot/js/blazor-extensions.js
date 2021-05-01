@@ -118,12 +118,9 @@
     CHANGE_PLAN_STATUS_SUCCESS: function (index) {
         $('#plan-status-image-' + index).removeClass();
         $('#plan-status-image-' + index).addClass("fa fa-check");
-        $('#plan-status-' + index).val = "Виконано ";
-    },
-
-    CLOSE_MODAL_NEW_PLAN: function (dotnetHelper, nameFunc) {
-        $('#new-plan-modal').modal('toggle');
-        dotnetHelper.invokeMethodAsync(nameFunc);
+        $('#plan-status-' + index).text("Виконано ");
+        //$('#plan-button-' + index).attr('disabled', true);
+        $('#plan-button-' + index).addClass('hide');
     }
 }
 

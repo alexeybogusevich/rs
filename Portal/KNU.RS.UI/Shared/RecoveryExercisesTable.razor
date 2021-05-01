@@ -9,7 +9,7 @@ else
     <div class="col-sm-12 col-6 text-right m-b-30">
         <a href="javascript:void(0)" class="btn btn-primary btn-rounded" @onclick="async () => await DisplayNewPlanAsync()"><i class="fa fa-plus"></i> Нова вправа</a>
     </div>
-    @if (Plans.Count() > 0)
+    @if (Plans?.Count() > 0)
     {
         <div class="row">
             <div class="col-md-12">
@@ -23,18 +23,20 @@ else
                                 <th>Повторень</th>
                                 <th>Статус</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var plan in Plans)
+                            @foreach (var plan in DisplayedPlans)
                             {
                                 <tr>
                                     <td>@plan.DateTime.ToString("dd.MM.yyyy")</td>
-                                    <td>@plan.DoctorName</td>
+                                    <td><a href="/viewdoctor/@plan.DoctorId.GetValueOrDefault()">@plan.DoctorName</a> </td>
                                     <td><a href="javascript:void(0)" @onclick="async () => await DisplayDescriptionAsync(plan.Description)">@plan.Name</a></td>
                                     <td>@plan.Times</td>
-                                    <td><span id="plan-status-@plan.SerialNumber"> @GetStatus(plan)</span><i id="plan-status-image-@plan.SerialNumber" class="fa @GetStatusClass(plan)"></i></td>
-                                    <td><button type="button" class="btn btn-success" @onclick="async () => await MarkAsCompletedAsync(plan.Id, plan.SerialNumber)" disabled="@GetButtonDisabled(plan)">Виконати</button></td>
+                                    <td><span id="plan-status-@plan.SerialNumber">@GetStatus(plan)&nbsp;</span><i id="plan-status-image-@plan.SerialNumber" class="fa @GetStatusClass(plan)"></i></td>
+                                    <td><button id="plan-button-@plan.SerialNumber" type="button" class="btn btn-success @GetButtonDisplay(plan)" @onclick="async () => await MarkAsCompletedAsync(plan.Id, plan.SerialNumber)" disabled="@GetButtonDisabled(plan)">Виконати</button></td>
+                                    <td><a href="#" data-toggle="modal" data-target="#delete_patient" @onclick="async () => await SetPlanToDeleteAsync(plan)"><i class="fa fa-trash"></i></a></td>
                                 </tr>
                             }
                         </tbody>
@@ -42,6 +44,16 @@ else
                 </div>
             </div>
         </div>
+        @if (DisplayedPlans?.Count != Plans?.Count)
+        {
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="see-all">
+                        <a class="see-all-btn" href="javascript:void(0)" @onclick="LoadMore">Завантажити ще</a>
+                    </div>
+                </div>
+            </div>
+        }
     }
     else
     {
@@ -59,7 +71,7 @@ else
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <NewRecoveryPlan PatientId="PatientId"></NewRecoveryPlan>
+                    <NewRecoveryPlan PatientId="PatientId" ParentCallback="async () => await SetPlansAsync()"></NewRecoveryPlan>
                 </div>
             </div>
         </div>
@@ -71,11 +83,25 @@ else
                     <br />
                     <div class="row">
                         <div class="col-md-12">
-                            <h5>@PlanDescriptionToDosplay</h5>
+                            <h5>@PlanDescriptionToDisplay</h5>
                         </div>
                     </div>
                     <div class="m-t-20">
                         <button type="submit" class="btn btn-info" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="delete-plan" class="modal fade delete-modal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="img/sent.png" alt="" width="50" height="46">
+                    <h3>Ви впевнені, що бажаєте видалити цю вправу?</h3>
+                    <div class="m-t-20">
+                        <a href="javascript:void(0);" class="btn btn-white" data-dismiss="modal" @onclick="ClearPlanToDelete">Ні</a>
+                        <button type="submit" class="btn btn-danger" data-dismiss="modal" @onclick="DeleteAsync">Так</button>
                     </div>
                 </div>
             </div>

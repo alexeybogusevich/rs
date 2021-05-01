@@ -35,7 +35,7 @@ namespace KNU.RS.UI.Components
 
         protected override void OnParametersSet()
         {
-            InitializeDisplayedDoctors();
+            SetDisplayedDoctors();
         }
 
         protected string GetPhotoURI(DoctorInfo doctor)
@@ -48,7 +48,7 @@ namespace KNU.RS.UI.Components
             return "img/user.jpg";
         }
 
-        private void InitializeDisplayedDoctors()
+        private void SetDisplayedDoctors()
         {
             DisplayedDoctors = Doctors.Take(Batches * BatchSize).OrderBy(d => d.LastName).ToList();
         }
@@ -61,7 +61,7 @@ namespace KNU.RS.UI.Components
             }
 
             Batches++;
-            InitializeDisplayedDoctors();
+            SetDisplayedDoctors();
         }
 
         protected void AssignDoctorToDelete(DoctorInfo doctor)
@@ -92,7 +92,7 @@ namespace KNU.RS.UI.Components
             Doctors.Remove(deletedDoctor);
 
             DisplayedDoctors = new List<DoctorInfo>();
-            InitializeDisplayedDoctors();
+            SetDisplayedDoctors();
 
             DoctorToDelete = null;
         }

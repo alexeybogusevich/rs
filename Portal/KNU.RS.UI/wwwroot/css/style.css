@@ -383,6 +383,9 @@ table.table td h2 span {
 .btn {
 	font-size: 0.875rem;
 }
+.hide {
+	display: none;
+}
 
 /*-----------------
 	4. Bootstrap Classes

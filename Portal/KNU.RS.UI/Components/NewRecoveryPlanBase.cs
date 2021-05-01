@@ -27,6 +27,9 @@ namespace KNU.RS.UI.Components
         [Parameter]
         public Guid PatientId { get; set; }
 
+        [Parameter]
+        public EventCallback ParentCallback { get; set; }
+
         protected RecoveryDailyPlanModel RecoveryModel { get; set; } = new RecoveryDailyPlanModel();
 
         protected async Task CreateAsync()
@@ -39,9 +42,8 @@ namespace KNU.RS.UI.Components
             }
 
             await RecoveryService.CreateAsync(RecoveryModel, userId, PatientId);
-
-            var dotNetReference = DotNetObjectReference.Create(this);
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.CloseModalNewRecoveryPlan, dotNetReference, JSInvokableMethods.RefreshPlans);
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "new-plan-modal");
+            await ParentCallback.InvokeAsync();
         }
     }
 }

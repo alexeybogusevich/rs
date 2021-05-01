@@ -23,21 +23,32 @@ namespace KNU.RS.UI.Components
 
 
         protected List<RecoveryDailyPlanInfo> Plans { get; set; } = new List<RecoveryDailyPlanInfo>();
+        protected List<RecoveryDailyPlanInfo> DisplayedPlans { get; set; } = new List<RecoveryDailyPlanInfo>();
+
 
         protected bool IsLoading { get; set; } = true;
 
-        protected string PlanDescriptionToDosplay { get; set; }
+        private int BatchSize { get; set; } = 10;
+        private int Batches { get; set; } = 1;
+
+        protected string PlanDescriptionToDisplay { get; set; }
+
+        protected RecoveryDailyPlanInfo PlanToDelete { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
-            await GetPlansAsync();
+            await SetPlansAsync();
         }
 
         protected async Task MarkAsCompletedAsync(Guid planId, int serialNumber)
         {
-            await RecoveryService.MarkAsCompletedAsync(planId);
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ChangePlanToCompleted, serialNumber);
+            var completed = await RecoveryService.MarkAsCompletedAsync(planId);
+
+            if (completed)
+            {
+                await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ChangePlanToCompleted, serialNumber);
+            }
         }
 
         protected async Task DisplayNewPlanAsync()
@@ -47,24 +58,18 @@ namespace KNU.RS.UI.Components
 
         protected async Task DisplayDescriptionAsync(string description)
         {
-            PlanDescriptionToDosplay = description;
+            PlanDescriptionToDisplay = description;
             await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "plan-description-modal");
         }
 
         protected bool GetButtonDisabled(RecoveryDailyPlanInfo plan)
         {
-            if (plan.Completed)
-            {
-                return true;
-            }
-            else if (!plan.Completed && plan.DateTime.Day > DateTime.Today.Day)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return plan.Completed || (!plan.Completed && plan.DateTime >= DateTime.Today.AddDays(1));
+        }
+
+        protected string GetButtonDisplay(RecoveryDailyPlanInfo plan)
+        {
+            return plan.Completed || plan.DateTime < DateTime.Today ? "hide" : string.Empty;
         }
 
         protected string GetStatus(RecoveryDailyPlanInfo plan)
@@ -73,14 +78,8 @@ namespace KNU.RS.UI.Components
             {
                 return Labels.Done;
             }
-            else if (!plan.Completed && plan.DateTime.Day >= DateTime.Now.Day)
-            {
-                return Labels.Planned;
-            }
-            else
-            {
-                return Labels.Failed;
-            }
+
+            return plan.DateTime >= DateTime.Today ? Labels.Planned : Labels.Failed;
         }
 
         protected string GetStatusClass(RecoveryDailyPlanInfo plan)
@@ -89,28 +88,60 @@ namespace KNU.RS.UI.Components
             {
                 return "fa-check";
             }
-            else if (!plan.Completed && plan.DateTime.Day >= DateTime.Now.Day)
-            {
-                return "fa-calendar";
-            }
-            else
-            {
-                return "fa-times";
-            }
+
+            return plan.DateTime >= DateTime.Today ? "fa-calendar" : "fa-times";
         }
 
-        [JSInvokable(JSInvokableMethods.RefreshPlans)]
-        protected async Task RefreshAsync()
+        protected async Task SetPlanToDeleteAsync(RecoveryDailyPlanInfo plan)
         {
-            await GetPlansAsync();
+            PlanToDelete = plan;
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "delete-plan");
         }
 
-        private async Task GetPlansAsync()
+        protected void ClearPlanToDelete()
+        {
+            PlanToDelete = null;
+        }
+
+        protected async Task DeleteAsync()
+        {
+            if (PlanToDelete == null)
+            {
+                return;
+            }
+
+            await RecoveryService.DeleteAsync(PlanToDelete.Id);
+
+            var deletedDoctor = Plans.FirstOrDefault(d => d.Id.Equals(PlanToDelete.Id));
+            Plans.Remove(deletedDoctor);
+            SetDisplayedPlans();
+
+            PlanToDelete = null;
+        }
+
+        protected void LoadMore()
+        {
+            if (DisplayedPlans.Count == Plans.Count)
+            {
+                return;
+            }
+
+            Batches++;
+            SetDisplayedPlans();
+        }
+
+        private void SetDisplayedPlans()
+        {
+            DisplayedPlans = Plans.Take(Batches * BatchSize).ToList();
+        }
+
+        protected async Task SetPlansAsync()
         {
             IsLoading = true;
 
             var plans = await RecoveryService.GetInfoAsync(PatientId);
-            Plans = plans.ToList();
+            Plans = plans?.OrderByDescending(p => p.DateTime)?.ThenBy(p => p.Completed)?.ToList() ?? new();
+            SetDisplayedPlans();
 
             IsLoading = false;
         }
