@@ -8,13 +8,15 @@ namespace KNU.RS.Logic.Converters
     {
         public static StudyInfo Convert(StudyHeader studyHeader)
         {
-            var doctor = studyHeader.DoctorPatient?.Doctor?.User;
+            var doctorUser = studyHeader.DoctorPatient?.Doctor?.User;
             return new StudyInfo
             {
                 Id = studyHeader.Id,
                 DateTime = studyHeader.DateTime,
-                DoctorId = studyHeader.DoctorPatient.DoctorId,
-                DoctorFullName = $"{doctor?.LastName} {doctor?.FirstName} {doctor?.MiddleName}",
+                DoctorId = studyHeader?.DoctorPatient?.DoctorId,
+                DoctorUserId = doctorUser?.Id,
+                DoctorFullName = $"{doctorUser?.LastName} {doctorUser?.FirstName} {doctorUser?.MiddleName}",
+                DoctorShortName = $"{doctorUser?.LastName} {doctorUser?.FirstName?.FirstOrDefault()}. {doctorUser?.MiddleName?.FirstOrDefault()}.",
                 StudyTypeId = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.StudyTypeId,
                 StudyTypeName = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.StudyType?.Name,
                 StudyDetails = studyHeader.StudyDetails?.Select(s =>

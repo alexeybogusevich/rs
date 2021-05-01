@@ -18,7 +18,7 @@
                     {
                         <tr>
                             <td>@study.DateTime.ToString("dd.MM.yyyy")</td>
-                            <td>@study.DoctorFullName</td>
+                            <td><a href="/viewdoctor/@study.DoctorUserId">@study.DoctorShortName</a></td>
                             <td>@study.StudyTypeName</td>
                             <td><a href="javascript:void(0)" @onclick="async () => await ShowDetailsAsync(study.StudyDetails)">Ознайомитись</a></td>
                             <td class="text-right">

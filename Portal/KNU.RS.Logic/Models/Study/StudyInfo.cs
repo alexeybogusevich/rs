@@ -9,8 +9,10 @@ namespace KNU.RS.Logic.Models.Study
 
         public DateTime DateTime { get; set; }
 
-        public Guid DoctorId { get; set; }
+        public Guid? DoctorUserId { get; set; }
+        public Guid? DoctorId { get; set; }
         public string DoctorFullName { get; set; }
+        public string DoctorShortName { get; set; }
 
         public Guid? StudyTypeId { get; set; }
         public string StudyTypeName { get; set; }
