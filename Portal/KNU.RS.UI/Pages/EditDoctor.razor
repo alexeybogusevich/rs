@@ -2,6 +2,8 @@
 @inherits EditDoctorBase
 @attribute [Authorize]
 
+<Title value="Реабілітація КНУ | Лікарі"></Title>
+
 @if (IsLoading)
 {
     <div class="spinner"></div>
@@ -84,7 +86,7 @@ else
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Номер телефону <span class="text-danger">*</span></label>
-                                    <InputText @bind-Value="EditModel.PhoneNumber" autofocus="" class="form-control"/>
+                                    <InputText @bind-Value="EditModel.PhoneNumber" autofocus="" class="form-control" />
                                     <ValidationMessage For="@(() => EditModel.PhoneNumber)" />
                                 </div>
                             </div>
@@ -162,29 +164,29 @@ else
     </div>
 }
 
-@code
+    @code
 {
-    [JSInvokable("Select2_ChangeClinic")]
-    public void ChangeClinic(string stringId)
-    {
-        var id = new Guid(stringId);
-        EditModel.ClinicId = id;
-    }
+        [JSInvokable("Select2_ChangeClinic")]
+        public void ChangeClinic(string stringId)
+        {
+            var id = new Guid(stringId);
+            EditModel.ClinicId = id;
+        }
 
-    [JSInvokable("Select2_ChangeQualification")]
-    public void ChangeQualification(string stringId)
-    {
-        var id = new Guid(stringId);
-        EditModel.QualificationId = id;
-    }
+        [JSInvokable("Select2_ChangeQualification")]
+        public void ChangeQualification(string stringId)
+        {
+            var id = new Guid(stringId);
+            EditModel.QualificationId = id;
+        }
 
-    private void ChangeGenderFemale()
-    {
-        EditModel.Gender = Data.Enums.Gender.Female;
-    }
+        private void ChangeGenderFemale()
+        {
+            EditModel.Gender = Data.Enums.Gender.Female;
+        }
 
-    private void ChangeGenderMale()
-    {
-        EditModel.Gender = Data.Enums.Gender.Male;
+        private void ChangeGenderMale()
+        {
+            EditModel.Gender = Data.Enums.Gender.Male;
+        }
     }
-}

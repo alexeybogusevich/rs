@@ -1,6 +1,8 @@
 ﻿@page "/patients"
 @inherits PatientsBase
 
+<Title value="Реабілітація КНУ | Пацієнти"></Title>
+
 <AuthorizeView Roles="Admin,Doctor,Patient">
     <Authorized>
         @if (IsLoading)
@@ -18,6 +20,6 @@
     </Authorized>
 </AuthorizeView>
 
-@code { 
+@code {
 
 }
