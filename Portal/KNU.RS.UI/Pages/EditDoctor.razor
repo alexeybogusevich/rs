@@ -1,6 +1,8 @@
 ﻿@page "/editdoctor/{Id:guid}"
+@using KNU.RS.Data.Constants
 @inherits EditDoctorBase
-@attribute [Authorize]
+
+@attribute [Authorize(Roles = RoleName.Admin + "," + RoleName.Doctor)]
 
 <Title value="Реабілітація КНУ | Лікарі"></Title>
 
@@ -164,29 +166,29 @@ else
     </div>
 }
 
-    @code
+@code
 {
-        [JSInvokable("Select2_ChangeClinic")]
-        public void ChangeClinic(string stringId)
-        {
-            var id = new Guid(stringId);
-            EditModel.ClinicId = id;
-        }
-
-        [JSInvokable("Select2_ChangeQualification")]
-        public void ChangeQualification(string stringId)
-        {
-            var id = new Guid(stringId);
-            EditModel.QualificationId = id;
-        }
-
-        private void ChangeGenderFemale()
-        {
-            EditModel.Gender = Data.Enums.Gender.Female;
-        }
-
-        private void ChangeGenderMale()
-        {
-            EditModel.Gender = Data.Enums.Gender.Male;
-        }
+    [JSInvokable("Select2_ChangeClinic")]
+    public void ChangeClinic(string stringId)
+    {
+        var id = new Guid(stringId);
+        EditModel.ClinicId = id;
     }
+
+    [JSInvokable("Select2_ChangeQualification")]
+    public void ChangeQualification(string stringId)
+    {
+        var id = new Guid(stringId);
+        EditModel.QualificationId = id;
+    }
+
+    private void ChangeGenderFemale()
+    {
+        EditModel.Gender = Data.Enums.Gender.Female;
+    }
+
+    private void ChangeGenderMale()
+    {
+        EditModel.Gender = Data.Enums.Gender.Male;
+    }
+}

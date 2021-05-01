@@ -1,4 +1,7 @@
 ﻿@page "/myrecoveryplans"
+@using KNU.RS.Data.Constants
+
+@attribute [Authorize(Roles = RoleName.Patient)]
 
 <Title value="Реабілітація КНУ | Мої вправи"></Title>
 

@@ -1,19 +1,17 @@
 ﻿@page "/doctors"
-@attribute [Authorize]
+@using KNU.RS.Data.Constants 
+
+@attribute [Authorize(Roles = RoleName.Admin)]
 
 @inherits DoctorsBase
 
 <Title value="Реабілітація КНУ | Лікарі"></Title>
 
-<AuthorizeView Roles="Admin,Doctor,Patient">
-    <Authorized>
-        @if (IsLoading)
-        {
-            <div class="spinner"></div>
-        }
-        else
-        {
-            <DoctorsGrid Doctors="DoctorsList"></DoctorsGrid>
-        }
-    </Authorized>
-</AuthorizeView>
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <DoctorsGrid Doctors="DoctorsList"></DoctorsGrid>
+}

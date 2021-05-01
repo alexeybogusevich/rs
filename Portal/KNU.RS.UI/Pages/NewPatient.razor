@@ -1,8 +1,10 @@
 ﻿@page "/newpatient"
 @using KNU.RS.Data.Enums
+@using KNU.RS.Data.Constants
 @using EnumsNET
 @inherits NewPatientBase
-@attribute [Authorize]
+
+@attribute [Authorize(Roles = RoleName.Admin + "," + RoleName.Doctor)]
 
 <Title value="Реабілітація КНУ | Пацієнти"></Title>
 

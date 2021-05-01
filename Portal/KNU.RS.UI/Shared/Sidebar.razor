@@ -6,18 +6,34 @@
         <div id="sidebar-menu" class="sidebar-menu">
             <ul>
                 <li class="menu-title">Головна</li>
-                <li class="@panelClass">
-                    <a href="/main" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-dashboard"></i> <span>Панель</span></a>
-                </li>
-                <li class="@doctorsClass">
-                    <a href="/doctors" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-user-md"></i> <span>Лікарі</span></a>
-                </li>
-                <li class="@patientsClass">
-                    <a href="/patients" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-wheelchair"></i> <span>Пацієнти</span></a>
-                </li>
-                <li class="@myRecoveryPlansClass">
-                    <a href="/myrecoveryplans" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-calendar-check-o"></i> <span>Мої вправи</span></a>
-                </li>
+                <AuthorizeView Roles="Admin,Doctor,Patient">
+                    <Authorized>
+                        <li class="@panelClass">
+                            <a href="/main" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-dashboard"></i> <span>Панель</span></a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <li class="@doctorsClass">
+                            <a href="/doctors" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-user-md"></i> <span>Лікарі</span></a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
+                <AuthorizeView Roles="Admin,Doctor">
+                    <Authorized>
+                        <li class="@patientsClass">
+                            <a href="/patients" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-wheelchair"></i> <span>Пацієнти</span></a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
+                <AuthorizeView Roles="Patient">
+                    <Authorized>
+                        <li class="@myRecoveryPlansClass">
+                            <a href="/myrecoveryplans" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-calendar-check-o"></i> <span>Мої вправи</span></a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
             </ul>
         </div>
     </div>

@@ -1,39 +1,15 @@
 ﻿@page "/viewdoctor/{Id:guid}"
-@using KNU.RS.Logic.Models.Doctor
-@using KNU.RS.Logic.Services.DoctorService
-
-@inject IDoctorService doctorService
-
 @inherits ViewDoctorBase
+
 @attribute [Authorize]
 
 <Title value="Реабілітація КНУ | Лікарі"></Title>
 
-<AuthorizeView Roles="Admin,Doctor,Patient">
-    <Authorized>
-        @if (IsLoading)
-        {
-            <div class="spinner"></div>
-        }
-        else
-        {
-            <DoctorProfile Doctor="Doctor"></DoctorProfile>
-        }
-    </Authorized>
-</AuthorizeView>
-
-@code {
-    [Parameter]
-    public Guid Id { get; set; }
-
-    protected DoctorInfo Doctor { get; set; }
-
-    protected bool IsLoading { get; set; } = true;
-
-    protected override async Task OnInitializedAsync()
-    {
-        IsLoading = true;
-        Doctor = await doctorService.GetInfoAsync(Id);
-        IsLoading = false;
-    }
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <DoctorProfile Doctor="Doctor"></DoctorProfile>
 }

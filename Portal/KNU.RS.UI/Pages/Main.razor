@@ -9,19 +9,30 @@
 @inject IDoctorService doctorService
 @inject IStudyService studyService
 @inject IJSRuntime JsRuntime
+@inject NavigationManager navManager
 
 @attribute [Authorize]
 
 <Title value="Реабілітація КНУ | Головна"></Title>
 
-@if (IsLoading)
-{
-    <div class="spinner"></div>
-}
-else
-{
-    <Panel Patients="Patients" NumberOfDoctors="Doctors.Count()" Studies="Studies"></Panel>
-}
+<AuthorizeView Roles="Patient">
+    <Authorized>
+        <RedirectToMyRecoveryPlans></RedirectToMyRecoveryPlans>
+    </Authorized>
+</AuthorizeView>
+
+<AuthorizeView Roles="Admin,Doctor">
+    <Authorized>
+        @if (IsLoading)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <Panel Patients="Patients" NumberOfDoctors="Doctors.Count()" Studies="Studies"></Panel>
+        }
+    </Authorized>
+</AuthorizeView>
 
 @code {
     private bool IsLoading { get; set; } = true;

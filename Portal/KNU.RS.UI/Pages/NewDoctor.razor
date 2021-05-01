@@ -1,6 +1,8 @@
 ﻿@page "/newdoctor"
+@using KNU.RS.Data.Constants
 @inherits NewDoctorBase
-@attribute [Authorize]
+
+@attribute [Authorize(Roles = RoleName.Admin)]
 
 <Title value="Реабілітація КНУ | Лікарі"></Title>
 

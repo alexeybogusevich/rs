@@ -1,21 +1,20 @@
 ﻿@page "/patients"
+@using KNU.RS.Data.Constants
 @inherits PatientsBase
+
+@attribute [Authorize(Roles = RoleName.Admin + "," + RoleName.Doctor)]
 
 <Title value="Реабілітація КНУ | Пацієнти"></Title>
 
-<AuthorizeView Roles="Admin,Doctor,Patient">
-    <Authorized>
-        @if (IsLoading)
-        {
-            <div class="spinner"></div>
-        }
-        else
-        {
-            <div class="page-wrapper">
-                <div class="content">
-                    <PatientsTable Patients="PatientsList" />
-                </div>
-            </div>
-        }
-    </Authorized>
-</AuthorizeView>
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="page-wrapper">
+        <div class="content">
+            <PatientsTable Patients="PatientsList" />
+        </div>
+    </div>
+}
