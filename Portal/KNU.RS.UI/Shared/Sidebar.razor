@@ -15,8 +15,8 @@
                 <li class="@patientsClass">
                     <a href="/patients" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-wheelchair"></i> <span>Пацієнти</span></a>
                 </li>
-                <li class="@settingsClass">
-                    <a href="/settings" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-cog"></i> <span>Налаштування</span></a>
+                <li class="@myRecoveryPlansClass">
+                    <a href="/myrecoveryplans" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-calendar-check-o"></i> <span>Мої вправи</span></a>
                 </li>
             </ul>
         </div>
@@ -28,7 +28,7 @@
     private string panelClass => currentUri.Equals("main") ? "active" : "";
     private string doctorsClass => currentUri.Contains("doctor") ? "active" : "";
     private string patientsClass => currentUri.Contains("patient") ? "active" : "";
-    private string settingsClass => currentUri.Contains("settings") ? "active" : "";
+    private string myRecoveryPlansClass => currentUri.Contains("myrecoveryplans") ? "active" : "";
 
     private async Task CloseSidebarAsync()
     {

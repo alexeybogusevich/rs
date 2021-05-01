@@ -2,25 +2,29 @@
 using KNU.RS.Logic.Services.RecoveryPlanService;
 using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class RecoveryExercisesTableBase : ComponentBase
+    public class PersonalRecoveryPlansBase : ComponentBase
     {
         [Inject]
         protected IRecoveryPlanService RecoveryService { get; set; }
 
         [Inject]
+        protected IHttpContextAccessor HttpContextAccessor { get; set; }
+
+        [Inject]
         protected IJSRuntime JsRuntime { get; set; }
 
-        [Parameter]
-        public Guid PatientId { get; set; }
-
+        [Inject]
+        protected NavigationManager NavigationManager { get; set; }
 
         protected List<RecoveryDailyPlanInfo> Plans { get; set; } = new List<RecoveryDailyPlanInfo>();
         protected List<RecoveryDailyPlanInfo> DisplayedPlans { get; set; } = new List<RecoveryDailyPlanInfo>();
@@ -49,11 +53,6 @@ namespace KNU.RS.UI.Components
             {
                 await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ChangePlanToCompleted, serialNumber);
             }
-        }
-
-        protected async Task DisplayNewPlanAsync()
-        {
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "new-plan-modal");
         }
 
         protected async Task DisplayDescriptionAsync(string description)
@@ -92,33 +91,6 @@ namespace KNU.RS.UI.Components
             return plan.DateTime >= DateTime.Today ? "fa-calendar" : "fa-times";
         }
 
-        protected async Task SetPlanToDeleteAsync(RecoveryDailyPlanInfo plan)
-        {
-            PlanToDelete = plan;
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "delete-plan");
-        }
-
-        protected void ClearPlanToDelete()
-        {
-            PlanToDelete = null;
-        }
-
-        protected async Task DeleteAsync()
-        {
-            if (PlanToDelete == null)
-            {
-                return;
-            }
-
-            await RecoveryService.DeleteAsync(PlanToDelete.Id);
-
-            var deletedDoctor = Plans.FirstOrDefault(d => d.Id.Equals(PlanToDelete.Id));
-            Plans.Remove(deletedDoctor);
-            SetDisplayedPlans();
-
-            PlanToDelete = null;
-        }
-
         protected void LoadMore()
         {
             if (DisplayedPlans.Count == Plans.Count)
@@ -139,7 +111,14 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            var plans = await RecoveryService.GetInfoByPatientAsync(PatientId);
+            if (!Guid.TryParse(
+                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                out var userId))
+            {
+                NavigationManager.NavigateTo("/signin");
+            }
+
+            var plans = await RecoveryService.GetInfoByUserAsync(userId);
             Plans = plans?.OrderByDescending(p => p.DateTime)?.ThenBy(p => p.Completed)?.ToList() ?? new();
             SetDisplayedPlans();
 

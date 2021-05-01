@@ -19,7 +19,20 @@ namespace KNU.RS.Logic.Services.RecoveryPlanService
             this.context = context;
         }
 
-        public async Task<IEnumerable<RecoveryDailyPlanInfo>> GetInfoAsync(Guid patientId)
+        public async Task<IEnumerable<RecoveryDailyPlanInfo>> GetInfoByUserAsync(Guid userId)
+        {
+            return await context.RecoveryDailyPlans
+                .Include(p => p.DoctorPatient)
+                    .ThenInclude(dp => dp.Doctor)
+                        .ThenInclude(d => d.User)
+                .Include(p => p.DoctorPatient)
+                    .ThenInclude(dp => dp.Patient)
+                .Where(p => p.DoctorPatient.Patient.UserId.Equals(userId))
+                .Select(p => RecoveryConverter.Convert(p))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<RecoveryDailyPlanInfo>> GetInfoByPatientAsync(Guid patientId)
         {
             return await context.RecoveryDailyPlans
                 .Include(p => p.DoctorPatient)
