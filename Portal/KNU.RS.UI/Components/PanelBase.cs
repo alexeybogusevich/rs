@@ -47,9 +47,11 @@ namespace KNU.RS.UI.Components
                 .GroupBy(s => (s.DateTime.Year, s.DateTime.Month))
                 .OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month)
                 .Take(12)
-                .Select(g => new { 
-                    Date = $"{DateTimeHelper.GetLocalMonthName(g.Key.Month, cultureInfo)} {g.Key.Year}", 
-                    Count = g.Count() });
+                .Select(g => new
+                {
+                    Date = $"{DateTimeHelper.GetLocalMonthName(g.Key.Month, cultureInfo)} {g.Key.Year}",
+                    Count = g.Count()
+                });
 
             var months = groupedStudies.Select(s => s.Date).ToList();
             var studyCounts = groupedStudies.Select(s => s.Count).ToList();

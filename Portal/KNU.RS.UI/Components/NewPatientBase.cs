@@ -1,6 +1,4 @@
-﻿using EnumsNET;
-using KNU.RS.Data.Enums;
-using KNU.RS.Logic.Models.Account;
+﻿using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.UI.Constants;
@@ -46,7 +44,7 @@ namespace KNU.RS.UI.Components
             IsLoading = true;
             await AccountService.RegisterAsync(RegistrationModel);
             IsLoading = false;
-            
+
             NavigationManager.NavigateTo("/patients");
         }
 

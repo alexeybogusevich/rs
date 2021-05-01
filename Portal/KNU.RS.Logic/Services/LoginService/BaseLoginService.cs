@@ -3,7 +3,6 @@ using KNU.RS.Data.Models;
 using KNU.RS.Logic.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.LoginService

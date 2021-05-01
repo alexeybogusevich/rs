@@ -69,8 +69,8 @@ namespace KNU.RS.UI.Components
 
                 await JsRuntime.InvokeVoidAsync(
                     JSExtensionMethods.FillStudyLinechart,
-                    title, labels, 
-                    Labels.ClockwiseDegreesTitle, Labels.CounterClockwiseDegreesTitle, 
+                    title, labels,
+                    Labels.ClockwiseDegreesTitle, Labels.CounterClockwiseDegreesTitle,
                     clockwiseStudies, counterClockwiseStudies, studiesOfSubtype.Key.SerialNumber);
             }
         }

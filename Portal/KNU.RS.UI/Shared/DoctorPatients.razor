@@ -1,0 +1,99 @@
+﻿@inherits DoctorPatientsBase
+
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row">
+        <div class="col-sm-6 col-9 text-right">
+            <a href="javascript:void(0)" class="btn btn-primary btn-rounded float-left" @onclick="async () => await ToggleModalAsync()"><i class="fa fa-user-plus"></i></a>
+        </div>
+        <div class="col-sm-4 col-9 m-b-10">
+            <input type="text" class="form-control" placeholder="Пошук" @bind="FilteringModel.SearchWord">
+        </div>
+        <div class="col-sm-2 col-9 m-b-10">
+            <div class="btn-group float-right">
+                <button class="btn btn-primary float-right" @onclick="Filter"><i class="fa fa-search"></i></button>
+                <button class="btn btn-white float-right" @onclick="ClearFilters"><i class="fa fa-remove"></i></button>
+            </div>
+        </div>
+    </div>
+    @if (Patients.Count > 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-border table-striped custom-table datatable mb-0">
+                        <thead>
+                            <tr>
+                                <th>Повне ім'я</th>
+                                <th>Вік</th>
+                                <th>Адреса</th>
+                                <th>Номер телефону</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var patient in PatientsPage.Items)
+                            {
+                                <tr>
+                                    <td><a href="/viewpatient/@patient.UserId"><img width="28" height="28" class="rounded-circle img-profile" src="@GetPhotoURI(patient)" alt=""> @patient.ToString()</a></td>
+                                    <td>@patient.Age</td>
+                                    <td>@patient.Address</td>
+                                    <td>@patient.PhoneNumber</td>
+                                    <td>@patient.Email</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div>
+            <ul class="pagination" style="justify-content: flex-end; margin-top: 5px;">
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" aria-label="Previous" @onclick="() => GoToPage(1)">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Назад</span>
+                    </a>
+                </li>
+                @foreach (var pageNo in AvailablePages)
+                {
+                    <li class="page-item @(pageNo == PatientsPage.PageIndex ? "active" : string.Empty)"><a class="page-link" href="javascript:void(0)" @onclick="() => GoToPage(pageNo)">@pageNo</a></li>
+                }
+                <li class="page-item">
+                    <a class="page-link" href="javascript:void(0)" aria-label="Далі" @onclick="() => GoToPage(PatientsPage.TotalPages)">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Далі</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    }
+    else
+    {
+        <br />
+        <ul class="list-unstyled">
+            <li>
+                <h5>
+                    <strong>За лікарем не закріплено жодного пацієнта.</strong>
+                </h5>
+            </li>
+            <li class="text">Для того, щоб мати змогу проводити обстеження пацієнта, необхідно закріпити його за лікарем.</li>
+        </ul>
+    }
+    <div id="doctor-patients-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <LinkDoctorPatient DoctorId="DoctorId"></LinkDoctorPatient>
+                    <div class="m-t-20">
+                        <button type="submit" class="btn btn-info" data-dismiss="modal" @onclick="async () => await RefreshPatientsAsync()">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

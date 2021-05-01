@@ -17,11 +17,11 @@ namespace KNU.RS.Logic.Converters
                 DoctorFullName = $"{doctor?.LastName} {doctor?.FirstName} {doctor?.MiddleName}",
                 StudyTypeId = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.StudyTypeId,
                 StudyTypeName = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.StudyType?.Name,
-                StudyDetails = studyHeader.StudyDetails?.Select(s => 
-                    new StudyDetailsShort 
-                    { 
-                        StudySubtypeName = s.StudySubtype?.Name, 
-                        ClockwiseDegrees = s.ClockwiseDegrees, 
+                StudyDetails = studyHeader.StudyDetails?.Select(s =>
+                    new StudyDetailsShort
+                    {
+                        StudySubtypeName = s.StudySubtype?.Name,
+                        ClockwiseDegrees = s.ClockwiseDegrees,
                         CounterClockwiseDegrees = s.CounterClockwiseDegrees
                     })
             };

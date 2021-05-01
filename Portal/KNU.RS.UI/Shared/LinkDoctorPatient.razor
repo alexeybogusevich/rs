@@ -1,0 +1,65 @@
+﻿@inherits LinkDoctorPatientComponent
+
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row">
+        <div class="col-sm-5 col-9 m-b-10">
+            <input type="text" class="form-control float-left text-left" placeholder="Пошук" @bind="FilteringModel.SearchWord">
+        </div>
+        <div class="col-sm-7 col-9 m-b-10">
+            <div class="btn-group float-right">
+                <button class="btn btn-primary float-right" @onclick="Filter"><i class="fa fa-search"></i></button>
+                <button class="btn btn-primary float-right" @onclick="ClearFilters"><i class="fa fa-remove"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover datatable mb-0">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left;">Повне ім'я</th>
+                            <th>Дата народження</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var patient in PatientsPage?.Items)
+                        {
+                            <tr>
+                                <td class="patient-short-name" style="vertical-align: middle;">@patient.FullName</td>
+                                <td style="vertical-align: middle;">@(patient.BirthDay.HasValue ? patient.BirthDay.GetValueOrDefault().ToString("dd.MM.yyy") : "-")</td>
+                                <td style="vertical-align: middle;"><button class="btn btn-primary btn-sm" disabled="@patient.Doctors.Contains(DoctorId)" @onclick="async () => await AssignPatientAsync(patient.Id)"><i class="fa fa-user-plus"></i></button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <ul class="pagination" style="justify-content: flex-end; margin-top: 5px;">
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" aria-label="Previous" @onclick="() => GoToPage(1)">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Назад</span>
+                </a>
+            </li>
+            @foreach (var pageNo in AvailablePages)
+            {
+                <li class="page-item @(pageNo == PatientsPage.PageIndex ? "active" : string.Empty)"><a class="page-link" href="javascript:void(0)" @onclick="() => GoToPage(pageNo)">@pageNo</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="javascript:void(0)" aria-label="Далі" @onclick="() => GoToPage(PatientsPage.TotalPages)">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Далі</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+}

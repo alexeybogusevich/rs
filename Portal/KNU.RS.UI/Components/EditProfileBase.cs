@@ -4,7 +4,6 @@ using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.Logic.Services.UserService;
-using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
@@ -62,8 +61,8 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            if(!Guid.TryParse(
-                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier), 
+            if (!Guid.TryParse(
+                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
                 NavigationManager.NavigateTo("/signin");

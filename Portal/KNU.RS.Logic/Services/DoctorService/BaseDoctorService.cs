@@ -46,19 +46,5 @@ namespace KNU.RS.Logic.Services.DoctorService
                 .Select(d => DoctorConverter.Convert(d))
                 .ToListAsync();
         }
-
-        public async Task<Doctor> CreateAsync(Doctor doctor)
-        {
-            await context.Doctors.AddAsync(doctor);
-            await context.SaveChangesAsync();
-            return doctor;
-        }
-
-        public async Task<Doctor> UpdateAsync(Doctor doctor)
-        {
-            context.Doctors.Update(doctor);
-            await context.SaveChangesAsync();
-            return doctor;
-        }
     }
 }

@@ -72,8 +72,8 @@ namespace KNU.RS.Logic.Services.StudyService
         {
             var doctorPatient = await context.DoctorPatients
                 .Include(d => d.Doctor)
-                .FirstOrDefaultAsync(dp => 
-                    dp.Doctor.UserId.Equals(userId) 
+                .FirstOrDefaultAsync(dp =>
+                    dp.Doctor.UserId.Equals(userId)
                     && dp.PatientId.Equals(study.PatientId));
 
             if (doctorPatient == null)

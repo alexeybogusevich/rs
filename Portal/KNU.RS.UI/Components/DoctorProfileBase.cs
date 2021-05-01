@@ -24,10 +24,17 @@ namespace KNU.RS.UI.Components
 
         protected List<PatientInfo> DoctorPatients { get; set; } = new List<PatientInfo>();
 
-        protected override async Task OnParametersSetAsync()
+        protected bool IsLoading { get; set; }
+
+
+        protected override async Task OnInitializedAsync()
         {
-            var patients = await PatientService.GetInfoAsync(); // make by doctor
+            IsLoading = true;
+
+            var patients = await PatientService.GetInfoByDoctorAsync(Doctor.Id);
             DoctorPatients = patients?.ToList();
+
+            IsLoading = false;
         }
 
         protected string GetPhotoURI()

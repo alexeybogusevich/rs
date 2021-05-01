@@ -1,11 +1,12 @@
 ﻿using KNU.RS.Logic.Collections;
 using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Models.Patient;
+using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.Logic.Services.PhotoService;
-using KNU.RS.Logic.Services.UserService;
 using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,23 +14,25 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class PatientsTableBase : ComponentBase
+    public class DoctorPatientsBase : ComponentBase
     {
         [Inject]
         protected IPhotoService PhotoService { get; set; }
 
         [Inject]
-        protected IUserService UserService { get; set; }
+        protected IPatientService PatientService { get; set; }
+
+        [Inject]
+        protected IJSRuntime JsRuntime { get; set; }
 
         [Inject]
         protected IOptions<PhotoConfiguration> Options { get; set; }
 
+        [Parameter]
+        public Guid DoctorId { get; set; }
 
         [Parameter]
         public List<PatientInfo> Patients { get; set; }
-
-
-        protected PatientInfo PatientToDelete { get; set; }
 
 
         protected int Counter = 1;
@@ -45,11 +48,30 @@ namespace KNU.RS.UI.Components
 
         protected Filtering FilteringModel { get; set; } = new();
 
+        protected bool IsLoading { get; set; }
+
+        protected async Task RefreshPatientsAsync()
+        {
+            IsLoading = true;
+
+            var patients = await PatientService.GetInfoByDoctorAsync(DoctorId);
+            Patients = patients.ToList();
+            PatientsPage = PaginatedList<PatientInfo>.Create(Patients, 1, PageSize);
+            SetAvailablePages();
+
+            IsLoading = false;
+        }
+
 
         protected override void OnParametersSet()
         {
             PatientsPage = PaginatedList<PatientInfo>.Create(Patients, 1, PageSize);
             SetAvailablePages();
+        }
+
+        protected async Task ToggleModalAsync()
+        {
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "doctor-patients-modal");
         }
 
         protected void SetAvailablePages()
@@ -108,39 +130,6 @@ namespace KNU.RS.UI.Components
             FilteringModel.SearchWord = string.Empty;
             PatientsPage = PaginatedList<PatientInfo>.Create(Patients, 1, PageSize);
             SetAvailablePages();
-        }
-
-        protected void AssignPatientToDelete(PatientInfo patient)
-        {
-            PatientToDelete = patient;
-        }
-
-        protected void ClearPatientToDelete()
-        {
-            PatientToDelete = null;
-        }
-
-        protected async Task DeleteAsync()
-        {
-            if (PatientToDelete == null)
-            {
-                return;
-            }
-
-            if (PatientToDelete.HasPhoto)
-            {
-                PhotoService.DeleteAsync(PatientToDelete.UserId);
-            }
-
-            await UserService.DeleteAsync(PatientToDelete.UserId);
-
-            var deletedDoctor = Patients.FirstOrDefault(d => d.UserId.Equals(PatientToDelete.UserId));
-            Patients.Remove(deletedDoctor);
-
-            PatientsPage = PaginatedList<PatientInfo>.Create(Patients, PatientsPage.PageIndex, PageSize);
-            SetAvailablePages();
-
-            PatientToDelete = null;
         }
 
         protected class Filtering

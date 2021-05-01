@@ -7,6 +7,7 @@ namespace KNU.RS.Logic.Models.Doctor
 {
     public class DoctorInfo : UserInfo
     {
+        public Guid Id { get; set; }
         public Guid? QualificationId { get; set; }
         public string QualificationName { get; set; }
         public Guid? ClinicId { get; set; }

@@ -13,6 +13,7 @@ namespace KNU.RS.Logic.Converters
         {
             return new DoctorInfo
             {
+                Id = doctor.Id,
                 UserId = doctor.UserId,
                 FirstName = doctor.User?.FirstName,
                 LastName = doctor.User?.LastName,

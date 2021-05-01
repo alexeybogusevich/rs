@@ -11,8 +11,8 @@ namespace KNU.RS.Logic.Services.PatientService
         Task<Patient> GetAsync(Guid userId);
         Task<IEnumerable<PatientInfo>> GetInfoAsync();
         Task<PatientInfo> GetInfoAsync(Guid userId);
+        Task<IEnumerable<PatientShort>> GetShortAsync();
         Task<IEnumerable<PatientInfo>> GetInfoByDoctorAsync(Guid doctorId);
-        Task<Patient> CreateAsync(Patient patient);
-        Task<Patient> UpdateAsync(Patient patient);
+        Task AssignToDoctorAsync(Guid patientId, Guid doctorId);
     }
 }

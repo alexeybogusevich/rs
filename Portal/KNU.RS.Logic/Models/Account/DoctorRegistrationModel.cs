@@ -22,7 +22,7 @@ namespace KNU.RS.Logic.Models.Account
         [MaxLength(100, ErrorMessage = "Будь-ласка, введіть не більше, ніж 100 символів")]
         [Required(ErrorMessage = "Будь-ласка, вкажіть науковий ступінь")]
         public string Degree { get; set; }
-        
+
         [PositiveInt(ErrorMessage = "Будь-ласка, вкажіть валідний номер аудиторії")]
         public int Room { get; set; }
     }

@@ -1265,6 +1265,10 @@ ul.chat-user-total li i.old-users {
 .new-patient-table tr td img {
 	margin-right: 5px;
 }
+.patient-short-name {
+	vertical-align: middle;
+	text-align: left;
+}
 .btn-primary-one {
 	border: 1px solid #ffbc35;
 	border-radius: 25px;

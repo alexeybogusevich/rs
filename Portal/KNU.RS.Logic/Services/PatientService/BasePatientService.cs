@@ -36,6 +36,15 @@ namespace KNU.RS.Logic.Services.PatientService
             return PatientConverter.Convert(patient);
         }
 
+        public async Task<IEnumerable<PatientShort>> GetShortAsync()
+        {
+            return await context.Patients
+                .Include(p => p.User)
+                .Include(p => p.Doctors)
+                .Select(p => PatientConverter.ConvertShort(p))
+                .ToListAsync();
+        }
+
         public async Task<Patient> GetAsync(Guid userId)
         {
             return await context.Patients
@@ -43,29 +52,21 @@ namespace KNU.RS.Logic.Services.PatientService
                 .FirstOrDefaultAsync(p => p.UserId.Equals(userId));
         }
 
-        public async Task<IEnumerable<PatientInfo>> GetInfoByDoctorAsync(Guid userId)
+        public async Task<IEnumerable<PatientInfo>> GetInfoByDoctorAsync(Guid doctorId)
         {
             return await context.Patients
                 .Include(p => p.User)
                 .Include(p => p.Doctors)
-                    .ThenInclude(d => d.Doctor)
-                .Where(p => p.Doctors.Select(d => d.Doctor.UserId).Contains(userId))
+                .Where(p => p.Doctors.Select(d => d.DoctorId).Contains(doctorId))
                 .Select(p => PatientConverter.Convert(p))
                 .ToListAsync();
         }
 
-        public async Task<Patient> CreateAsync(Patient patient)
+        public async Task AssignToDoctorAsync(Guid patientId, Guid doctorId)
         {
-            await context.Patients.AddAsync(patient);
+            var doctorPatient = new DoctorPatient { PatientId = patientId, DoctorId = doctorId };
+            await context.DoctorPatients.AddAsync(doctorPatient);
             await context.SaveChangesAsync();
-            return patient;
-        }
-
-        public async Task<Patient> UpdateAsync(Patient patient)
-        {
-            context.Patients.Update(patient);
-            await context.SaveChangesAsync();
-            return patient;
         }
     }
 }

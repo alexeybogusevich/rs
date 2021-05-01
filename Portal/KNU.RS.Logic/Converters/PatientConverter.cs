@@ -4,6 +4,7 @@ using KNU.RS.Logic.Helpers;
 using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Models.Patient;
 using System;
+using System.Linq;
 
 namespace KNU.RS.Logic.Converters
 {
@@ -66,6 +67,17 @@ namespace KNU.RS.Logic.Converters
                 Passport = patient.Passport,
                 Complaints = patient.Complaints,
                 Diagnosis = patient.Diagnosis
+            };
+        }
+
+        public static PatientShort ConvertShort(Patient patient)
+        {
+            return new PatientShort
+            {
+                Id = patient.Id,
+                FullName = $"{patient.User?.LastName} {patient.User?.FirstName} {patient.User?.MiddleName}",
+                BirthDay = patient.User?.Birthday,
+                Doctors = patient.Doctors?.Select(d => d.DoctorId)
             };
         }
     }

@@ -7,7 +7,7 @@ namespace KNU.RS.Data.Enums
         [Description("Інформація відсутня")]
         NoInformation = 0,
         [Description("Працевлаштований")]
-        Employed = 1, 
+        Employed = 1,
         [Description("Пенсіонер")]
         Pensioner = 2,
         [Description("Студент")]
