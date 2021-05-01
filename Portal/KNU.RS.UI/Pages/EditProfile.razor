@@ -17,7 +17,7 @@ else
             </div>
             <div class="row">
                 <div class="col-lg-8 offset-lg-2">
-                    <EditForm Model="@EditModel" OnValidSubmit="@SaveUserAsync">
+                    <EditForm Model="@EditModel" OnValidSubmit="@(async () => await SaveUserAsync())">
                         <DataAnnotationsValidator />
                         <div class="row">
                             <div class="col-sm-6">

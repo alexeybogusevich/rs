@@ -51,7 +51,7 @@
                 <h3>Ви впевнені, що бажаєте видалити цього лікаря з системи?</h3>
                 <div class="m-t-20">
                     <a href="javascript:void(0)" class="btn btn-white" data-dismiss="modal" @onclick="ClearDoctorToDelete">Ні</a>
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal" @onclick="DeleteAsync">Так</button>
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal" @onclick="async () => await DeleteAsync()">Так</button>
                 </div>
             </div>
         </div>

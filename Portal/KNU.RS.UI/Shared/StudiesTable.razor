@@ -20,7 +20,7 @@
                             <td>@study.DateTime.ToString("dd.MM.yyyy")</td>
                             <td>@study.DoctorFullName</td>
                             <td>@study.StudyTypeName</td>
-                            <td><a href="#">Ознайомитись</a></td>
+                            <td><a href="javascript:void(0)" @onclick="async () => await ShowDetailsAsync(study.StudyDetails)">Ознайомитись</a></td>
                             <td class="text-right">
                                 <div class="dropdown dropdown-action">
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
@@ -33,6 +33,42 @@
                     }
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+<div id="study-details-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-border table-striped custom-table datatable mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Підтип обстеження</th>
+                                        <th>За годинниковою стрілкою</th>
+                                        <th>Проти годинникової стрілки</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var details in StudyDetailsToDisplay)
+                                    {
+                                        <tr>
+                                            <td>@details.StudySubtypeName</td>
+                                            <td>@details.ClockwiseDegrees</td>
+                                            <td>@details.CounterClockwiseDegrees</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-t-20">
+                    <button type="submit" class="btn btn-info" data-dismiss="modal" @onclick="CloseDetails">OK</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

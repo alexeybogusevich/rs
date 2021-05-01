@@ -7,16 +7,16 @@
             <ul>
                 <li class="menu-title">Головна</li>
                 <li class="@panelClass">
-                    <a href="/main" @onclick="CloseSidebar"><i class="fa fa-dashboard"></i> <span>Панель</span></a>
+                    <a href="/main" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-dashboard"></i> <span>Панель</span></a>
                 </li>
                 <li class="@doctorsClass">
-                    <a href="/doctors" @onclick="CloseSidebar"><i class="fa fa-user-md"></i> <span>Лікарі</span></a>
+                    <a href="/doctors" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-user-md"></i> <span>Лікарі</span></a>
                 </li>
                 <li class="@patientsClass">
-                    <a href="/patients" @onclick="CloseSidebar"><i class="fa fa-wheelchair"></i> <span>Пацієнти</span></a>
+                    <a href="/patients" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-wheelchair"></i> <span>Пацієнти</span></a>
                 </li>
                 <li class="@settingsClass">
-                    <a href="/settings" @onclick="CloseSidebar"><i class="fa fa-cog"></i> <span>Налаштування</span></a>
+                    <a href="/settings" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-cog"></i> <span>Налаштування</span></a>
                 </li>
             </ul>
         </div>
@@ -30,7 +30,7 @@
     private string patientsClass => currentUri.Contains("patient") ? "active" : "";
     private string settingsClass => currentUri.Contains("settings") ? "active" : "";
 
-    private async Task CloseSidebar()
+    private async Task CloseSidebarAsync()
     {
         await JsRuntime.InvokeVoidAsync(JSExtensionMethods.CloseSidebar);
     }
