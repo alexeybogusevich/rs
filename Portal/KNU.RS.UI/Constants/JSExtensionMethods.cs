@@ -22,6 +22,7 @@
         public const string CheckPhoneNumber = "blazorExtensions.CHECK_PHONE_NUMBER";
         public const string SetInvalidPhoneNumber = "blazorExtensions.SET_CHANGE_INVALID_PHONE_NUMBER";
         public const string ClearInvalidPhoneNumber = "blazorExtensions.CLEAR_CHANGE_INVALID_PHONE_NUMBER";
-
+        public const string ChangePlanToCompleted = "blazorExtensions.CHANGE_PLAN_STATUS_SUCCESS";
+        public const string CloseModalNewRecoveryPlan = "blazorExtensions.CLOSE_MODAL_NEW_PLAN";
     }
 }

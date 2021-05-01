@@ -1,0 +1,40 @@
+﻿@inherits NewRecoveryPlanBase
+
+<div class="row">
+    <div class="col-lg-12">
+        <EditForm Model="@RecoveryModel" OnValidSubmit="@(async () => await CreateAsync())">
+            <DataAnnotationsValidator />
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label>Назва <span class="text-danger">*</span></label>
+                        <InputText @bind-Value="RecoveryModel.Name" autofocus="" class="form-control" />
+                        <ValidationMessage For="@(() => RecoveryModel.Name)" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Кількість повторень <span class="text-danger">*</span></label>
+                        <InputNumber @bind-Value="RecoveryModel.Times" autofocus="" class="form-control" />
+                        <ValidationMessage For="@(() => RecoveryModel.Times)" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Дата виконання <span class="text-danger">*</span></label>
+                        <InputDate @bind-Value="RecoveryModel.Day" autofocus="" class="form-control" />
+                        <ValidationMessage For="@(() => RecoveryModel.Day)" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Опис<span class="text-danger">*</span></label>
+                <InputTextArea @bind-Value="RecoveryModel.Description" autofocus="" class="form-control" rows="3" cols="30" />
+                <ValidationMessage For="@(() => RecoveryModel.Description)" />
+            </div>
+            <div class="m-t-20 text-center">
+                <button class="btn btn-primary submit-btn">Зберегти</button>
+            </div>
+        </EditForm>
+    </div>
+</div>

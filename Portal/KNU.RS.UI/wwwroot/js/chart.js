@@ -32,12 +32,6 @@ window.chartExtensions = {
 	},
 
 	FILL_STUDY_LINECHART: function (title, xAxis, labels1, labels2, data1, data2, index) {
-		console.log(title);
-		console.log(labels1);
-		console.log(labels2);
-		console.log(data1);
-		console.log(data2);
-
 		var lineChartData = {
 			labels: xAxis,
 			datasets: [{

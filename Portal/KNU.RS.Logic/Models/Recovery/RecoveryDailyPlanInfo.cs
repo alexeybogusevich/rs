@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace KNU.RS.Data.Models
+namespace KNU.RS.Logic.Models.Recovery
 {
-    public class RecoveryDailyPlan
+    public class RecoveryDailyPlanInfo
     {
         public Guid Id { get; set; }
 
@@ -14,12 +14,12 @@ namespace KNU.RS.Data.Models
 
         public int Times { get; set; }
 
-        public DateTime Day { get; set; }
+        public DateTime DateTime { get; set; }
 
         public bool Completed { get; set; }
 
-        public Guid DoctorPatientId { get; set; }
+        public string DoctorName { get; set; }
 
-        public DoctorPatient DoctorPatient { get; set; }
+        public Guid? DoctorId { get; set; }
     }
 }

@@ -7,5 +7,6 @@
         public const string ChangeMaritalStatus = "Select2_ChangeMaritalStatus";
         public const string ChangeEducationStatus = "Select2_ChangeEducationStatus";
         public const string ChangeOccupation = "Select2_ChangeOccupation";
+        public const string RefreshPlans = "RefreshPlans";
     }
 }

@@ -1,4 +1,4 @@
-﻿using KNU.RS.Data.Models;
+﻿using KNU.RS.Logic.Models.Recovery;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -7,7 +7,8 @@ namespace KNU.RS.Logic.Services.RecoveryPlanService
 {
     public interface IRecoveryPlanService
     {
-        Task<RecoveryDailyPlan> CreateAsync(RecoveryDailyPlan dailyPlan);
-        Task<IEnumerable<RecoveryDailyPlan>> GetAsync(Guid patientId);
+        Task<IEnumerable<RecoveryDailyPlanInfo>> GetInfoAsync(Guid patientId);
+        Task MarkAsCompletedAsync(Guid id);
+        Task CreateAsync(RecoveryDailyPlanModel model, Guid doctorId, Guid patientId);
     }
 }

@@ -111,7 +111,19 @@
     },
 
     TOGGLE_MODAL: function (modalId) {
+        console.log(modalId);
         $('#' + modalId).modal('toggle');
+    },
+
+    CHANGE_PLAN_STATUS_SUCCESS: function (index) {
+        $('#plan-status-image-' + index).removeClass();
+        $('#plan-status-image-' + index).addClass("fa fa-check");
+        $('#plan-status-' + index).val = "Виконано ";
+    },
+
+    CLOSE_MODAL_NEW_PLAN: function (dotnetHelper, nameFunc) {
+        $('#new-plan-modal').modal('toggle');
+        dotnetHelper.invokeMethodAsync(nameFunc);
     }
 }
 

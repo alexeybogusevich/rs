@@ -39,10 +39,10 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            var studyDetails = await StudyService.GetDetailsInfoAsync(Patient.PatientId);
+            var studyDetails = await StudyService.GetDetailsInfoAsync(Patient.Id);
             StudyDetails = studyDetails.OrderBy(s => s.DateTime).Take(15).ToList();
 
-            var studies = await StudyService.GetInfoAsync(Patient.PatientId);
+            var studies = await StudyService.GetInfoAsync(Patient.Id);
             Studies = studies.OrderByDescending(s => s.DateTime).ToList();
 
             IsLoading = false;

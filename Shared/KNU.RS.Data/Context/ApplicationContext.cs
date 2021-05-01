@@ -80,6 +80,7 @@ namespace KNU.RS.Data.Context
             modelBuilder.Entity<RecoveryDailyPlan>(rp =>
             {
                 rp.HasKey(r => r.Id);
+                rp.Property(r => r.SerialNumber).ValueGeneratedOnAdd();
                 rp.HasOne(r => r.DoctorPatient).WithMany(p => p.RecoveryDailyPlans).HasForeignKey(r => r.DoctorPatientId);
             });
 
