@@ -1,6 +1,7 @@
 ﻿using KNU.RS.Logic.Models.Recovery;
 using KNU.RS.Logic.Services.RecoveryPlanService;
 using KNU.RS.UI.Constants;
+using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
@@ -38,7 +39,7 @@ namespace KNU.RS.UI.Components
                 HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
-                NavigationManager.NavigateTo("/signin");
+                NavigationManager.NavigateUnauthorized();
             }
 
             await RecoveryService.CreateAsync(RecoveryModel, userId, PatientId);

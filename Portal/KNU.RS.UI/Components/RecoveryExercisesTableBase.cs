@@ -23,12 +23,13 @@ namespace KNU.RS.UI.Components
 
 
         protected List<RecoveryDailyPlanInfo> Plans { get; set; } = new List<RecoveryDailyPlanInfo>();
-        protected List<RecoveryDailyPlanInfo> DisplayedPlans { get; set; } = new List<RecoveryDailyPlanInfo>();
 
+        protected List<RecoveryDailyPlanInfo> DisplayedPlans { get; set; } = new List<RecoveryDailyPlanInfo>();
 
         protected bool IsLoading { get; set; } = true;
 
         private int BatchSize { get; set; } = 10;
+
         private int Batches { get; set; } = 1;
 
         protected string PlanDescriptionToDisplay { get; set; }

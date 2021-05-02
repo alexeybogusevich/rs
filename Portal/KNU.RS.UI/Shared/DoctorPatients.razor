@@ -6,20 +6,24 @@
 }
 else
 {
-    <div class="row">
-        <div class="col-sm-6 col-9 text-right">
-            <a href="javascript:void(0)" class="btn btn-primary btn-rounded float-left" @onclick="async () => await ToggleModalAsync()"><i class="fa fa-user-plus"></i></a>
-        </div>
-        <div class="col-sm-4 col-9 m-b-10">
-            <input type="text" class="form-control" placeholder="Пошук" @bind="FilteringModel.SearchWord">
-        </div>
-        <div class="col-sm-2 col-9 m-b-10">
-            <div class="btn-group float-right">
-                <button class="btn btn-primary float-right" @onclick="Filter"><i class="fa fa-search"></i></button>
-                <button class="btn btn-white float-right" @onclick="ClearFilters"><i class="fa fa-remove"></i></button>
+<div class="row">
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <div class="col-sm-6 col-9 text-right">
+                <a href="javascript:void(0)" class="btn btn-primary btn-rounded float-left" @onclick="async () => await ToggleModalAsync()"><i class="fa fa-user-plus"></i></a>
             </div>
+        </Authorized>
+    </AuthorizeView>
+    <div class="col-sm-4 col-9 m-b-10">
+        <input type="text" class="form-control" placeholder="Пошук" @bind="FilteringModel.SearchWord">
+    </div>
+    <div class="col-sm-2 col-9 m-b-10">
+        <div class="btn-group float-right">
+            <button class="btn btn-primary float-right" @onclick="Filter"><i class="fa fa-search"></i></button>
+            <button class="btn btn-white float-right" @onclick="ClearFilters"><i class="fa fa-remove"></i></button>
         </div>
     </div>
+</div>
     @if (Patients.Count > 0)
     {
         <div class="row">

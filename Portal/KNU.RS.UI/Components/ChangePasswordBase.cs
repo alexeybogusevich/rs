@@ -3,6 +3,7 @@ using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.LoginService;
 using KNU.RS.Logic.Services.UserService;
 using KNU.RS.UI.Constants;
+using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
@@ -12,16 +13,13 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class ChangePasswordBase : ComponentBase
+    public class ChangePasswordBase : PageBase
     {
         [Inject]
         protected IHttpContextAccessor HttpContextAccessor { get; set; }
 
         [Inject]
         protected ILoginService LoginService { get; set; }
-
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; }
 
         [Inject]
         protected IUserService UserService { get; set; }
@@ -41,7 +39,7 @@ namespace KNU.RS.UI.Components
                 HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
-                NavigationManager.NavigateTo("/signin");
+                NavigationManager.NavigateUnauthorized();
             }
 
             User = await UserService.GetAsync(userId);
@@ -62,8 +60,14 @@ namespace KNU.RS.UI.Components
                 return;
             }
 
-            await LoginService.ChangePasswordAsync(User, ChangePasswordModel.NewPassword);
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "password_changed");
+            var completed = await LoginService.ChangePasswordAsync(User, ChangePasswordModel.NewPassword);
+            if (completed)
+            {
+                await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "password_changed");
+                return;
+            }
+
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "password_change_failed");
         }
 
         public async Task ClearErrorsAsync()
@@ -74,8 +78,7 @@ namespace KNU.RS.UI.Components
 
         public async Task DoneAsync()
         {
-            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "password_changed");
-            NavigationManager.NavigateTo("/main");
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.BackToPreviousPage);
         }
     }
 }

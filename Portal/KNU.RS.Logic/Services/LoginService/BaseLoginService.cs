@@ -33,20 +33,24 @@ namespace KNU.RS.Logic.Services.LoginService
             return result.Succeeded;
         }
 
-        public async Task ChangePasswordAsync(User user, string password)
+        public async Task<bool> ChangePasswordAsync(User user, string password)
         {
+            IdentityResult setPasswordResult;
+
             if (await userManager.HasPasswordAsync(user))
             {
                 var token = await userManager.GeneratePasswordResetTokenAsync(user);
-                await userManager.ResetPasswordAsync(user, token, password);
+                setPasswordResult = await userManager.ResetPasswordAsync(user, token, password);
             }
             else
             {
-                await userManager.AddPasswordAsync(user, password);
+                setPasswordResult = await userManager.AddPasswordAsync(user, password);
             }
 
             context.Entry(user).State = EntityState.Modified;
             await context.SaveChangesAsync();
+
+            return setPasswordResult.Succeeded;
         }
 
         public async Task LogoutAsync()

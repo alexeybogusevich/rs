@@ -25,19 +25,17 @@ namespace KNU.RS.UI.Components
         protected IOptions<PhotoConfiguration> Options { get; set; }
 
 
-        [Parameter]
-        public List<PatientInfo> Patients { get; set; }
-
-
-        protected PatientInfo PatientToDelete { get; set; }
-
-
         protected int Counter = 1;
 
         private int PageSize = 10;
 
         private int PagesForReference = 5;
 
+
+        [Parameter]
+        public List<PatientInfo> Patients { get; set; }
+
+        protected PatientInfo PatientToDelete { get; set; }
 
         protected List<int> AvailablePages { get; set; } = new List<int>();
 

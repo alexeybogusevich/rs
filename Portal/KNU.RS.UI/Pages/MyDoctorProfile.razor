@@ -1,0 +1,15 @@
+﻿@page "/mydoctorprofile"
+@inherits MyDoctorProfileBase
+
+@attribute [Authorize]
+
+<Title value="Реабілітація КНУ | Мій профіль лікаря"></Title>
+
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <DoctorProfile Doctor="Doctor"></DoctorProfile>
+}

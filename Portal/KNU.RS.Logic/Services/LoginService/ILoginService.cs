@@ -7,7 +7,7 @@ namespace KNU.RS.Logic.Services.LoginService
     public interface ILoginService
     {
         Task<bool> CheckLoginAsync(LoginModel model);
-        Task ChangePasswordAsync(User user, string password);
+        Task<bool> ChangePasswordAsync(User user, string password);
         Task LogoutAsync();
     }
 }

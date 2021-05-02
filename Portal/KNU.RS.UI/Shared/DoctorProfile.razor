@@ -8,10 +8,13 @@
             <div class="col-sm-7 col-6">
                 <h4 class="page-title">Профіль</h4>
             </div>
-
-            <div class="col-sm-5 col-6 text-right m-b-30">
-                <a href="/editdoctor/@Doctor.UserId" class="btn btn-primary btn-rounded"><i class="fa fa-edit"></i> Редагувати</a>
-            </div>
+            <AuthorizeView Roles="Admin">
+                <Authorized>
+                    <div class="col-sm-5 col-6 text-right m-b-30">
+                        <a href="/editdoctor/@Doctor.UserId" class="btn btn-primary btn-rounded"><i class="fa fa-edit"></i> Редагувати</a>
+                    </div>
+                </Authorized>
+            </AuthorizeView>
         </div>
         <div class="card-box profile-header">
             <div class="row">
@@ -70,7 +73,11 @@
             <ul class="nav nav-tabs nav-tabs-bottom">
                 <li class="nav-item"><a class="nav-link active" href="#about-cont" data-toggle="tab">Деталі</a></li>
                 <li class="nav-item"><a class="nav-link" href="#bottom-tab2" data-toggle="tab">Інформація</a></li>
-                <li class="nav-item"><a class="nav-link" href="#bottom-tab3" data-toggle="tab">Пацієнти</a></li>
+                <AuthorizeView Roles="Admin,Doctor">
+                    <Authorized>
+                        <li class="nav-item"><a class="nav-link" href="#bottom-tab3" data-toggle="tab">Пацієнти</a></li>
+                    </Authorized>
+                </AuthorizeView>
                 <li class="nav-item"><a class="nav-link" href="#bottom-tab4" data-toggle="tab">Запис до лікаря</a></li>
             </ul>
 

@@ -45,7 +45,12 @@
             <div class="col-12 col-md-6 col-lg-8 col-xl-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title d-inline-block">Нові пацієнти </h4> <a href="/patients" class="btn btn-primary float-right">Переглянути всіх</a>
+                        <h4 class="card-title d-inline-block">Нові пацієнти </h4>
+                        <AuthorizeView Roles="Admin">
+                            <Authorized>
+                                <a href="/patients" class="btn btn-primary float-right">Переглянути всіх</a>
+                            </Authorized>
+                        </AuthorizeView>
                     </div>
                     <div class="card-block">
                         <div class="table-responsive">

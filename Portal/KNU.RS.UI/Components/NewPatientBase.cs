@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class NewPatientBase : ComponentBase
+    public class NewPatientBase : PageBase
     {
         [Inject]
         protected IAccountService AccountService { get; set; }
@@ -19,9 +19,6 @@ namespace KNU.RS.UI.Components
 
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; }
 
 
         protected bool IsLoading { get; set; } = true;
@@ -45,7 +42,7 @@ namespace KNU.RS.UI.Components
             await AccountService.RegisterAsync(RegistrationModel);
             IsLoading = false;
 
-            NavigationManager.NavigateTo("/patients");
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.BackToPreviousPage);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)

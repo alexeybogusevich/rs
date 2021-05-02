@@ -121,6 +121,10 @@
         $('#plan-status-' + index).text("Виконано ");
         //$('#plan-button-' + index).attr('disabled', true);
         $('#plan-button-' + index).addClass('hide');
+    },
+
+    HISTORY_BACK: function () {
+        history.back();
     }
 }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class DoctorsBase : ComponentBase
+    public class DoctorsBase : PageBase
     {
         [Inject]
         protected IDoctorService DoctorService { get; set; }

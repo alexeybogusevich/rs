@@ -1,0 +1,28 @@
+﻿@page "/mypatients"
+@using KNU.RS.Data.Constants
+@inherits MyPatientsBase
+
+@attribute [Authorize(Roles = RoleName.Doctor)]
+
+<Title value="Реабілітація КНУ | Мої пацієнти"></Title>
+
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="page-wrapper">
+        <div class="content">
+            @if (PatientsList?.Count() > 0)
+            {
+                <PatientsTable Patients="PatientsList" />
+            }
+            else
+            {
+                <br />
+                <h5>Наразі за вами пацієнти не закріплені. Очікуйте на оновлення або ж зверніться до адміністратора.</h5>
+            }
+        </div>
+    </div>
+}

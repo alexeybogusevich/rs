@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class LinkDoctorPatientComponent : ComponentBase
+    public class LinkDoctorPatientBase : ComponentBase
     {
         [Inject]
         protected IPatientService PatientService { get; set; }
@@ -19,21 +19,19 @@ namespace KNU.RS.UI.Components
         public Guid DoctorId { get; set; }
 
 
-        public List<PatientShort> Patients { get; set; } = new List<PatientShort>();
-
-
         protected int Counter = 1;
 
         private int PageSize = 10;
 
         private int PagesForReference = 5;
 
+        public List<PatientShort> Patients { get; set; } = new List<PatientShort>();
+
         protected List<int> AvailablePages { get; set; } = new List<int>();
 
         protected PaginatedList<PatientShort> PatientsPage { get; set; } = new PaginatedList<PatientShort>();
 
         protected Filtering FilteringModel { get; set; } = new Filtering();
-
 
         protected bool IsLoading { get; set; }
 

@@ -1,6 +1,7 @@
 ﻿using KNU.RS.Logic.Models.Recovery;
 using KNU.RS.Logic.Services.RecoveryPlanService;
 using KNU.RS.UI.Constants;
+using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
@@ -26,13 +27,15 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected NavigationManager NavigationManager { get; set; }
 
-        protected List<RecoveryDailyPlanInfo> Plans { get; set; } = new List<RecoveryDailyPlanInfo>();
-        protected List<RecoveryDailyPlanInfo> DisplayedPlans { get; set; } = new List<RecoveryDailyPlanInfo>();
 
+        protected List<RecoveryDailyPlanInfo> Plans { get; set; } = new List<RecoveryDailyPlanInfo>();
+
+        protected List<RecoveryDailyPlanInfo> DisplayedPlans { get; set; } = new List<RecoveryDailyPlanInfo>();
 
         protected bool IsLoading { get; set; } = true;
 
         private int BatchSize { get; set; } = 10;
+
         private int Batches { get; set; } = 1;
 
         protected string PlanDescriptionToDisplay { get; set; }
@@ -115,7 +118,7 @@ namespace KNU.RS.UI.Components
                 HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
-                NavigationManager.NavigateTo("/signin");
+                NavigationManager.NavigateUnauthorized();
             }
 
             var plans = await RecoveryService.GetInfoByUserAsync(userId);

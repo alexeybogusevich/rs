@@ -4,6 +4,8 @@ using KNU.RS.Logic.Models.Account;
 using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.Logic.Services.UserService;
+using KNU.RS.UI.Constants;
+using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
@@ -14,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class EditProfileBase : ComponentBase
+    public class EditProfileBase : PageBase
     {
         [Inject]
         protected IAccountService AccountService { get; set; }
@@ -30,9 +32,6 @@ namespace KNU.RS.UI.Components
 
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; }
 
         protected bool IsLoading { get; set; } = true;
 
@@ -54,7 +53,7 @@ namespace KNU.RS.UI.Components
             await AccountService.EditAsync(EditModel);
             IsLoading = false;
 
-            NavigationManager.NavigateTo("/main");
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.BackToPreviousPage);
         }
 
         protected override async Task OnInitializedAsync()
@@ -65,7 +64,7 @@ namespace KNU.RS.UI.Components
                 HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
-                NavigationManager.NavigateTo("/signin");
+                NavigationManager.NavigateUnauthorized();
             }
 
             var user = await UserService.GetAsync(userId);

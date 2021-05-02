@@ -4,6 +4,7 @@ using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Models.User;
 using KNU.RS.Logic.Services.UserService;
 using KNU.RS.UI.Constants;
+using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -47,7 +48,7 @@ namespace KNU.RS.UI.Components
                 HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
-                NavigationManager.NavigateTo("/signin");
+                NavigationManager.NavigateUnauthorized();
             }
 
             using var scope = ServiceScopeFactory.CreateScope();

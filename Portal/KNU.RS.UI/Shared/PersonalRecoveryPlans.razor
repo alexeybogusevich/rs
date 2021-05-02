@@ -6,62 +6,66 @@
 }
 else
 {
-    @if (Plans?.Count() > 0)
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-border custom-table mb-0">
-                        <thead>
-                            <tr>
-                                <th>Дата виконання</th>
-                                <th>Лікар</th>
-                                <th>Назва</th>
-                                <th>Повторень</th>
-                                <th>Статус</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var plan in DisplayedPlans)
-                            {
-                                <tr>
-                                    <td>@plan.DateTime.ToString("dd.MM.yyyy")</td>
-                                    <td><a href="/viewdoctor/@plan.DoctorId.GetValueOrDefault()">@plan.DoctorName</a> </td>
-                                    <td><a href="javascript:void(0)" @onclick="async () => await DisplayDescriptionAsync(plan.Description)">@plan.Name</a></td>
-                                    <td>@plan.Times</td>
-                                    <td><span id="plan-status-@plan.SerialNumber">@GetStatus(plan)&nbsp;</span><i id="plan-status-image-@plan.SerialNumber" class="fa @GetStatusClass(plan)"></i></td>
-                                    <td><button id="plan-button-@plan.SerialNumber" type="button" class="btn btn-success @GetButtonDisplay(plan)" @onclick="async () => await MarkAsCompletedAsync(plan.Id, plan.SerialNumber)" disabled="@GetButtonDisabled(plan)">Виконати</button></td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        @if (DisplayedPlans?.Count != Plans?.Count)
-        {
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="see-all">
-                        <a class="see-all-btn" href="javascript:void(0)" @onclick="LoadMore">Завантажити ще</a>
+    <div class="page-wrapper">
+        <div class="content">
+            @if (Plans?.Count() > 0)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-border custom-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Дата виконання</th>
+                                        <th>Лікар</th>
+                                        <th>Назва</th>
+                                        <th>Повторень</th>
+                                        <th>Статус</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var plan in DisplayedPlans)
+                                    {
+                                        <tr>
+                                            <td>@plan.DateTime.ToString("dd.MM.yyyy")</td>
+                                            <td><a href="/viewdoctor/@plan.DoctorId.GetValueOrDefault()">@plan.DoctorName</a> </td>
+                                            <td><a href="javascript:void(0)" @onclick="async () => await DisplayDescriptionAsync(plan.Description)">@plan.Name</a></td>
+                                            <td>@plan.Times</td>
+                                            <td><span id="plan-status-@plan.SerialNumber">@GetStatus(plan)&nbsp;</span><i id="plan-status-image-@plan.SerialNumber" class="fa @GetStatusClass(plan)"></i></td>
+                                            <td><button id="plan-button-@plan.SerialNumber" type="button" class="btn btn-success @GetButtonDisplay(plan)" @onclick="async () => await MarkAsCompletedAsync(plan.Id, plan.SerialNumber)" disabled="@GetButtonDisabled(plan)">Виконати</button></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    }
-    else
-    {
-        <br />
-        <ul class="list-unstyled">
-            <li>
-                <h5>
-                    <strong>Наразі вам не призначено до виконання жодної вправи. Відпочивайте.</strong>
-                </h5>
-            </li>
-        </ul>
-    }
+                @if (DisplayedPlans?.Count != Plans?.Count)
+                {
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="see-all">
+                                <a class="see-all-btn" href="javascript:void(0)" @onclick="LoadMore">Завантажити ще</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <br />
+                <ul class="list-unstyled">
+                    <li>
+                        <h5>
+                            <strong>Наразі вам не призначено до виконання жодної вправи. Відпочивайте.</strong>
+                        </h5>
+                    </li>
+                </ul>
+            }
+        </div>
+    </div>
     <div id="plan-description-modal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

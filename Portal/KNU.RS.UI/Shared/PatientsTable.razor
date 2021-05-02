@@ -7,12 +7,20 @@
     <div class="col-sm-2 col-9 m-b-10">
         <div class="btn-group float-right">
             <button class="btn btn-primary float-right" @onclick="Filter"><i class="fa fa-search"></i></button>
-            <button class="btn btn-white float-right" @onclick="ClearFilters"><i class="fa fa-remove"></i></button>
+            <AuthorizeView Roles="Admin">
+                <Authorized>
+                    <button class="btn btn-white float-right" @onclick="ClearFilters"><i class="fa fa-remove"></i></button>
+                </Authorized>
+            </AuthorizeView>
         </div>
     </div>
-    <div class="col-sm-6 col-9 text-left m-b-10">
-        <a href="/newpatient" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Додати</a>
-    </div>
+    <AuthorizeView Roles="Admin">
+        <Authorized>
+            <div class="col-sm-6 col-9 text-left m-b-10">
+                <a href="/newpatient" class="btn btn btn-primary btn-rounded float-right"><i class="fa fa-plus"></i> Додати</a>
+            </div>
+        </Authorized>
+    </AuthorizeView>
 </div>
 <div class="row">
     <div class="col-md-12">

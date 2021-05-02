@@ -8,6 +8,7 @@ using KNU.RS.Logic.Services.DoctorService;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.Logic.Services.QualificationService;
 using KNU.RS.UI.Constants;
+using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -17,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class EditDoctorBase : ComponentBase
+    public class EditDoctorBase : PageBase
     {
         [Inject]
         protected IAccountService AccountService { get; set; }
@@ -33,9 +34,6 @@ namespace KNU.RS.UI.Components
 
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; }
 
         [Inject]
         protected IQualificationService QualificationService { get; set; }
@@ -67,7 +65,7 @@ namespace KNU.RS.UI.Components
             await AccountService.EditAsync(EditModel);
             IsLoading = false;
 
-            NavigationManager.NavigateTo("/doctors");
+            await JsRuntime.InvokeVoidAsync(JSExtensionMethods.BackToPreviousPage);
         }
 
         protected override async Task OnInitializedAsync()
