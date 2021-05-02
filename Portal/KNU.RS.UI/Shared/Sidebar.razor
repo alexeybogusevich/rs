@@ -37,7 +37,7 @@
                 <AuthorizeView Roles="Doctor">
                     <Authorized>
                         <li class="@myDoctorProfileClass">
-                            <a href="/mydoctorprofile" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-id-card-o"></i> <span>Мій профіль лікаря</span></a>
+                            <a href="/mydoctorprofile" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-id-card-o"></i> <span>Мій профіль</span></a>
                         </li>
                     </Authorized>
                 </AuthorizeView>
@@ -48,6 +48,13 @@
                         </li>
                     </Authorized>
                 </AuthorizeView>
+                <AuthorizeView Roles="Admin">
+                    <Authorized>
+                        <li class="@clinicsClass">
+                            <a href="/clinics" @onclick="async () => await CloseSidebarAsync()"><i class="fa fa-hospital-o"></i> <span>Відділення</span></a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
             </ul>
         </div>
     </div>
@@ -55,12 +62,13 @@
 
 @code {
     private string currentUri => navManager.ToBaseRelativePath(navManager.Uri);
-    private string panelClass => currentUri.Equals("main") ? "active" : "";
-    private string doctorsClass => currentUri.Contains("doctor") && !currentUri.Contains("mydoctorprofile") ? "active" : "";
-    private string patientsClass => currentUri.Contains("patient") && !currentUri.Contains("mypatients") ? "active" : "";
-    private string myPatientsClass => currentUri.Contains("mypatients") ? "active" : "";
-    private string myDoctorProfileClass => currentUri.Contains("mydoctorprofile") ? "active" : "";
-    private string myRecoveryPlansClass => currentUri.Contains("myrecoveryplans") ? "active" : "";
+    private string panelClass => currentUri.Equals("main") ? "active" : string.Empty;
+    private string doctorsClass => currentUri.Contains("doctor") && !currentUri.Contains("mydoctorprofile") ? "active" : string.Empty;
+    private string clinicsClass => currentUri.Contains("clinic") ? "active" : string.Empty;
+    private string patientsClass => currentUri.Contains("patient") && !currentUri.Contains("mypatients") ? "active" : string.Empty;
+    private string myPatientsClass => currentUri.Contains("mypatients") ? "active" : string.Empty;
+    private string myDoctorProfileClass => currentUri.Contains("mydoctorprofile") ? "active" : string.Empty;
+    private string myRecoveryPlansClass => currentUri.Contains("myrecoveryplans") ? "active" : string.Empty;
 
     private async Task CloseSidebarAsync()
     {

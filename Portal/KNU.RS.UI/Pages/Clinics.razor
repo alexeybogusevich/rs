@@ -1,0 +1,20 @@
+﻿@page "/clinics"
+@using KNU.RS.Data.Constants
+@inherits ClinicsBase
+
+@attribute [Authorize(Roles = RoleName.Admin)]
+
+<Title value="Реабілітація КНУ | Відділення"></Title>
+
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="page-wrapper">
+        <div class="content">
+            <ClinicsTable Clinics="ClinicsList" />
+        </div>
+    </div>
+}

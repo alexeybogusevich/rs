@@ -1,0 +1,65 @@
+﻿@page "/editclinic/{Id:guid}"
+@using KNU.RS.Data.Constants
+@inherits EditClinicBase
+
+@attribute [Authorize(Roles = RoleName.Admin)]
+
+<Title value="Реабілітація КНУ | Відділення"></Title>
+
+@if (IsLoading)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <h4 class="page-title">Редагування відділення</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <EditForm Model="@EditModel" OnValidSubmit="@(async () => await UpdateAsync())">
+                        <DataAnnotationsValidator />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Назва <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="EditModel.Name" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.Name)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Робочі години <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="EditModel.WorkingHours" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.WorkingHours)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Телефон <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="EditModel.PhoneNumber" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.PhoneNumber)" />
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Адреса <span class="text-danger">*</span></label>
+                                    <InputText @bind-Value="EditModel.Location" autofocus="" class="form-control" />
+                                    <ValidationMessage For="@(() => EditModel.Location)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-t-20 text-center">
+                            <button class="btn btn-primary submit-btn">Зберегти</button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
