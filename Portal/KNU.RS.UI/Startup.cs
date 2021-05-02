@@ -3,7 +3,6 @@ using KNU.RS.Data.Context;
 using KNU.RS.Data.Models;
 using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Constants;
-using KNU.RS.Logic.Helpers;
 using KNU.RS.Logic.Mapper;
 using KNU.RS.Logic.Middleware;
 using KNU.RS.Logic.Services.AccountService;
@@ -71,8 +70,6 @@ namespace KNU.RS.UI
             services.AddScoped<IStudyService, BaseStudyService>();
             services.AddScoped<IUserService, BaseUserService>();
             services.AddScoped<IQualificationService, BaseQualificationService>();
-
-            services.AddSingleton<PageHistoryState>();
 
             services.AddHttpContextAccessor();
 

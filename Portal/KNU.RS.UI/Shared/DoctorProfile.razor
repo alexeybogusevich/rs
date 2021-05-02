@@ -71,8 +71,7 @@
         </div>
         <div class="profile-tabs">
             <ul class="nav nav-tabs nav-tabs-bottom">
-                <li class="nav-item"><a class="nav-link active" href="#about-cont" data-toggle="tab">Деталі</a></li>
-                <li class="nav-item"><a class="nav-link" href="#bottom-tab2" data-toggle="tab">Інформація</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#about-cont" data-toggle="tab">Інформація</a></li>
                 <AuthorizeView Roles="Admin,Doctor">
                     <Authorized>
                         <li class="nav-item"><a class="nav-link" href="#bottom-tab3" data-toggle="tab">Пацієнти</a></li>
@@ -89,6 +88,14 @@
                                 <h3 class="card-title">Професійні компетенції</h3>
                                 <div class="experience-box">
                                     @Doctor.Competencies
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card-box">
+                                <h3 class="card-title">Біографія</h3>
+                                <div class="experience-box">
+                                    @Doctor.Biography
                                 </div>
                             </div>
                         </div>
@@ -122,18 +129,6 @@
                             </div>
                         </div>
                     }
-                </div>
-                <div class="tab-pane" id="bottom-tab2">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card-box">
-                                <h3 class="card-title">Біографія</h3>
-                                <div class="experience-box">
-                                    @Doctor.Biography
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 @if (IsLoading)
                 {

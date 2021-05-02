@@ -147,7 +147,7 @@ else
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Професійні компетенції</label>
+                            <label>Професійні компетенції<span class="text-danger">*</span></label>
                             <InputTextArea @bind-Value="EditModel.Competencies" autofocus="" class="form-control" rows="3" cols="30" />
                             <ValidationMessage For="@(() => EditModel.Competencies)" />
                         </div>

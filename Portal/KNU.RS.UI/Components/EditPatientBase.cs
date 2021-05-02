@@ -5,7 +5,6 @@ using KNU.RS.Logic.Services.AccountService;
 using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.UI.Constants;
-using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;

@@ -8,7 +8,6 @@ using KNU.RS.Logic.Services.DoctorService;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.Logic.Services.QualificationService;
 using KNU.RS.UI.Constants;
-using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
