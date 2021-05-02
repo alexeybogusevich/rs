@@ -11,5 +11,6 @@
         public const string Height = "HEIGHT";
         public const string Diagnosis = "DIAGNOSIS";
         public const string Complaints = "COMPLAINTS";
+        public const string StudyType = "TYPENAME";
     }
 }

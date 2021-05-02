@@ -84,7 +84,6 @@ namespace KNU.RS.Logic.Helpers
                 rSep.Remove();
                 rEnd.Remove();
             }
-
         }
         public static Paragraph GetParagraph(this OpenXmlElement xmlElement)
         {

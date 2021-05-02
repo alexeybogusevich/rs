@@ -3,6 +3,6 @@
     public class ReportConfiguration
     {
         public string FullPath { get; set; }
-        public string TempPath { get; set; }
+        public string TempPathBase { get; set; }
     }
 }
