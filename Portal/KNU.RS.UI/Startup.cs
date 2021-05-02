@@ -15,6 +15,7 @@ using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.Logic.Services.QualificationService;
 using KNU.RS.Logic.Services.RecoveryPlanService;
+using KNU.RS.Logic.Services.ReportService;
 using KNU.RS.Logic.Services.StudyService;
 using KNU.RS.Logic.Services.UserService;
 using KNU.RS.PlatformExtensions.Configuration;
@@ -67,6 +68,7 @@ namespace KNU.RS.UI
             services.AddScoped<IPatientService, BasePatientService>();
             services.AddScoped<IPhotoService, BasePhotoService>();
             services.AddScoped<IRecoveryPlanService, BaseRecoveryPlanService>();
+            services.AddScoped<IReportService, BaseReportService>();
             services.AddScoped<IStudyService, BaseStudyService>();
             services.AddScoped<IUserService, BaseUserService>();
             services.AddScoped<IQualificationService, BaseQualificationService>();
@@ -77,6 +79,8 @@ namespace KNU.RS.UI
                 (options => Configuration.GetSection(ConfigurationConstants.Emailing).Bind(options));
             services.Configure<PhotoConfiguration>
                 (options => Configuration.GetSection(ConfigurationConstants.Photo).Bind(options));
+            services.Configure<ReportConfiguration>
+                (options => Configuration.GetSection(ConfigurationConstants.Report).Bind(options));
 
             services.AddRouting(options =>
             {

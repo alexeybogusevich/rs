@@ -2,13 +2,14 @@
 using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class StudiesTableBase : ComponentBase
+    public class StudiesTableBase : PageBase
     {
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
@@ -27,6 +28,12 @@ namespace KNU.RS.UI.Components
         protected void CloseDetails()
         {
             StudyDetailsToDisplay = new List<StudyDetailsShort>();
+        }
+
+        protected async Task DownloadReportAsync(Guid reportId)
+        {
+            NavigationManager.NavigateTo($"/api/studyreports/{reportId}", true);
+            //await JsRuntime.InvokeVoidAsync(JSExtensionMethods.DownloadReport, reportId);
         }
     }
 }

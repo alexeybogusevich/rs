@@ -1,4 +1,5 @@
 ﻿using KNU.RS.Data.Models;
+using KNU.RS.Logic.Helpers;
 using KNU.RS.Logic.Models.Study;
 using System.Linq;
 
@@ -43,6 +44,33 @@ namespace KNU.RS.Logic.Converters
                 StudySubtypeName = studyDetails.StudySubtype?.Name,
                 StudyTypeId = studyDetails.StudySubtype?.StudyTypeId,
                 StudyTypeName = studyDetails.StudySubtype?.StudyType?.Name
+            };
+        }
+
+        public static StudyReportInfo ConvertReport(StudyHeader studyHeader)
+        {
+            var doctorUser = studyHeader.DoctorPatient?.Doctor?.User;
+            var patientUser = studyHeader.DoctorPatient?.Patient?.User;
+
+            return new StudyReportInfo
+            {
+                Age = patientUser?.Birthday == null ? string.Empty : DateTimeHelper.GetAge(patientUser.Birthday).ToString(),
+                Complaints = studyHeader.DoctorPatient?.Patient?.Complaints ?? string.Empty,
+                Diagnosis = studyHeader.DoctorPatient?.Patient?.Diagnosis ?? string.Empty,
+                Date = studyHeader.DateTime.ToString("dd.MM.yyyy"),
+                DoctorShortName = doctorUser == null ? string.Empty : NameHelper.GetShortName(doctorUser),
+                Fullname = patientUser == null ? string.Empty : NameHelper.GetFullName(patientUser),
+                PhoneNumber = patientUser.PhoneNumber?.ToString() ?? string.Empty,
+                Height = studyHeader.DoctorPatient?.Patient?.Height.ToString() ?? string.Empty,
+                Weight = studyHeader.DoctorPatient?.Patient?.Weight.ToString() ?? string.Empty,
+                StudyTypeName = studyHeader.StudyDetails?.FirstOrDefault()?.StudySubtype?.StudyType?.Name ?? string.Empty,
+                StudyDetails = studyHeader.StudyDetails?.Select(s =>
+                    new StudyDetailsShort
+                    {
+                        StudySubtypeName = s.StudySubtype?.Name,
+                        ClockwiseDegrees = s.ClockwiseDegrees,
+                        CounterClockwiseDegrees = s.CounterClockwiseDegrees
+                    })
             };
         }
     }

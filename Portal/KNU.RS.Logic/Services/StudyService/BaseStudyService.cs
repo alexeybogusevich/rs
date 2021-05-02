@@ -58,6 +58,23 @@ namespace KNU.RS.Logic.Services.StudyService
                 .ToListAsync();
         }
 
+        public async Task<StudyReportInfo> GetReportAsync(Guid headerId)
+        {
+            return await context.StudyHeaders
+                .Include(s => s.DoctorPatient)
+                    .ThenInclude(dp => dp.Doctor)
+                        .ThenInclude(d => d.User)
+                .Include(s => s.DoctorPatient)
+                    .ThenInclude(dp => dp.Patient)
+                        .ThenInclude(d => d.User)
+                .Include(s => s.StudyDetails)
+                    .ThenInclude(s => s.StudySubtype)
+                        .ThenInclude(s => s.StudyType)
+                .Where(s => s.Id.Equals(headerId))
+                .Select(s => StudyConverter.ConvertReport(s))
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<StudySubtype>> GetSubtypesAsync()
         {
             return await context.StudySubtypes.ToListAsync();
