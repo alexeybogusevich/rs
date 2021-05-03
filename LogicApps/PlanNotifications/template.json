@@ -1,0 +1,134 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_logic_app_knu_rs_westeu_001_name": {
+            "defaultValue": "logic-app-knu-rs-westeu-001",
+            "type": "String"
+        },
+        "connections_sql_1_externalid": {
+            "defaultValue": "/subscriptions/ca2c3423-0306-4a5c-b6b5-c49059793418/resourceGroups/rs/providers/Microsoft.Web/connections/sql-1",
+            "type": "String"
+        },
+        "connections_twilio_externalid": {
+            "defaultValue": "/subscriptions/ca2c3423-0306-4a5c-b6b5-c49059793418/resourceGroups/rs/providers/Microsoft.Web/connections/twilio",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_logic_app_knu_rs_westeu_001_name')]",
+            "location": "westeurope",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "Everyday_at_9:00": {
+                            "recurrence": {
+                                "frequency": "Day",
+                                "interval": 1,
+                                "schedule": {
+                                    "hours": [
+                                        "9",
+                                        "17"
+                                    ],
+                                    "minutes": [
+                                        45
+                                    ]
+                                }
+                            },
+                            "type": "Recurrence"
+                        }
+                    },
+                    "actions": {
+                        "Filter_array": {
+                            "runAfter": {
+                                "GET_today_plans_and_phone_numbers_from_the_database": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Query",
+                            "inputs": {
+                                "from": "@coalesce(body('GET_today_plans_and_phone_numbers_from_the_database')?['ResultSets']?['Table1'],json('[]'))",
+                                "where": "@equals(item()['PhoneNumber'], string('+380951360156'))"
+                            }
+                        },
+                        "For_each": {
+                            "foreach": "@body('Filter_array')",
+                            "actions": {
+                                "Send_Text_Message_(SMS)": {
+                                    "runAfter": {},
+                                    "type": "ApiConnection",
+                                    "inputs": {
+                                        "body": {
+                                            "body": "Добрий ранок, @{items('For_each')?['FirstName']} @{items('For_each')?['MiddleName']}! Вас вітає Реабілітація КНУ! Сьогодні вам призначено до виконання такі вправи: @{items('For_each')?['Plans']}. Після завершення роботи, будь-ласка, перейдіть на портал Реабілітації та підтвердіть виконання. Вдалого дня! ",
+                                            "from": "+16308844792",
+                                            "to": "@items('For_each')?['PhoneNumber']"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['twilio']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/Messages.json"
+                                    }
+                                }
+                            },
+                            "runAfter": {
+                                "Filter_array": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
+                        },
+                        "GET_today_plans_and_phone_numbers_from_the_database": {
+                            "runAfter": {},
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": {
+                                    "query": "SELECT \n\t\tu2.FirstName, u2.MiddleName, u2.PhoneNumber, \n\t\tSTUFF(\n\t\t\t(SELECT DISTINCT ', ' + p1.Name + ' (' + CAST(p1.Times as nvarchar) + ')'\n\t\t\tFROM dbo.RecoveryDailyPlans p1\n\t\t\tJOIN dbo.DoctorPatients dp1\n\t\t\tON p1.DoctorPatientId = dp1.Id\n\t\t\tJOIN dbo.Patients pt1\n\t\t\tON pt1.Id = dp1.PatientId\n\t\t\tJOIN dbo.AspNetUsers u1\n\t\t\tON pt1.UserId = u2.Id\n\t\t\tWHERE CAST(p1.Day as DATE) = CAST(GETDATE() as DATE)\n\t\t\tFOR XML PATH (''))\n          , 1, 1, '')  AS Plans\nFROM dbo.RecoveryDailyPlans AS p2\nJOIN dbo.DoctorPatients AS dp2\nON p2.DoctorPatientId = dp2.Id\nJOIN dbo.Patients AS pt2\nON pt2.Id = dp2.PatientId\nJOIN dbo.AspNetUsers AS u2\nON pt2.UserId = u2.Id\nWHERE CAST(p2.Day as DATE) = CAST(GETDATE() as DATE) \nGROUP BY u2.FirstName, u2.MiddleName, u2.PhoneNumber, u2.Id"
+                                },
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['sql']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/query/sql"
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "sql": {
+                                "connectionId": "[parameters('connections_sql_1_externalid')]",
+                                "connectionName": "sql-1",
+                                "id": "/subscriptions/ca2c3423-0306-4a5c-b6b5-c49059793418/providers/Microsoft.Web/locations/westeurope/managedApis/sql"
+                            },
+                            "twilio": {
+                                "connectionId": "[parameters('connections_twilio_externalid')]",
+                                "connectionName": "twilio",
+                                "id": "/subscriptions/ca2c3423-0306-4a5c-b6b5-c49059793418/providers/Microsoft.Web/locations/westeurope/managedApis/twilio"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
