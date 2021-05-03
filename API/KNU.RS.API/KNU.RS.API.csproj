@@ -13,8 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Portal\KNU.RS.Logic\KNU.RS.Logic.csproj" />
-    <ProjectReference Include="..\Shared\KNU.RS.PlatformExtensions\KNU.RS.PlatformExtensions.csproj" />
+    <ProjectReference Include="..\..\Portal\KNU.RS.Logic\KNU.RS.Logic.csproj" />
+    <ProjectReference Include="..\..\Shared\KNU.RS.Data\KNU.RS.Data.csproj" />
+    <ProjectReference Include="..\..\Shared\KNU.RS.PlatformExtensions\KNU.RS.PlatformExtensions.csproj" />
   </ItemGroup>
 
 </Project>
