@@ -23,7 +23,7 @@
             "name": "[parameters('workflows_logic_app_knu_rs_westeu_001_name')]",
             "location": "westeurope",
             "properties": {
-                "state": "Enabled",
+                "state": "Disabled",
                 "definition": {
                     "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
                     "contentVersion": "1.0.0.0",
@@ -40,11 +40,10 @@
                                 "interval": 1,
                                 "schedule": {
                                     "hours": [
-                                        "9",
-                                        "17"
+                                        "9"
                                     ],
                                     "minutes": [
-                                        45
+                                        0
                                     ]
                                 }
                             },
