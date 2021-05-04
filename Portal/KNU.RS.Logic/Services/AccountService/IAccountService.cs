@@ -1,4 +1,5 @@
 ﻿using KNU.RS.Logic.Models.Account;
+using System;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.AccountService
@@ -11,5 +12,6 @@ namespace KNU.RS.Logic.Services.AccountService
         Task EditAsync(DoctorRegistrationModel model);
         Task EditAsync(RegistrationModel model);
         Task HandleForgotPasswordAsync(ForgotPasswordModel model);
+        Task PromoteToAdminAsync(Guid id);
     }
 }

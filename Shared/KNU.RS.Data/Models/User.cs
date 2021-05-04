@@ -17,6 +17,8 @@ namespace KNU.RS.Data.Models
 
         public bool HasPhoto { get; set; }
 
+        public bool PromotedToAdmin { get; set; }
+
         public Doctor Doctor { get; set; }
         public Patient Patient { get; set; }
     }

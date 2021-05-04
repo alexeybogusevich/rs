@@ -305,6 +305,22 @@ namespace KNU.RS.Logic.Services.AccountService
             }
         }
 
+        public async Task PromoteToAdminAsync(Guid id)
+        {
+            var user = await context.Users.FindAsync(id);
+            if (user == null)
+            {
+                throw new ArgumentException($"Користувача не знайдено. Id: {id}");
+            }
+
+            await userManager.AddToRoleAsync(user, RoleName.Doctor);
+            await userManager.UpdateAsync(user);
+
+            user.PromotedToAdmin = true;
+            context.Users.Update(user);
+            await context.SaveChangesAsync();
+        }
+
         private async Task SetPasswordAsync(User user, string password)
         {
             IdentityResult setPasswordResult;

@@ -12,15 +12,18 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IDoctorService DoctorService { get; set; }
 
-        protected bool IsLoading { get; set; } = true;
+        protected bool IsLoading { get; set; }
 
         public List<DoctorInfo> DoctorsList { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
+            IsLoading = true;
+
             var doctors = await DoctorService.GetInfoAsync();
             DoctorsList = doctors.ToList();
+
             IsLoading = false;
         }
     }

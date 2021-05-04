@@ -35,7 +35,8 @@ namespace KNU.RS.Logic.Converters
                 ClinicName = doctor.Clinic?.Name,
                 ClinicAddress = doctor.Clinic?.Location,
                 ClinicPhoneNumber = doctor.Clinic?.PhoneNumber,
-                ClinicWorkingHours = doctor.Clinic?.WorkingHours
+                ClinicWorkingHours = doctor.Clinic?.WorkingHours,
+                PromotedToAdmin = doctor.User?.PromotedToAdmin ?? false
             };
         }
 

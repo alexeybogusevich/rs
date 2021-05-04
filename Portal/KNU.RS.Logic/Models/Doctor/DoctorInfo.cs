@@ -19,6 +19,7 @@ namespace KNU.RS.Logic.Models.Doctor
         public string ClinicAddress { get; set; }
         public string ClinicPhoneNumber { get; set; }
         public string ClinicWorkingHours { get; set; }
+        public bool PromotedToAdmin { get; set; }
         public IEnumerable<Education> Educations { get; set; }
     }
 }
