@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class DoctorsGridBase : ComponentBase
+    public class DoctorsGridBase : PageBase
     {
         [Inject]
         protected IPhotoService PhotoService { get; set; }

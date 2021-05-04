@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class ClinicsBase : ComponentBase
+    public class ClinicsBase : PageBase
     {
         [Inject]
         protected IClinicService ClinicService { get; set; }
@@ -20,7 +20,7 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            var clinics = await ClinicService.GetModelAsync();
+            var clinics = await ClinicService.GetModelAsync(cancellationTokenSource.Token);
             ClinicsList = clinics?.OrderBy(c => c.Name)?.ToList() ?? new();
 
             IsLoading = false;

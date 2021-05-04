@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class PersonalRecoveryPlansBase : ComponentBase
+    public class PersonalRecoveryPlansBase : PageBase
     {
         [Inject]
         protected IRecoveryPlanService RecoveryService { get; set; }
@@ -23,9 +23,6 @@ namespace KNU.RS.UI.Components
 
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; }
 
 
         protected List<RecoveryDailyPlanInfo> Plans { get; set; } = new List<RecoveryDailyPlanInfo>();
@@ -121,7 +118,7 @@ namespace KNU.RS.UI.Components
                 NavigationManager.NavigateUnauthorized();
             }
 
-            var plans = await RecoveryService.GetInfoByUserAsync(userId);
+            var plans = await RecoveryService.GetInfoByUserAsync(userId, cancellationTokenSource.Token);
             Plans = plans?.OrderByDescending(p => p.DateTime)?.ThenBy(p => p.Completed)?.ToList() ?? new();
             SetDisplayedPlans();
 

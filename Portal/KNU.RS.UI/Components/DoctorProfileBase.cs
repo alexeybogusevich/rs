@@ -56,7 +56,7 @@ namespace KNU.RS.UI.Components
                 NavigationManager.NavigateUnauthorized();
             }
 
-            var patients = await PatientService.GetInfoByDoctorAsync(Doctor.Id);
+            var patients = await PatientService.GetInfoByDoctorAsync(Doctor.Id, cancellationTokenSource.Token);
             DoctorPatients = patients?.ToList();
             CurrentUserId = userId;
 

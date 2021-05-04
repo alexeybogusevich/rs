@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class DoctorPatientsBase : ComponentBase
+    public class DoctorPatientsBase : PageBase
     {
         [Inject]
         protected IPhotoService PhotoService { get; set; }
@@ -54,7 +54,7 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            var patients = await PatientService.GetInfoByDoctorAsync(DoctorId);
+            var patients = await PatientService.GetInfoByDoctorAsync(DoctorId, cancellationTokenSource.Token);
             Patients = patients.ToList();
             PatientsPage = PaginatedList<PatientInfo>.Create(Patients, 1, PageSize);
             SetAvailablePages();

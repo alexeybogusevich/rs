@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.UserService
@@ -22,17 +23,17 @@ namespace KNU.RS.Logic.Services.UserService
             this.userManager = userManager;
         }
 
-        public async Task<User> GetAsync(Guid id)
+        public async Task<User> GetAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await context.Users.FirstOrDefaultAsync(u => u.Id.Equals(id));
+            return await context.Users.FirstOrDefaultAsync(u => u.Id.Equals(id), cancellationToken);
         }
 
-        public async Task<FooterInfo> GetFooterAsync(Guid id)
+        public async Task<FooterInfo> GetFooterAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await context.Users
                 .Where(u => u.Id.Equals(id))
                 .Select(u => UserConverter.ConvertFooter(u))
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<string>> GetRolesAsync(string email)

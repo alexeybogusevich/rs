@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class ClinicsTableBase : ComponentBase
+    public class ClinicsTableBase : PageBase
     {
         [Inject]
         protected IClinicService ClinicService { get; set; }

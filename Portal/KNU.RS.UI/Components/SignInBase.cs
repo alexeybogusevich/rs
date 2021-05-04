@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class SignInBase : ComponentBase
+    public class SignInBase : PageBase
     {
         [Inject]
         protected IJSRuntime JsRuntime { get; set; }
@@ -15,10 +15,9 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected ILoginService LoginService { get; set; }
 
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; }
 
         protected LoginModel LoginModel { get; set; } = new LoginModel();
+
 
         protected async Task LoginAsync()
         {

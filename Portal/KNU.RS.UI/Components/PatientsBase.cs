@@ -15,14 +15,14 @@ namespace KNU.RS.UI.Components
 
         protected List<PatientInfo> PatientsList { get; set; }
 
-        protected bool IsLoading { get; set; } = true;
+        protected bool IsLoading { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
 
-            var patients = await PatientService.GetInfoAsync();
+            var patients = await PatientService.GetInfoAsync(cancellationTokenSource.Token);
             PatientsList = patients.ToList();
 
             IsLoading = false;

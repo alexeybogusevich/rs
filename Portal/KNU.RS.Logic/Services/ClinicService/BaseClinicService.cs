@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.ClinicService
@@ -22,21 +23,21 @@ namespace KNU.RS.Logic.Services.ClinicService
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<Clinic>> GetAsync()
+        public async Task<IEnumerable<Clinic>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await context.Clinics.ToListAsync();
+            return await context.Clinics.ToListAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<ClinicModel>> GetModelAsync()
+        public async Task<IEnumerable<ClinicModel>> GetModelAsync(CancellationToken cancellationToken = default)
         {
             return await context.Clinics
                 .Select(c => ClinicConverter.Convert(c))
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<ClinicModel> GetModelAsync(Guid id)
+        public async Task<ClinicModel> GetModelAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var clinic = await context.Clinics.FindAsync(id);
+            var clinic = await context.Clinics.FirstOrDefaultAsync(c => c.Id.Equals(id), cancellationToken);
             return mapper.Map<ClinicModel>(clinic);
         }
 

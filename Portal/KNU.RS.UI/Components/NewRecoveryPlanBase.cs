@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class NewRecoveryPlanBase : ComponentBase
+    public class NewRecoveryPlanBase : PageBase
     {
         [Inject]
         protected IRecoveryPlanService RecoveryService { get; set; }
@@ -22,8 +22,6 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IHttpContextAccessor HttpContextAccessor { get; set; }
 
-        [Inject]
-        protected NavigationManager NavigationManager { get; set; }
 
         [Parameter]
         public Guid PatientId { get; set; }
@@ -31,7 +29,9 @@ namespace KNU.RS.UI.Components
         [Parameter]
         public EventCallback ParentCallback { get; set; }
 
+
         protected RecoveryDailyPlanModel RecoveryModel { get; set; } = new RecoveryDailyPlanModel();
+
 
         protected async Task CreateAsync()
         {

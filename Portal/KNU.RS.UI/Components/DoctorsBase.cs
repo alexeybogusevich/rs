@@ -21,7 +21,7 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            var doctors = await DoctorService.GetInfoAsync();
+            var doctors = await DoctorService.GetInfoAsync(cancellationTokenSource.Token);
             DoctorsList = doctors.ToList();
 
             IsLoading = false;

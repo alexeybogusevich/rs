@@ -23,7 +23,7 @@
                             <td><a href="javascript:void(0)" @onclick="async () => await ShowDetailsAsync(study.StudyDetails)">Ознайомитись</a></td>
                             <td>
                                 <div class="dropdown dropdown-action">
-                                    <a href="javascript:void(0)" class="action-icon" @onclick="async () => await DownloadReportAsync(study.Id)"><i class="fa fa-download"></i></a>
+                                    <a href="javascript:void(0)" class="action-icon" @onclick="() => DownloadReport(study.Id)"><i class="fa fa-download"></i></a>
                                 </div>
                             </td>
                         </tr>

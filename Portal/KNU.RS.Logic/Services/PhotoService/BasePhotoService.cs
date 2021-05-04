@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Extensions.Options;
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.PhotoService
@@ -16,7 +17,7 @@ namespace KNU.RS.Logic.Services.PhotoService
             this.configuration = options.Value;
         }
 
-        public async Task<byte[]> ValidateAndGetBytesAsync(IBrowserFile file)
+        public async Task<byte[]> ValidateAndGetBytesAsync(IBrowserFile file, CancellationToken cancellationToken = default)
         {
             var croppedImage = await file.RequestImageFileAsync(
                 configuration.Format, configuration.MaxHeight, configuration.MaxWidth);
@@ -24,7 +25,7 @@ namespace KNU.RS.Logic.Services.PhotoService
             using var reader = croppedImage.OpenReadStream();
             using var ms = new MemoryStream();
 
-            await reader.CopyToAsync(ms);
+            await reader.CopyToAsync(ms, cancellationToken);
             return ms.ToArray();
         }
 

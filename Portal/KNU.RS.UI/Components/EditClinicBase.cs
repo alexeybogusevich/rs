@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class EditClinicBase : ComponentBase
+    public class EditClinicBase : PageBase
     {
         [Inject]
         protected IClinicService ClinicService { get; set; }
@@ -28,7 +28,7 @@ namespace KNU.RS.UI.Components
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
-            EditModel = await ClinicService.GetModelAsync(Id);
+            EditModel = await ClinicService.GetModelAsync(Id, cancellationTokenSource.Token);
             IsLoading = false;
         }
 

@@ -42,7 +42,7 @@ namespace KNU.RS.UI.Components
                 NavigationManager.NavigateUnauthorized();
             }
 
-            User = await UserService.GetAsync(userId);
+            User = await UserService.GetAsync(userId, cancellationTokenSource.Token);
         }
 
         protected async Task ChangePasswordAsync()

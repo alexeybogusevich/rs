@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.StudyService
@@ -19,7 +20,7 @@ namespace KNU.RS.Logic.Services.StudyService
             this.context = context;
         }
 
-        public async Task<IEnumerable<StudyInfo>> GetInfoAsync()
+        public async Task<IEnumerable<StudyInfo>> GetInfoAsync(CancellationToken cancellationToken = default)
         {
             return await context.StudyHeaders
                 .Include(s => s.StudyDetails)
@@ -29,10 +30,10 @@ namespace KNU.RS.Logic.Services.StudyService
                     .ThenInclude(s => s.Doctor)
                         .ThenInclude(s => s.User)
                 .Select(s => StudyConverter.Convert(s))
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<StudyInfo>> GetInfoAsync(Guid patientId)
+        public async Task<IEnumerable<StudyInfo>> GetInfoAsync(Guid patientId, CancellationToken cancellationToken = default)
         {
             return await context.StudyHeaders
                 .Include(s => s.StudyDetails)
@@ -43,10 +44,10 @@ namespace KNU.RS.Logic.Services.StudyService
                         .ThenInclude(s => s.User)
                 .Where(s => s.DoctorPatient.PatientId.Equals(patientId))
                 .Select(s => StudyConverter.Convert(s))
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<StudyDetailsInfo>> GetDetailsInfoAsync(Guid patientId)
+        public async Task<IEnumerable<StudyDetailsInfo>> GetDetailsInfoAsync(Guid patientId, CancellationToken cancellationToken = default)
         {
             return await context.StudyDetails
                 .Include(s => s.StudySubtype)
@@ -55,10 +56,10 @@ namespace KNU.RS.Logic.Services.StudyService
                     .ThenInclude(s => s.DoctorPatient)
                 .Where(s => s.StudyHeader.DoctorPatient.PatientId.Equals(patientId))
                 .Select(s => StudyConverter.Convert(s))
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<StudyReportInfo> GetReportAsync(Guid headerId)
+        public async Task<StudyReportInfo> GetReportAsync(Guid headerId, CancellationToken cancellationToken = default)
         {
             return await context.StudyHeaders
                 .Include(s => s.DoctorPatient)
@@ -72,17 +73,17 @@ namespace KNU.RS.Logic.Services.StudyService
                         .ThenInclude(s => s.StudyType)
                 .Where(s => s.Id.Equals(headerId))
                 .Select(s => StudyConverter.ConvertReport(s))
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<StudySubtype>> GetSubtypesAsync()
+        public async Task<IEnumerable<StudySubtype>> GetSubtypesAsync(CancellationToken cancellationToken = default)
         {
-            return await context.StudySubtypes.ToListAsync();
+            return await context.StudySubtypes.ToListAsync(cancellationToken);
         }
 
-        public async Task<int> GetCountAsync()
+        public async Task<int> GetCountAsync(CancellationToken cancellationToken = default)
         {
-            return await context.StudyHeaders.CountAsync();
+            return await context.StudyHeaders.CountAsync(cancellationToken);
         }
 
         public async Task<StudyHeader> SaveAsync(StudyModel study, Guid userId)

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KNU.RS.API.Controllers
@@ -32,7 +33,7 @@ namespace KNU.RS.API.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<PatientInfo>), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        public async Task<ActionResult<IEnumerable<PatientInfo>>> GetAsync()
+        public async Task<ActionResult<IEnumerable<PatientInfo>>> GetAsync(CancellationToken cancellationToken)
         {
             if (!Guid.TryParse(
                 HttpContext.User.FindFirstValue(ClaimTypes.Name),
@@ -41,7 +42,7 @@ namespace KNU.RS.API.Controllers
                 return BadRequest("Користувача не знайдено.");
             }
 
-            var patients = await patientService.GetInfoByDoctorAsync(userId);
+            var patients = await patientService.GetInfoByDoctorAsync(userId, cancellationToken);
             return Ok(patients);
         }
 

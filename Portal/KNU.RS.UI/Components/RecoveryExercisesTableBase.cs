@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class RecoveryExercisesTableBase : ComponentBase
+    public class RecoveryExercisesTableBase : PageBase
     {
         [Inject]
         protected IRecoveryPlanService RecoveryService { get; set; }
@@ -26,7 +26,7 @@ namespace KNU.RS.UI.Components
 
         protected List<RecoveryDailyPlanInfo> DisplayedPlans { get; set; } = new List<RecoveryDailyPlanInfo>();
 
-        protected bool IsLoading { get; set; } = true;
+        protected bool IsLoading { get; set; }
 
         private int BatchSize { get; set; } = 10;
 
@@ -140,7 +140,7 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            var plans = await RecoveryService.GetInfoByPatientAsync(PatientId);
+            var plans = await RecoveryService.GetInfoByPatientAsync(PatientId, cancellationTokenSource.Token);
             Plans = plans?.OrderByDescending(p => p.DateTime)?.ThenBy(p => p.Completed)?.ToList() ?? new();
             SetDisplayedPlans();
 

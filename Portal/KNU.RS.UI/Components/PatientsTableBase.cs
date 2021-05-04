@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class PatientsTableBase : ComponentBase
+    public class PatientsTableBase : PageBase
     {
         [Inject]
         protected IPhotoService PhotoService { get; set; }

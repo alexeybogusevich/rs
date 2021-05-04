@@ -44,7 +44,7 @@ namespace KNU.RS.UI.Components
 
         protected async Task AssignPhotoAsync(InputFileChangeEventArgs e)
         {
-            EditModel.Photo = await PhotoService.ValidateAndGetBytesAsync(e.File);
+            EditModel.Photo = await PhotoService.ValidateAndGetBytesAsync(e.File, cancellationTokenSource.Token);
         }
 
         protected async Task SaveUserAsync()
@@ -67,7 +67,7 @@ namespace KNU.RS.UI.Components
                 NavigationManager.NavigateUnauthorized();
             }
 
-            var user = await UserService.GetAsync(userId);
+            var user = await UserService.GetAsync(userId, cancellationTokenSource.Token);
             EditModel = UserConverter.ConvertProfile(user);
             IsMaleGender = EditModel.Gender.Equals(Gender.Male);
             Id = userId;

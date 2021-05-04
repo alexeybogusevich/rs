@@ -34,7 +34,7 @@ namespace KNU.RS.UI.Components
                 NavigationManager.NavigateUnauthorized();
             }
 
-            Doctor = await DoctorService.GetInfoAsync(userId);
+            Doctor = await DoctorService.GetInfoAsync(userId, cancellationTokenSource.Token);
 
             IsLoading = false;
         }

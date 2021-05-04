@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KNU.RS.API.Controllers
@@ -26,9 +27,9 @@ namespace KNU.RS.API.Controllers
         [HttpGet("subtypes")]
         [ProducesResponseType(typeof(IEnumerable<StudySubtype>), 200)]
         [ResponseCache(Duration = 3600)]
-        public async Task<ActionResult<StudySubtype>> GetTypesAsync()
+        public async Task<ActionResult<StudySubtype>> GetTypesAsync(CancellationToken cancellationToken)
         {
-            var subtypes = await studyService.GetSubtypesAsync();
+            var subtypes = await studyService.GetSubtypesAsync(cancellationToken);
             return Ok(subtypes);
         }
 

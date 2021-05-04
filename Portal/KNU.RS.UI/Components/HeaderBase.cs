@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class HeaderBase : ComponentBase
+    public class HeaderBase : PageBase
     {
         [Inject]
         protected IServiceScopeFactory ServiceScopeFactory { get; set; }
@@ -29,11 +29,7 @@ namespace KNU.RS.UI.Components
         protected IJSRuntime JsRuntime { get; set; }
 
         [Inject]
-        protected NavigationManager NavigationManager { get; set; }
-
-        [Inject]
         protected UserManager<User> UserManager { get; set; }
-
 
         [Inject]
         protected IOptions<PhotoConfiguration> Options { get; set; }
@@ -54,7 +50,7 @@ namespace KNU.RS.UI.Components
             using var scope = ServiceScopeFactory.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
             var userService = new BaseUserService(context, UserManager);
-            UserFooter = await userService.GetFooterAsync(userId);
+            UserFooter = await userService.GetFooterAsync(userId, cancellationTokenSource.Token);
         }
 
         protected string GetPhotoURI()

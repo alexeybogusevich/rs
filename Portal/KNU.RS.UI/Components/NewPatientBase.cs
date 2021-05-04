@@ -33,7 +33,7 @@ namespace KNU.RS.UI.Components
 
         protected async Task AssignPhotoAsync(InputFileChangeEventArgs e)
         {
-            RegistrationModel.Photo = await PhotoService.ValidateAndGetBytesAsync(e.File);
+            RegistrationModel.Photo = await PhotoService.ValidateAndGetBytesAsync(e.File, cancellationTokenSource.Token);
         }
 
         protected async Task SavePatientAsync()

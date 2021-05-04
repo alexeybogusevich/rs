@@ -40,7 +40,7 @@ namespace KNU.RS.UI.Components
 
         protected async Task AssignPhotoAsync(InputFileChangeEventArgs e)
         {
-            EditModel.Photo = await PhotoService.ValidateAndGetBytesAsync(e.File);
+            EditModel.Photo = await PhotoService.ValidateAndGetBytesAsync(e.File, cancellationTokenSource.Token);
         }
 
         protected async Task SavePatientAsync()
@@ -56,7 +56,7 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            var patient = await PatientService.GetAsync(Id);
+            var patient = await PatientService.GetAsync(Id, cancellationTokenSource.Token);
             EditModel = PatientConverter.ConvertProfile(patient);
             IsMaleGender = EditModel.Gender.Equals(Gender.Male);
 

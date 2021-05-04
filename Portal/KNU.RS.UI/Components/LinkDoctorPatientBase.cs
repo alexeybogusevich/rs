@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class LinkDoctorPatientBase : ComponentBase
+    public class LinkDoctorPatientBase : PageBase
     {
         [Inject]
         protected IPatientService PatientService { get; set; }
@@ -40,7 +40,7 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            var patients = await PatientService.GetShortAsync();
+            var patients = await PatientService.GetShortAsync(cancellationTokenSource.Token);
             Patients = patients?.OrderBy(p => p.FullName)?.ToList();
             PatientsPage = PaginatedList<PatientShort>.Create(Patients, 1, PageSize);
             SetAvailablePages();

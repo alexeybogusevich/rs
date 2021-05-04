@@ -2,6 +2,7 @@
 using KNU.RS.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.QualificationService
@@ -15,9 +16,9 @@ namespace KNU.RS.Logic.Services.QualificationService
             this.context = context;
         }
 
-        public async Task<IEnumerable<Qualification>> GetAsync()
+        public async Task<IEnumerable<Qualification>> GetAsync(CancellationToken cancellationToken = default)
         {
-            return await context.Qualifications.ToListAsync();
+            return await context.Qualifications.ToListAsync(cancellationToken);
         }
     }
 }

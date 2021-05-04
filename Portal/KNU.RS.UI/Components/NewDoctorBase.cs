@@ -33,18 +33,16 @@ namespace KNU.RS.UI.Components
 
         protected bool IsLoading { get; set; } = true;
 
-
         protected IEnumerable<Clinic> Clinics { get; set; }
 
         protected IEnumerable<Qualification> Qualifications { get; set; }
-
 
         protected DoctorRegistrationModel RegistrationModel { get; set; } = new DoctorRegistrationModel();
 
 
         protected async Task AssignPhotoAsync(InputFileChangeEventArgs e)
         {
-            RegistrationModel.Photo = await PhotoService.ValidateAndGetBytesAsync(e.File);
+            RegistrationModel.Photo = await PhotoService.ValidateAndGetBytesAsync(e.File, cancellationTokenSource.Token);
         }
 
         protected async Task SaveDoctorAsync()
@@ -60,8 +58,8 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
-            Qualifications = await QualificationService.GetAsync();
-            Clinics = await ClinicService.GetAsync();
+            Qualifications = await QualificationService.GetAsync(cancellationTokenSource.Token);
+            Clinics = await ClinicService.GetAsync(cancellationTokenSource.Token);
 
             IsLoading = false;
         }

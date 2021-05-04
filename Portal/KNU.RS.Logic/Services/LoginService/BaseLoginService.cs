@@ -3,6 +3,7 @@ using KNU.RS.Data.Models;
 using KNU.RS.Logic.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.LoginService
@@ -21,9 +22,9 @@ namespace KNU.RS.Logic.Services.LoginService
             this.userManager = userManager;
         }
 
-        public async Task<bool> CheckLoginAsync(LoginModel model)
+        public async Task<bool> CheckLoginAsync(LoginModel model, CancellationToken cancellationToken = default)
         {
-            var user = await context.Users.SingleOrDefaultAsync(u => u.Email.Equals(model.Email));
+            var user = await context.Users.SingleOrDefaultAsync(u => u.Email.Equals(model.Email), cancellationToken);
             if (user == null)
             {
                 return false;

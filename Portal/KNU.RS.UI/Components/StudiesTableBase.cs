@@ -17,7 +17,9 @@ namespace KNU.RS.UI.Components
         [Parameter]
         public List<StudyInfo> Studies { get; set; } = new List<StudyInfo>();
 
+
         protected List<StudyDetailsShort> StudyDetailsToDisplay { get; set; } = new List<StudyDetailsShort>();
+
 
         protected async Task ShowDetailsAsync(IEnumerable<StudyDetailsShort> studyDetails)
         {
@@ -30,10 +32,9 @@ namespace KNU.RS.UI.Components
             StudyDetailsToDisplay = new List<StudyDetailsShort>();
         }
 
-        protected async Task DownloadReportAsync(Guid reportId)
+        protected void DownloadReport(Guid reportId)
         {
             NavigationManager.NavigateTo($"/api/studyreports/{reportId}", true);
-            //await JsRuntime.InvokeVoidAsync(JSExtensionMethods.DownloadReport, reportId);
         }
     }
 }

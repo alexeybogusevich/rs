@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class PatientProfileBase : ComponentBase
+    public class PatientProfileBase : PageBase
     {
         [Inject]
         protected IOptions<PhotoConfiguration> Options { get; set; }
@@ -30,19 +30,22 @@ namespace KNU.RS.UI.Components
         [Parameter]
         public PatientInfo Patient { get; set; }
 
+
         protected List<StudyInfo> Studies { get; set; } = new List<StudyInfo>();
+
         protected List<StudyDetailsInfo> StudyDetails { get; set; } = new List<StudyDetailsInfo>();
 
-        protected bool IsLoading { get; set; } = true;
+        protected bool IsLoading { get; set; }
+
 
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
 
-            var studyDetails = await StudyService.GetDetailsInfoAsync(Patient.Id);
+            var studyDetails = await StudyService.GetDetailsInfoAsync(Patient.Id, cancellationTokenSource.Token);
             StudyDetails = studyDetails.OrderBy(s => s.DateTime).Take(15).ToList();
 
-            var studies = await StudyService.GetInfoAsync(Patient.Id);
+            var studies = await StudyService.GetInfoAsync(Patient.Id, cancellationTokenSource.Token);
             Studies = studies.OrderByDescending(s => s.DateTime).ToList();
 
             IsLoading = false;
@@ -50,7 +53,7 @@ namespace KNU.RS.UI.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (Studies.Count() < 2)
+            if (Studies.Count < 2)
             {
                 return;
             }

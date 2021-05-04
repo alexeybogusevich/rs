@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace KNU.RS.Logic.Services.RecoveryPlanService
@@ -19,7 +20,8 @@ namespace KNU.RS.Logic.Services.RecoveryPlanService
             this.context = context;
         }
 
-        public async Task<IEnumerable<RecoveryDailyPlanInfo>> GetInfoByUserAsync(Guid userId)
+        public async Task<IEnumerable<RecoveryDailyPlanInfo>> GetInfoByUserAsync(
+            Guid userId, CancellationToken cancellationToken = default)
         {
             return await context.RecoveryDailyPlans
                 .Include(p => p.DoctorPatient)
@@ -29,10 +31,11 @@ namespace KNU.RS.Logic.Services.RecoveryPlanService
                     .ThenInclude(dp => dp.Patient)
                 .Where(p => p.DoctorPatient.Patient.UserId.Equals(userId))
                 .Select(p => RecoveryConverter.Convert(p))
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<RecoveryDailyPlanInfo>> GetInfoByPatientAsync(Guid patientId)
+        public async Task<IEnumerable<RecoveryDailyPlanInfo>> GetInfoByPatientAsync(
+            Guid patientId, CancellationToken cancellationToken = default)
         {
             return await context.RecoveryDailyPlans
                 .Include(p => p.DoctorPatient)
@@ -40,7 +43,7 @@ namespace KNU.RS.Logic.Services.RecoveryPlanService
                         .ThenInclude(d => d.User)
                 .Where(p => p.DoctorPatient.PatientId.Equals(patientId))
                 .Select(p => RecoveryConverter.Convert(p))
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<bool> MarkAsCompletedAsync(Guid id)
