@@ -313,7 +313,7 @@ namespace KNU.RS.Logic.Services.AccountService
                 throw new ArgumentException($"Користувача не знайдено. Id: {id}");
             }
 
-            await userManager.AddToRoleAsync(user, RoleName.Doctor);
+            await userManager.AddToRoleAsync(user, RoleName.Admin);
             await userManager.UpdateAsync(user);
 
             user.PromotedToAdmin = true;

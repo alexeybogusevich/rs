@@ -65,17 +65,17 @@ namespace KNU.RS.UI.Components
 
         protected async Task SetPromoteToAdminAsync()
         {
-            IsLoading = true;
-
             await JsRuntime.InvokeVoidAsync(JSExtensionMethods.ToggleModal, "promote-doctor");
-            Doctor.PromotedToAdmin = true;
-
-            IsLoading = false;
         }
 
         protected async Task PromoteToAdminAsync()
         {
+            IsLoading = true;
+
             await AccountService.PromoteToAdminAsync(Doctor.UserId);
+            Doctor.PromotedToAdmin = true;
+
+            IsLoading = false;
         }
 
         protected string GetPhotoURI()
