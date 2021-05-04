@@ -60,26 +60,42 @@ namespace KNU.RS.Logic.Services.ReportService
                 paragraphProperties.Append(spacing);
                 paragraphProperties.Append(justification);
 
-                var tableCellProperties = new TableCellProperties();
-                tableCellProperties.TableCellVerticalAlignment =
-                    new TableCellVerticalAlignment { Val = TableVerticalAlignmentValues.Center };
+                var tableCellProperties = new TableCellProperties
+                {
+                    TableCellVerticalAlignment = new TableCellVerticalAlignment { Val = TableVerticalAlignmentValues.Center }
+                };
 
                 foreach (var studyDetails in reportInfo.StudyDetails)
                 {
-                    var paragraph1 = new Paragraph(new Run(new Text(studyDetails.StudySubtypeName)));
-                    paragraph1.ParagraphProperties = new ParagraphProperties(spacing.CloneNode(true) as SpacingBetweenLines);
-                    var tableCell1 = new TableCell(paragraph1);
-                    tableCell1.TableCellProperties = tableCellProperties.CloneNode(true) as TableCellProperties;
+                    var paragraph1 = new Paragraph(new Run(new Text(studyDetails.StudySubtypeName)))
+                    {
+                        ParagraphProperties = new ParagraphProperties(spacing.CloneNode(true) as SpacingBetweenLines)
+                    };
 
-                    var paragraph2 = new Paragraph(new Run(new Text(studyDetails.ClockwiseDegrees.ToString())));
-                    paragraph2.ParagraphProperties = paragraphProperties.CloneNode(true) as ParagraphProperties;
-                    var tableCell2 = new TableCell(paragraph2);
-                    tableCell2.TableCellProperties = tableCellProperties.CloneNode(true) as TableCellProperties;
+                    var tableCell1 = new TableCell(paragraph1)
+                    {
+                        TableCellProperties = tableCellProperties.CloneNode(true) as TableCellProperties
+                    };
 
-                    var paragraph3 = new Paragraph(new Run(new Text(studyDetails.CounterClockwiseDegrees.ToString())));
-                    paragraph3.ParagraphProperties = paragraphProperties.CloneNode(true) as ParagraphProperties;
-                    var tableCell3 = new TableCell(paragraph3);
-                    tableCell3.TableCellProperties = tableCellProperties.CloneNode(true) as TableCellProperties;
+                    var paragraph2 = new Paragraph(new Run(new Text(studyDetails.ClockwiseDegrees.ToString())))
+                    {
+                        ParagraphProperties = paragraphProperties.CloneNode(true) as ParagraphProperties
+                    };
+
+                    var tableCell2 = new TableCell(paragraph2)
+                    {
+                        TableCellProperties = tableCellProperties.CloneNode(true) as TableCellProperties
+                    };
+
+                    var paragraph3 = new Paragraph(new Run(new Text(studyDetails.CounterClockwiseDegrees.ToString())))
+                    {
+                        ParagraphProperties = paragraphProperties.CloneNode(true) as ParagraphProperties
+                    };
+
+                    var tableCell3 = new TableCell(paragraph3)
+                    {
+                        TableCellProperties = tableCellProperties.CloneNode(true) as TableCellProperties
+                    };
 
                     lastTable.Append(new TableRow(tableCell1, tableCell2, tableCell3));
                 }
