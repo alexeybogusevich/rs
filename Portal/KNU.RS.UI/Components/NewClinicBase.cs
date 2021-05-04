@@ -18,7 +18,7 @@ namespace KNU.RS.UI.Components
         protected ClinicModel CreateModel { get; set; } = new ClinicModel();
 
         protected bool IsLoading { get; set; }
-        
+
         protected async Task SaveAsync()
         {
             IsLoading = true;

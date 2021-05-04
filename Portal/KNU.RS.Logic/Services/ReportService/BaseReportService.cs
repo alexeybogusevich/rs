@@ -61,7 +61,7 @@ namespace KNU.RS.Logic.Services.ReportService
                 paragraphProperties.Append(justification);
 
                 var tableCellProperties = new TableCellProperties();
-                tableCellProperties.TableCellVerticalAlignment = 
+                tableCellProperties.TableCellVerticalAlignment =
                     new TableCellVerticalAlignment { Val = TableVerticalAlignmentValues.Center };
 
                 foreach (var studyDetails in reportInfo.StudyDetails)
