@@ -23,11 +23,12 @@ namespace KNU.RS.Logic.Services.ReportService
 
         public async Task<byte[]> GetReportAsync(StudyReportInfo reportInfo)
         {
+            var templatePath = Path.Combine(Directory.GetCurrentDirectory(), configuration.Path);
             var hash = CryptographyHelper.GetRandomMD5Hash();
-            var extension = configuration.FullPath.Split(".").Last();
-            var tempPath = $"{configuration.TempPathBase}{hash}.{extension}";
+            var extension = configuration.Path.Split(".").Last();
+            var tempPath = Path.Combine(Path.GetTempPath(), $"{hash}.{extension}");
 
-            var sourceFile = Path.GetFullPath(configuration.FullPath);
+            var sourceFile = Path.GetFullPath(templatePath);
             var tempFile = Path.GetFullPath(tempPath);
             File.Copy(sourceFile, tempFile);
 

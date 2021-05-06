@@ -38,16 +38,6 @@ namespace KNU.RS.UI.Components
             SetDisplayedDoctors();
         }
 
-        protected string GetPhotoURI(DoctorInfo doctor)
-        {
-            if (doctor.HasPhoto)
-            {
-                return $"{StaticFileConstants.PhotosRequestPath}/{doctor.UserId}.{Options.Value.Extension}";
-            }
-
-            return "img/user.jpg";
-        }
-
         private void SetDisplayedDoctors()
         {
             DisplayedDoctors = Doctors.Take(Batches * BatchSize).OrderBy(d => d.LastName).ToList();

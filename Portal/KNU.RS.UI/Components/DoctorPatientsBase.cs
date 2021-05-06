@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -95,16 +96,6 @@ namespace KNU.RS.UI.Components
         {
             PatientsPage = PaginatedList<PatientInfo>.Create(Patients, pageNumber, PageSize);
             SetAvailablePages();
-        }
-
-        protected string GetPhotoURI(PatientInfo patient)
-        {
-            if (patient.HasPhoto)
-            {
-                return $"{StaticFileConstants.PhotosRequestPath}/{patient.UserId}.{Options.Value.Extension}";
-            }
-
-            return "img/user.jpg";
         }
 
         protected void Filter()

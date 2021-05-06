@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using System;
+using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -57,7 +58,7 @@ namespace KNU.RS.UI.Components
         {
             if (UserFooter.HasPhoto)
             {
-                return $"{StaticFileConstants.PhotosRequestPath}/{UserFooter.Id}.{Options.Value.Extension}";
+                return Path.Combine(Options.Value.Directory, $"{UserFooter.Id}.{Options.Value.Extension}");
             }
 
             return "img/user.jpg";

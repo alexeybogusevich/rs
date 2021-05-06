@@ -123,14 +123,6 @@ namespace KNU.RS.UI
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            var photoOptions = app.ApplicationServices.GetService<IOptions<PhotoConfiguration>>();
-            var absoluteBasePathToPhotos = Path.GetFullPath(photoOptions.Value.BasePath);
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(absoluteBasePathToPhotos),
-                RequestPath = StaticFileConstants.PhotosRequestPath
-            });
-
             app.UseRouting();
 
             app.UseAuthentication();

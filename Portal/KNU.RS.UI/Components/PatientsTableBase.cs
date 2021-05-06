@@ -73,16 +73,6 @@ namespace KNU.RS.UI.Components
             SetAvailablePages();
         }
 
-        protected string GetPhotoURI(PatientInfo patient)
-        {
-            if (patient.HasPhoto)
-            {
-                return $"{StaticFileConstants.PhotosRequestPath}/{patient.UserId}.{Options.Value.Extension}";
-            }
-
-            return "img/user.jpg";
-        }
-
         protected void Filter()
         {
             if (string.IsNullOrEmpty(FilteringModel.SearchWord))

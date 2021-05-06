@@ -77,15 +77,5 @@ namespace KNU.RS.UI.Components
                     clockwiseStudies, counterClockwiseStudies, studiesOfSubtype.Key.SerialNumber);
             }
         }
-
-        protected string GetPhotoURI()
-        {
-            if (Patient.HasPhoto)
-            {
-                return $"{StaticFileConstants.PhotosRequestPath}/{Patient.UserId}.{Options.Value.Extension}";
-            }
-
-            return "img/user.jpg";
-        }
     }
 }

@@ -2,7 +2,8 @@
 {
     public class PhotoConfiguration
     {
-        public string BasePath { get; set; }
+        public string UploadPath { get; set; }
+        public string Directory { get; set; }
         public string Format { get; set; }
         public string Extension { get; set; }
         public int MaxWidth { get; set; }

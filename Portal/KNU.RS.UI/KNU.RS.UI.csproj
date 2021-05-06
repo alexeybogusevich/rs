@@ -6,6 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\profilePhotos\0db3f707-2891-495c-bc3a-ae89e8387cb8.jpeg" />
+    <Content Remove="wwwroot\profilePhotos\22f84675-7948-41ba-ac0f-f9d66215a40f.jpeg" />
+    <Content Remove="wwwroot\profilePhotos\2528d570-46a7-47e9-a7a3-c662cdcc3836.jpeg" />
+    <Content Remove="wwwroot\profilePhotos\296d92cf-0860-44ec-89c1-4721190089f1.jpeg" />
+    <Content Remove="wwwroot\profilePhotos\76c8ddd4-2f0d-47c8-a986-a3dc41a690a9.jpeg" />
+    <Content Remove="wwwroot\profilePhotos\96b24268-06b9-4e9b-98ef-38e2d047b623.jpeg" />
+    <Content Remove="wwwroot\profilePhotos\a4cd1abf-68c2-4c57-87b7-c61e74c3bb37.jpeg" />
+    <Content Remove="wwwroot\profilePhotos\b3bd06f4-064b-4dd3-8790-391855cfc679.jpeg" />
+    <Content Remove="wwwroot\reportTemplates\StudyReport.docx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Components\NewPatientBase.cs~RFd5e5520.TMP" />
   </ItemGroup>
 
@@ -25,6 +37,18 @@
     <ProjectReference Include="..\..\Shared\KNU.RS.Data\KNU.RS.Data.csproj" />
     <ProjectReference Include="..\..\Shared\KNU.RS.PlatformExtensions\KNU.RS.PlatformExtensions.csproj" />
     <ProjectReference Include="..\KNU.RS.Logic\KNU.RS.Logic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\profilePhotos\0db3f707-2891-495c-bc3a-ae89e8387cb8.jpeg" />
+    <None Include="wwwroot\profilePhotos\22f84675-7948-41ba-ac0f-f9d66215a40f.jpeg" />
+    <None Include="wwwroot\profilePhotos\2528d570-46a7-47e9-a7a3-c662cdcc3836.jpeg" />
+    <None Include="wwwroot\profilePhotos\296d92cf-0860-44ec-89c1-4721190089f1.jpeg" />
+    <None Include="wwwroot\profilePhotos\76c8ddd4-2f0d-47c8-a986-a3dc41a690a9.jpeg" />
+    <None Include="wwwroot\profilePhotos\96b24268-06b9-4e9b-98ef-38e2d047b623.jpeg" />
+    <None Include="wwwroot\profilePhotos\a4cd1abf-68c2-4c57-87b7-c61e74c3bb37.jpeg" />
+    <None Include="wwwroot\profilePhotos\b3bd06f4-064b-4dd3-8790-391855cfc679.jpeg" />
+    <None Include="wwwroot\reportTemplates\StudyReport.docx" />
   </ItemGroup>
 
 </Project>

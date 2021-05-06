@@ -77,15 +77,5 @@ namespace KNU.RS.UI.Components
 
             IsLoading = false;
         }
-
-        protected string GetPhotoURI()
-        {
-            if (Doctor.HasPhoto)
-            {
-                return $"{StaticFileConstants.PhotosRequestPath}/{Doctor.UserId}.{Options.Value.Extension}";
-            }
-
-            return "img/user.jpg";
-        }
     }
 }

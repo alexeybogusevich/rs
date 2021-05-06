@@ -60,7 +60,7 @@
                                     {
                                         <tr>
                                             <td>
-                                                <img width="28" height="28" class="rounded-circle" src="@GetPhotoURI(patient)" alt="">
+                                                <img width="28" height="28" class="rounded-circle" src="@PhotoHelper.GetURI(patient, Options.Value)" alt="">
                                             </td>
                                             <td>@patient.ToString()</td>
                                             <td>Зареєстровано @patient.RegistrationDate.ToString("dd.MM.yyyy HH:mm")</td>

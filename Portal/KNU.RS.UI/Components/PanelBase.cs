@@ -21,6 +21,7 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IOptions<PhotoConfiguration> Options { get; set; }
 
+
         [Parameter]
         public List<PatientInfo> Patients { get; set; } = new List<PatientInfo>();
 
@@ -30,15 +31,6 @@ namespace KNU.RS.UI.Components
         [Parameter]
         public int NumberOfDoctors { get; set; }
 
-        protected string GetPhotoURI(PatientInfo patient)
-        {
-            if (patient.HasPhoto)
-            {
-                return $"{StaticFileConstants.PhotosRequestPath}/{patient.UserId}.{Options.Value.Extension}";
-            }
-
-            return "img/user.jpg";
-        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
