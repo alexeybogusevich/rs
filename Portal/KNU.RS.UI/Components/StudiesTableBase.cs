@@ -11,9 +11,6 @@ namespace KNU.RS.UI.Components
 {
     public class StudiesTableBase : PageBase
     {
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
         [Parameter]
         public List<StudyInfo> Studies { get; set; } = new List<StudyInfo>();
 

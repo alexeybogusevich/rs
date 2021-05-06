@@ -3,7 +3,6 @@ using KNU.RS.Logic.Services.RecoveryPlanService;
 using KNU.RS.UI.Constants;
 using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
@@ -18,18 +17,10 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IRecoveryPlanService RecoveryService { get; set; }
 
-        [Inject]
-        protected IHttpContextAccessor HttpContextAccessor { get; set; }
-
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
 
         protected List<RecoveryDailyPlanInfo> Plans { get; set; } = new List<RecoveryDailyPlanInfo>();
 
         protected List<RecoveryDailyPlanInfo> DisplayedPlans { get; set; } = new List<RecoveryDailyPlanInfo>();
-
-        protected bool IsLoading { get; set; } = true;
 
         private int BatchSize { get; set; } = 10;
 
@@ -111,8 +102,10 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
+            var authenticationState = await AuthenticationStateTask!;
+
             if (!Guid.TryParse(
-                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                authenticationState?.User?.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
                 NavigationManager.NavigateUnauthorized();

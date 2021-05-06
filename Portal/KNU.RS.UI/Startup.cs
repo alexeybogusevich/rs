@@ -21,7 +21,6 @@ using KNU.RS.Logic.Services.UserService;
 using KNU.RS.PlatformExtensions.Configuration;
 using KNU.RS.PlatformExtensions.Enums;
 using KNU.RS.UI.Areas.Identity;
-using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
@@ -30,11 +29,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using System.Globalization;
-using System.IO;
 
 namespace KNU.RS.UI
 {
@@ -86,6 +82,12 @@ namespace KNU.RS.UI
             {
                 options.LowercaseUrls = true;
             });
+
+            //services.AddSignalR().AddAzureSignalR(options =>
+            //{
+            //    options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required;
+            //    options.ConnectionString = Configuration.GetConnectionString(ConnectionString.SignalR);
+            //});
 
             services.AddRazorPages();
             services.AddServerSideBlazor();

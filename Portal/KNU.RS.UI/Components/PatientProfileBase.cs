@@ -24,18 +24,13 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IStudyService StudyService { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
 
         [Parameter]
         public PatientInfo Patient { get; set; }
 
-
         protected List<StudyInfo> Studies { get; set; } = new List<StudyInfo>();
 
         protected List<StudyDetailsInfo> StudyDetails { get; set; } = new List<StudyDetailsInfo>();
-
-        protected bool IsLoading { get; set; }
 
 
         protected override async Task OnInitializedAsync()

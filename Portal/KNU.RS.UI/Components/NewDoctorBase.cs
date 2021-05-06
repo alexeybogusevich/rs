@@ -25,13 +25,8 @@ namespace KNU.RS.UI.Components
         protected IPhotoService PhotoService { get; set; }
 
         [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
         protected IQualificationService QualificationService { get; set; }
 
-
-        protected bool IsLoading { get; set; } = true;
 
         protected IEnumerable<Clinic> Clinics { get; set; }
 

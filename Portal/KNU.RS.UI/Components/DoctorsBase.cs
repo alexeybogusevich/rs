@@ -12,7 +12,6 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IDoctorService DoctorService { get; set; }
 
-        protected bool IsLoading { get; set; }
 
         public List<DoctorInfo> DoctorsList { get; set; }
 

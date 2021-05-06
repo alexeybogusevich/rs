@@ -15,16 +15,15 @@ namespace KNU.RS.UI.Components
         [Parameter]
         public Guid Id { get; set; }
 
-
         protected DoctorInfo Doctor { get; set; }
-
-        protected bool IsLoading { get; set; } = true;
 
 
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
+
             Doctor = await DoctorService.GetInfoAsync(Id, cancellationTokenSource.Token);
+
             IsLoading = false;
         }
     }

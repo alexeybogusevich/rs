@@ -9,7 +9,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,9 +21,6 @@ namespace KNU.RS.UI.Components
 
         [Inject]
         protected IPatientService PatientService { get; set; }
-
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
 
         [Inject]
         protected IOptions<PhotoConfiguration> Options { get; set; }
@@ -49,7 +45,6 @@ namespace KNU.RS.UI.Components
 
         protected Filtering FilteringModel { get; set; } = new();
 
-        protected bool IsLoading { get; set; }
 
         protected async Task RefreshPatientsAsync()
         {
@@ -62,7 +57,6 @@ namespace KNU.RS.UI.Components
 
             IsLoading = false;
         }
-
 
         protected override void OnParametersSet()
         {

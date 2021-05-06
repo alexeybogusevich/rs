@@ -3,7 +3,6 @@ using KNU.RS.Logic.Services.RecoveryPlanService;
 using KNU.RS.UI.Constants;
 using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System;
 using System.Security.Claims;
@@ -15,12 +14,6 @@ namespace KNU.RS.UI.Components
     {
         [Inject]
         protected IRecoveryPlanService RecoveryService { get; set; }
-
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
-        protected IHttpContextAccessor HttpContextAccessor { get; set; }
 
 
         [Parameter]
@@ -35,8 +28,10 @@ namespace KNU.RS.UI.Components
 
         protected async Task CreateAsync()
         {
+            var authenticationState = await AuthenticationStateTask!;
+
             if (!Guid.TryParse(
-                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                authenticationState?.User?.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
                 NavigationManager.NavigateUnauthorized();

@@ -14,8 +14,6 @@ namespace KNU.RS.UI.Components
 
         protected List<ClinicModel> ClinicsList { get; set; } = new List<ClinicModel>();
 
-        protected bool IsLoading { get; set; } = true;
-
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;

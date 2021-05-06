@@ -6,7 +6,6 @@ using KNU.RS.Logic.Services.UserService;
 using KNU.RS.UI.Constants;
 using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -24,12 +23,6 @@ namespace KNU.RS.UI.Components
         protected IServiceScopeFactory ServiceScopeFactory { get; set; }
 
         [Inject]
-        protected IHttpContextAccessor HttpContextAccessor { get; set; }
-
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
         protected UserManager<User> UserManager { get; set; }
 
         [Inject]
@@ -41,8 +34,10 @@ namespace KNU.RS.UI.Components
 
         protected override async Task OnInitializedAsync()
         {
+            var authenticationState = await AuthenticationStateTask!;
+
             if (!Guid.TryParse(
-                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                authenticationState?.User?.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
                 NavigationManager.NavigateUnauthorized();

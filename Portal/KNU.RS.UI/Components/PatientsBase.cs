@@ -15,8 +15,6 @@ namespace KNU.RS.UI.Components
 
         protected List<PatientInfo> PatientsList { get; set; }
 
-        protected bool IsLoading { get; set; }
-
 
         protected override async Task OnInitializedAsync()
         {

@@ -19,17 +19,18 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IHttpContextAccessor HttpContextAccessor { get; set; }
 
-        protected List<PatientInfo> PatientsList { get; set; }
 
-        protected bool IsLoading { get; set; } = true;
+        protected List<PatientInfo> PatientsList { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
 
+            var authenticationState = await AuthenticationStateTask!;
+
             if (!Guid.TryParse(
-                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                authenticationState?.User?.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
                 NavigationManager.NavigateUnauthorized();

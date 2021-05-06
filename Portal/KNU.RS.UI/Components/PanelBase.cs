@@ -13,11 +13,8 @@ using System.Threading.Tasks;
 
 namespace KNU.RS.UI.Components
 {
-    public class PanelBase : ComponentBase
+    public class PanelBase : PageBase
     {
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
         [Inject]
         protected IOptions<PhotoConfiguration> Options { get; set; }
 

@@ -18,7 +18,6 @@ namespace KNU.RS.UI.Components
         [Parameter]
         public Guid DoctorId { get; set; }
 
-
         protected int Counter = 1;
 
         private int PageSize = 10;
@@ -33,8 +32,6 @@ namespace KNU.RS.UI.Components
 
         protected Filtering FilteringModel { get; set; } = new Filtering();
 
-        protected bool IsLoading { get; set; }
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -48,12 +45,10 @@ namespace KNU.RS.UI.Components
             IsLoading = false;
         }
 
-
         protected async Task AssignPatientAsync(Guid patientId)
         {
             await PatientService.AssignToDoctorAsync(patientId, DoctorId);
         }
-
 
         protected void SetAvailablePages()
         {
@@ -72,13 +67,11 @@ namespace KNU.RS.UI.Components
             AvailablePages = resultPages;
         }
 
-
         protected void GoToPage(int pageNumber)
         {
             PatientsPage = PaginatedList<PatientShort>.Create(Patients, pageNumber, PageSize);
             SetAvailablePages();
         }
-
 
         protected void Filter()
         {
@@ -95,7 +88,6 @@ namespace KNU.RS.UI.Components
             PatientsPage = PaginatedList<PatientShort>.Create(filteredPatients, 1, PageSize);
             SetAvailablePages();
         }
-
 
         protected void ClearFilters()
         {

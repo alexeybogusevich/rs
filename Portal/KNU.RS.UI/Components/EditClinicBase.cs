@@ -14,28 +14,27 @@ namespace KNU.RS.UI.Components
         protected IClinicService ClinicService { get; set; }
 
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-        protected ClinicModel EditModel { get; set; } = new ClinicModel();
-
-        protected bool IsLoading { get; set; }
-
         [Parameter]
         public Guid Id { get; set; }
+
+        protected ClinicModel EditModel { get; set; } = new ClinicModel();
 
 
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
+
             EditModel = await ClinicService.GetModelAsync(Id, cancellationTokenSource.Token);
+
             IsLoading = false;
         }
 
         protected async Task UpdateAsync()
         {
             IsLoading = true;
+
             await ClinicService.UpdateAsync(EditModel);
+
             IsLoading = false;
 
             await JsRuntime.InvokeVoidAsync(JSExtensionMethods.BackToPreviousPage);

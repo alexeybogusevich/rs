@@ -3,7 +3,6 @@ using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Models.Patient;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.Logic.Services.UserService;
-using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
 using System;
@@ -27,9 +26,9 @@ namespace KNU.RS.UI.Components
 
         protected int Counter = 1;
 
-        private int PageSize = 10;
+        private readonly int PageSize = 10;
 
-        private int PagesForReference = 5;
+        private readonly int PagesForReference = 5;
 
 
         [Parameter]
@@ -41,7 +40,7 @@ namespace KNU.RS.UI.Components
 
         protected PaginatedList<PatientInfo> PatientsPage { get; set; }
 
-        protected Filtering FilteringModel { get; set; } = new();
+        protected Filtering FilteringModel { get; set; } = new Filtering();
 
 
         protected override void OnParametersSet()
@@ -83,9 +82,9 @@ namespace KNU.RS.UI.Components
             }
 
             var filteredPatients = Patients.Where(p =>
-                p.FirstName.IndexOf(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                p.LastName.IndexOf(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                p.MiddleName.IndexOf(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) >= 0);
+                p.FirstName.Contains(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) ||
+                p.LastName.Contains(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) ||
+                p.MiddleName.Contains(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase));
 
             PatientsPage = PaginatedList<PatientInfo>.Create(filteredPatients, 1, PageSize);
             SetAvailablePages();

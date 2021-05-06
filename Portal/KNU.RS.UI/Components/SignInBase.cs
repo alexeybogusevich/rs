@@ -10,9 +10,6 @@ namespace KNU.RS.UI.Components
     public class SignInBase : PageBase
     {
         [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
         protected ILoginService LoginService { get; set; }
 
 

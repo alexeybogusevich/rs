@@ -5,7 +5,6 @@ using KNU.RS.Logic.Services.UserService;
 using KNU.RS.UI.Constants;
 using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System;
 using System.Security.Claims;
@@ -16,16 +15,10 @@ namespace KNU.RS.UI.Components
     public class ChangePasswordBase : PageBase
     {
         [Inject]
-        protected IHttpContextAccessor HttpContextAccessor { get; set; }
-
-        [Inject]
         protected ILoginService LoginService { get; set; }
 
         [Inject]
         protected IUserService UserService { get; set; }
-
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
 
 
         protected User User { get; set; }
@@ -35,8 +28,10 @@ namespace KNU.RS.UI.Components
 
         protected override async Task OnInitializedAsync()
         {
+            var authenticationState = await AuthenticationStateTask!;
+
             if (!Guid.TryParse(
-                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                authenticationState?.User?.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
                 NavigationManager.NavigateUnauthorized();

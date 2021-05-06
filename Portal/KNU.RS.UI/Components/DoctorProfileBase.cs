@@ -6,7 +6,6 @@ using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.UI.Constants;
 using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
 using System;
@@ -28,19 +27,11 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IAccountService AccountService { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
-        protected IHttpContextAccessor HttpContextAccessor { get; set; }
-
 
         [Parameter]
         public DoctorInfo Doctor { get; set; }
 
         protected List<PatientInfo> DoctorPatients { get; set; } = new List<PatientInfo>();
-
-        protected bool IsLoading { get; set; }
 
         protected Guid CurrentUserId { get; set; }
 
@@ -49,8 +40,10 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
+            var authenticationState = await AuthenticationStateTask!;
+
             if (!Guid.TryParse(
-                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                authenticationState?.User?.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
                 NavigationManager.NavigateUnauthorized();

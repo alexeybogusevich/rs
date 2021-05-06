@@ -17,11 +17,6 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IPhotoService PhotoService { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-
-        protected bool IsLoading { get; set; } = true;
 
         protected PatientRegistrationModel RegistrationModel { get; set; } = new PatientRegistrationModel();
 

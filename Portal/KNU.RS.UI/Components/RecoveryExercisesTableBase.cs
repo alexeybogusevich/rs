@@ -15,18 +15,13 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IRecoveryPlanService RecoveryService { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
 
         [Parameter]
         public Guid PatientId { get; set; }
 
-
         protected List<RecoveryDailyPlanInfo> Plans { get; set; } = new List<RecoveryDailyPlanInfo>();
 
         protected List<RecoveryDailyPlanInfo> DisplayedPlans { get; set; } = new List<RecoveryDailyPlanInfo>();
-
-        protected bool IsLoading { get; set; }
 
         private int BatchSize { get; set; } = 10;
 

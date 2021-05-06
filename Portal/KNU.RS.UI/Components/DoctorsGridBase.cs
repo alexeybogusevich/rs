@@ -2,7 +2,6 @@
 using KNU.RS.Logic.Models.Doctor;
 using KNU.RS.Logic.Services.PhotoService;
 using KNU.RS.Logic.Services.UserService;
-using KNU.RS.UI.Constants;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
@@ -31,7 +30,9 @@ namespace KNU.RS.UI.Components
         protected DoctorInfo DoctorToDelete { get; set; }
 
         private int BatchSize { get; set; } = 8;
+
         private int Batches { get; set; } = 1;
+
 
         protected override void OnParametersSet()
         {

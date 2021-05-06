@@ -32,26 +32,19 @@ namespace KNU.RS.UI.Components
         protected IPhotoService PhotoService { get; set; }
 
         [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-        [Inject]
         protected IQualificationService QualificationService { get; set; }
 
-
-        protected bool IsLoading { get; set; } = true;
-
+        [Parameter]
+        public Guid Id { get; set; }
 
         protected IEnumerable<Clinic> Clinics { get; set; }
 
         protected IEnumerable<Qualification> Qualifications { get; set; }
 
-
         protected DoctorRegistrationModel EditModel { get; set; } = new DoctorRegistrationModel();
 
-        [Parameter]
-        public Guid Id { get; set; }
-
         protected bool IsMaleGender { get; set; } = true;
+
 
         protected async Task AssignPhotoAsync(InputFileChangeEventArgs e)
         {
@@ -61,7 +54,9 @@ namespace KNU.RS.UI.Components
         protected async Task SaveDoctorAsync()
         {
             IsLoading = true;
+
             await AccountService.EditAsync(EditModel);
+
             IsLoading = false;
 
             await JsRuntime.InvokeVoidAsync(JSExtensionMethods.BackToPreviousPage);

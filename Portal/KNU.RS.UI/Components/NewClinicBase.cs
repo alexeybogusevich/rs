@@ -12,17 +12,16 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IClinicService ClinicService { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
 
         protected ClinicModel CreateModel { get; set; } = new ClinicModel();
 
-        protected bool IsLoading { get; set; }
 
         protected async Task SaveAsync()
         {
             IsLoading = true;
+
             await ClinicService.CreateAsync(CreateModel);
+
             IsLoading = false;
 
             await JsRuntime.InvokeVoidAsync(JSExtensionMethods.BackToPreviousPage);

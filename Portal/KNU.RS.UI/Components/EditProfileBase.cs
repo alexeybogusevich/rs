@@ -8,7 +8,6 @@ using KNU.RS.UI.Constants;
 using KNU.RS.UI.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop;
 using System;
 using System.Security.Claims;
@@ -22,25 +21,17 @@ namespace KNU.RS.UI.Components
         protected IAccountService AccountService { get; set; }
 
         [Inject]
-        protected IHttpContextAccessor HttpContextAccessor { get; set; }
-
-        [Inject]
         protected IUserService UserService { get; set; }
 
         [Inject]
         protected IPhotoService PhotoService { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-        protected bool IsLoading { get; set; } = true;
-
+        protected Guid Id { get; set; }
 
         protected RegistrationModel EditModel { get; set; } = new RegistrationModel();
 
-        protected Guid Id { get; set; }
-
         protected bool IsMaleGender { get; set; } = true;
+
 
         protected async Task AssignPhotoAsync(InputFileChangeEventArgs e)
         {
@@ -50,7 +41,9 @@ namespace KNU.RS.UI.Components
         protected async Task SaveUserAsync()
         {
             IsLoading = true;
+
             await AccountService.EditAsync(EditModel);
+
             IsLoading = false;
 
             await JsRuntime.InvokeVoidAsync(JSExtensionMethods.BackToPreviousPage);
@@ -60,8 +53,10 @@ namespace KNU.RS.UI.Components
         {
             IsLoading = true;
 
+            var authenticationState = await AuthenticationStateTask!;
+
             if (!Guid.TryParse(
-                HttpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                authenticationState?.User?.FindFirstValue(ClaimTypes.NameIdentifier),
                 out var userId))
             {
                 NavigationManager.NavigateUnauthorized();

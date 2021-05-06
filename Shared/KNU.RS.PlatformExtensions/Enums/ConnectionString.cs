@@ -5,6 +5,8 @@ namespace KNU.RS.PlatformExtensions.Enums
     public enum ConnectionString
     {
         [Description("SqlConnectionString")]
-        Database
+        Database,
+        [Description("SignalRConnectionString")]
+        SignalR
     }
 }

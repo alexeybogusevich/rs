@@ -14,15 +14,12 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IClinicService ClinicService { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
 
         [Parameter]
         public List<ClinicModel> Clinics { get; set; } = new List<ClinicModel>();
 
         protected ClinicModel ClinicToDelete { get; set; }
 
-        protected bool IsLoading { get; set; }
 
         protected async Task SetClinicToDeleteAsync(ClinicModel model)
         {

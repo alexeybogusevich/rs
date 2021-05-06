@@ -24,19 +24,14 @@ namespace KNU.RS.UI.Components
         [Inject]
         protected IPhotoService PhotoService { get; set; }
 
-        [Inject]
-        protected IJSRuntime JsRuntime { get; set; }
-
-
-        protected bool IsLoading { get; set; } = true;
-
-
-        protected PatientRegistrationModel EditModel { get; set; } = new PatientRegistrationModel();
 
         [Parameter]
         public Guid Id { get; set; }
 
+        protected PatientRegistrationModel EditModel { get; set; } = new PatientRegistrationModel();
+
         protected bool IsMaleGender { get; set; } = true;
+
 
         protected async Task AssignPhotoAsync(InputFileChangeEventArgs e)
         {
