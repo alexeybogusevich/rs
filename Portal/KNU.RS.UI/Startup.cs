@@ -83,11 +83,11 @@ namespace KNU.RS.UI
                 options.LowercaseUrls = true;
             });
 
-            //services.AddSignalR().AddAzureSignalR(options =>
-            //{
-            //    options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required;
-            //    options.ConnectionString = Configuration.GetConnectionString(ConnectionString.SignalR);
-            //});
+            services.AddSignalR().AddAzureSignalR(options =>
+            {
+                options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required;
+                options.ConnectionString = Configuration.GetConnectionString(ConnectionString.SignalR);
+            });
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
