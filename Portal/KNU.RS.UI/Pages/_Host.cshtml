@@ -24,6 +24,17 @@
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
 
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            Сталася помилка. Будь-ласка, перезавантажте сторінку.
+        </environment>
+        <environment include="Development">
+            Сталася помилка. Будь-ласка, перезавантажте сторінку.
+        </environment>
+        <a href="" class="reload">Перезавантажити</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
     <script src="_framework/blazor.server.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
