@@ -36,12 +36,14 @@ namespace KNU.RS.UI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -83,11 +85,14 @@ namespace KNU.RS.UI
                 options.LowercaseUrls = true;
             });
 
-            services.AddSignalR().AddAzureSignalR(options =>
+            if (!Environment.IsDevelopment())
             {
-                options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required;
-                options.ConnectionString = Configuration.GetConnectionString(ConnectionString.SignalR);
-            });
+                services.AddSignalR().AddAzureSignalR(options =>
+                {
+                    options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required;
+                    options.ConnectionString = Configuration.GetConnectionString(ConnectionString.SignalR);
+                });
+            }
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
@@ -95,8 +100,7 @@ namespace KNU.RS.UI
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddScoped<IHostEnvironmentAuthenticationStateProvider>(sp =>
-                (ServerAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>()
-            );
+                (ServerAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>());
 
             services.AddAuthentication();
 
