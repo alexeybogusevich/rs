@@ -85,15 +85,6 @@ namespace KNU.RS.UI
                 options.LowercaseUrls = true;
             });
 
-            if (!Environment.IsDevelopment())
-            {
-                services.AddSignalR().AddAzureSignalR(options =>
-                {
-                    options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required;
-                    options.ConnectionString = Configuration.GetConnectionString(ConnectionString.SignalR);
-                });
-            }
-
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();

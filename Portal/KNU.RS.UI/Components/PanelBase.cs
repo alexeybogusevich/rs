@@ -31,11 +31,6 @@ namespace KNU.RS.UI.Components
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (!firstRender)
-            {
-                return;
-            }
-
             var cultureInfo = CultureInfo.CurrentCulture;
             var groupedStudies = Studies
                 .GroupBy(s => (s.DateTime.Year, s.DateTime.Month))

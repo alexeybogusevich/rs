@@ -53,11 +53,6 @@ namespace KNU.RS.UI.Components
                 return;
             }
 
-            if (!firstRender)
-            {
-                return;
-            }
-
             var groupedStudies = StudyDetails.GroupBy(s => new { s.SerialNumber, Name = s.StudySubtypeName });
 
             foreach (var studiesOfSubtype in groupedStudies)
