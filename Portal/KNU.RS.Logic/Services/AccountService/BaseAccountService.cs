@@ -56,6 +56,7 @@ namespace KNU.RS.Logic.Services.AccountService
 
                 patient = mapper.Map<Patient>(model);
                 patient.UserId = user.Id;
+                patient.RegistrationDate = DateTime.Now;
 
                 await userManager.CreateAsync(user);
                 await userManager.AddToRoleAsync(user, RoleName.Patient);
@@ -84,7 +85,6 @@ namespace KNU.RS.Logic.Services.AccountService
                 patient.Passport = model.Passport;
                 patient.Complaints = model.Complaints;
                 patient.Diagnosis = model.Diagnosis;
-                patient.RegistrationDate = DateTime.Now;
 
                 var result = await userManager.UpdateAsync(user);
             }
