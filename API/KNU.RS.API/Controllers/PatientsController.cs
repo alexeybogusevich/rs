@@ -42,7 +42,7 @@ namespace KNU.RS.API.Controllers
                 return BadRequest("Користувача не знайдено.");
             }
 
-            var patients = await patientService.GetInfoByDoctorAsync(userId, cancellationToken);
+            var patients = await patientService.GetShortByDoctorUserAsync(userId, cancellationToken);
             return Ok(patients);
         }
 

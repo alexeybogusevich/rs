@@ -37,6 +37,13 @@ namespace KNU.RS.Logic.Services.PatientService
             return PatientConverter.Convert(patient);
         }
 
+        public async Task<Patient> GetAsync(Guid userId, CancellationToken cancellationToken = default)
+        {
+            return await context.Patients
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.UserId.Equals(userId), cancellationToken);
+        }
+
         public async Task<IEnumerable<PatientShort>> GetShortAsync(CancellationToken cancellationToken = default)
         {
             return await context.Patients
@@ -46,11 +53,15 @@ namespace KNU.RS.Logic.Services.PatientService
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<Patient> GetAsync(Guid userId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<PatientShort>> GetShortByDoctorUserAsync(Guid userId, CancellationToken cancellationToken = default)
         {
             return await context.Patients
                 .Include(p => p.User)
-                .FirstOrDefaultAsync(p => p.UserId.Equals(userId), cancellationToken);
+                .Include(p => p.Doctors)
+                    .ThenInclude(d => d.Doctor)
+                .Where(p => p.Doctors.Select(d => d.Doctor.UserId).Contains(userId))
+                .Select(p => PatientConverter.ConvertShort(p))
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<PatientInfo>> GetInfoByDoctorAsync(Guid doctorId, CancellationToken cancellationToken = default)

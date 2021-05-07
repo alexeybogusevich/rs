@@ -16,5 +16,6 @@ namespace KNU.RS.Logic.Services.PatientService
         Task<IEnumerable<PatientInfo>> GetInfoByDoctorUserAsync(Guid userId, CancellationToken cancellationToken = default);
         Task<IEnumerable<PatientShort>> GetShortAsync(CancellationToken cancellationToken = default);
         Task AssignToDoctorAsync(Guid patientId, Guid doctorId);
+        Task<IEnumerable<PatientShort>> GetShortByDoctorUserAsync(Guid userId, CancellationToken cancellationToken = default);
     }
 }
