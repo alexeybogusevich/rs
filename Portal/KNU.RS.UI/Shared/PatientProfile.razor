@@ -1,6 +1,7 @@
 ﻿@using KNU.RS.Data.Enums
 @using EnumsNET
-
+@using ChartJs.Blazor.Charts
+ 
 @inherits PatientProfileBase
 
 <div class="page-wrapper">
@@ -282,15 +283,27 @@
                         @if (Studies.Count() > 1)
                         {
                             <div class="row">
-                                @foreach (var studiesOfSubtype in StudyDetails.GroupBy(s => new { s.SerialNumber, s.StudySubtypeName, s.StudyTypeName }))
+                                @foreach (var chart in Charts)
                                 {
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-body">
-                                                <div class="chart-title">
-                                                    <h4>@($"{studiesOfSubtype.Key.StudyTypeName} : {studiesOfSubtype.Key.StudySubtypeName}")</h4>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="chart-title text-center">
+                                                            <h4><strong>@($"{chart.Key.TypeName}")</strong></h4>
+                                                            <h5 style="margin-top:5px;">@($"{chart.Key.SubtypeName}")</h5>
+                                                        </div>
+                                                        <ChartJsLineChart Config="chart.Value.Configuration" @ref="chart.Value.Chart"></ChartJsLineChart>
+                                                    </div>
+                                                    <div class="col-md-12 btn-group-study text-center">
+                                                        <div class="btn-group btn-group-lg">
+                                                            <button type="button" class="btn btn-white">Мінімум</button>
+                                                            <button type="button" class="btn btn-dark active">Середнє</button>
+                                                            <button type="button" class="btn btn-white">Максимум</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <canvas id="@($"studylinegraph{studiesOfSubtype.Key.SerialNumber}")"></canvas>
                                             </div>
                                         </div>
                                     </div>

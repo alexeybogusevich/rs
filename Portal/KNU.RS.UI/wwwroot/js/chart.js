@@ -31,7 +31,12 @@ window.chartExtensions = {
 		});
 	},
 
+	INITIALIZE_CHART_DICTIONARY: function () {
+		window.myCharts = new Map();
+    },
+
 	FILL_STUDY_LINECHART: function (title, xAxis, labels1, labels2, data1, data2, index) {
+
 		var lineChartData = {
 			labels: xAxis,
 			datasets: [{
@@ -47,7 +52,8 @@ window.chartExtensions = {
 		};
 
 		var linectx = document.getElementById('studylinegraph' + index).getContext('2d');
-		window.myLine = new Chart(linectx, {
+
+		window['studychart' + index] = new Chart(linectx, {
 			type: 'line',
 			data: lineChartData,
 			options: {
@@ -78,5 +84,33 @@ window.chartExtensions = {
 				}
 			}
 		});
-    }
+
+		console.log(window['studychart' + index]);
+	},
+
+	REFILL_STUDY_LINECHART: function (data1, data2, index, buttonId) {
+		for (i = 1; i <= 3; i++) {
+			$('#study-btn-' + index + '-' + i).removeClass();
+        }
+
+		for (i = 1; i <= 3; i++) {
+			if (i == buttonId) {
+				document.getElementById('study-btn-' + index + '-' + i).classList.add('btn');
+				document.getElementById('study-btn-' + index + '-' + i).classList.add('btn-dark');
+				document.getElementById('study-btn-' + index + '-' + i).classList.add('active');
+			}
+			else {
+				document.getElementById('study-btn-' + index + '-' + i).classList.add('btn');
+				document.getElementById('study-btn-' + index + '-' + i).classList.add('btn-white');
+            }
+		}
+
+		console.log(myCharts);
+
+		chartToUpdate = window['studychart' + index];
+
+		chartToUpdate.data.datasets[0].data = data1;
+		chartToUpdate.data.datasets[1].data = data2;
+		chartToUpdate.update();
+	}
 }

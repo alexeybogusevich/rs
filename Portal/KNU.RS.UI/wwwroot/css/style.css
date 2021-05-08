@@ -1760,6 +1760,10 @@ ul.chat-user-total li i.old-users {
 .btn-text {
 	color: #fff;
 }
+.btn-group-study {
+	margin-top:12px;
+	margin-bottom:5px;
+}
 
 /*-----------------
 	15. Chat
