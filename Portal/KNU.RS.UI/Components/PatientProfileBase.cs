@@ -10,6 +10,7 @@ using KNU.RS.Logic.Models.Study;
 using KNU.RS.Logic.Services.PatientService;
 using KNU.RS.Logic.Services.StudyService;
 using KNU.RS.UI.Constants;
+using KNU.RS.UI.Helpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Options;
 using Microsoft.JSInterop;
@@ -39,7 +40,7 @@ namespace KNU.RS.UI.Components
 
         protected List<StudyDetailsInfo> StudyDetails { get; set; } = new List<StudyDetailsInfo>();
 
-        protected Dictionary<StudyKey, StudyValue> Charts = new Dictionary<StudyKey, StudyValue>();
+        protected Dictionary<int, StudyValue> Containers = new Dictionary<int, StudyValue>();
 
 
         protected override async Task OnInitializedAsync()
@@ -64,18 +65,18 @@ namespace KNU.RS.UI.Components
                 var typeName = studiesOfSubtype.FirstOrDefault()?.StudyTypeName;
                 var title = $"{typeName} : {studiesOfSubtype.Key.Name}";
 
-                var clockwiseStudies = studiesOfSubtype.Select(s => decimal.ToDouble(s.AvgClockwiseDegrees));
-                var counterClockwiseStudies = studiesOfSubtype.Select(s => decimal.ToDouble(s.AvgCounterClockwiseDegrees));
+                var clockwiseStudies = studiesOfSubtype.Select(s => s.AvgClockwiseDegrees);
+                var counterClockwiseStudies = studiesOfSubtype.Select(s => s.AvgCounterClockwiseDegrees);
 
                 var labels = studiesOfSubtype.Select(s => s.DateTime.GetValueOrDefault().ToString("dd.MM.yyyy")).ToList();
 
-                var config = GetChartConfig(title);
+                var config = ChartHelper.GetLineChartConfig();
 
-                var datasetClockwise = GetChartDataset(
+                var datasetClockwise = ChartHelper.GetChartDataset(
                     clockwiseStudies, Labels.ClockwiseDegreesTitle, 
                     ChartConstants.BackgroundClockwise, ChartConstants.BorderClockwise);
 
-                var datasetCounterClockwise = GetChartDataset(
+                var datasetCounterClockwise = ChartHelper.GetChartDataset(
                     counterClockwiseStudies, Labels.CounterClockwiseTitle, 
                     ChartConstants.BackgroundCounterClockwise, ChartConstants.BorderCounterClockwise);
 
@@ -87,22 +88,15 @@ namespace KNU.RS.UI.Components
                     config.Data.Labels.Add(label);
                 }
 
-                var chart = new Chart();
-
-                var key = new StudyKey
+                var value = new StudyValue
                 {
-                    SerialNumber = studiesOfSubtype.Key.SerialNumber,
+                    Chart = new Chart(),
+                    Configuration = config,
                     TypeName = typeName,
                     SubtypeName = studiesOfSubtype.Key.Name
                 };
 
-                var value = new StudyValue
-                {
-                    Chart = chart,
-                    Configuration = config
-                };
-
-                Charts.Add(key, value);
+                Containers.Add(studiesOfSubtype.Key.SerialNumber, value);
             }
 
             IsLoading = false;
@@ -110,89 +104,13 @@ namespace KNU.RS.UI.Components
 
         protected override void OnAfterRender(bool firstRender)
         {
-            foreach (var chart in Charts)
+            foreach (var container in Containers)
             {
-                chart.Value.Chart.Update();
+                container.Value.Chart.Update();
             }
 
             base.OnAfterRender(firstRender);
         }
-
-        protected LineConfig GetChartConfig(string title)
-        {
-            return new LineConfig
-            {
-                Options = new LineOptions
-                {
-                    Responsive = true,
-                    Legend = new Legend
-                    {
-                        Display = false
-                    },
-                    Tooltips = new Tooltips
-                    {
-                        Mode = InteractionMode.Index,
-                        Intersect = false
-                    },
-                    Scales = new Scales
-                    {
-                        YAxes = new List<CartesianAxis>
-                        {
-                            new LinearCartesianAxis
-                            {
-                                Ticks = new LinearCartesianTicks
-                                {
-                                    BeginAtZero = true,
-                                    SuggestedMax = 90
-                                }
-                            }
-                        }
-                    },
-                    MaintainAspectRatio = true
-                }
-            };
-        }
-
-        protected LineDataset<double> GetChartDataset(
-            IEnumerable<double> data, string label, string backgroundColor, string borderColor)
-        {
-            return new LineDataset<double>(data)
-            {
-                Label = label,
-                BorderWidth = 1,
-                BackgroundColor = backgroundColor,
-                BorderColor = borderColor
-            };
-        }
-
-        //protected override async Task OnAfterRenderAsync(bool firstRender)
-        //{
-        //    if (Studies.Count < 2)
-        //    {
-        //        return;
-        //    }
-
-        //    var groupedStudies = StudyDetails.GroupBy(s => new { s.SerialNumber, Name = s.StudySubtypeName });
-
-        //    foreach (var studiesOfSubtype in groupedStudies)
-        //    {
-        //        var typeName = studiesOfSubtype.FirstOrDefault()?.StudyTypeName;
-        //        var title = $"{typeName} : {studiesOfSubtype.Key.Name}";
-
-        //        var clockwiseStudies = studiesOfSubtype.Select(s => s.AvgClockwiseDegrees).ToList();
-        //        var counterClockwiseStudies = studiesOfSubtype.Select(s => s.AvgCounterClockwiseDegrees).ToList();
-
-        //        var labels = studiesOfSubtype.Select(s => s.DateTime.GetValueOrDefault().ToString("dd.MM.yyyy")).ToList();
-
-        //        await JsRuntime.InvokeVoidAsync(JSExtensionMethods.InitializeCharts);
-
-        //        await JsRuntime.InvokeVoidAsync(
-        //            JSExtensionMethods.FillStudyLinechart,
-        //            title, labels,
-        //            Labels.ClockwiseDegreesTitle, Labels.CounterClockwiseDegreesTitle,
-        //            clockwiseStudies, counterClockwiseStudies, studiesOfSubtype.Key.SerialNumber);
-        //    }
-        //}
 
         protected async Task LoadCategoryResultsAsync(int serialNumber, int category)
         {
@@ -220,30 +138,34 @@ namespace KNU.RS.UI.Components
                     throw new ArgumentException();
             }
 
-            var typeName = studiesOfTypeNumber.FirstOrDefault()?.StudyTypeName;
-            var title = $"{typeName} : {studiesOfTypeNumber.Key.Name}";
-
             var clockwiseStudies = studiesOfTypeNumber.Select(filterClockwise).ToList();
             var counterClockwiseStudies = studiesOfTypeNumber.Select(filterCounterClockwise).ToList();
 
-            var labels = studiesOfTypeNumber.Select(s => s.DateTime.GetValueOrDefault().ToString("dd.MM.yyyy")).ToList();
+            var container = Containers[serialNumber];
+            container.Configuration.Data.Datasets.Clear();
+
+            var datasetClockwise = ChartHelper.GetChartDataset(
+                clockwiseStudies, Labels.ClockwiseDegreesTitle,
+                ChartConstants.BackgroundClockwise, ChartConstants.BorderClockwise);
+
+            var datasetCounterClockwise = ChartHelper.GetChartDataset(
+                counterClockwiseStudies, Labels.CounterClockwiseTitle,
+                ChartConstants.BackgroundCounterClockwise, ChartConstants.BorderCounterClockwise);
+
+            container.Configuration.Data.Datasets.Add(datasetClockwise);
+            container.Configuration.Data.Datasets.Add(datasetCounterClockwise);
+            await container.Chart.Update();
 
             await JsRuntime.InvokeVoidAsync(
-                JSExtensionMethods.RefillStudyLinechart,
-                clockwiseStudies, counterClockwiseStudies, studiesOfTypeNumber.Key.SerialNumber, category);
-        }
-
-        protected class StudyKey
-        {
-            public int SerialNumber { get; set; }
-            public string TypeName { get; set; }
-            public string SubtypeName { get; set; }
+                JSExtensionMethods.SetStudyChartButtons, studiesOfTypeNumber.Key.SerialNumber, category);
         }
 
         protected class StudyValue
         {
             public Chart Chart { get; set; }
             public LineConfig Configuration { get; set; }
+            public string TypeName { get; set; }
+            public string SubtypeName { get; set; }
         }
     }
 }

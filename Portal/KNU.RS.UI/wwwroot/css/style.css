@@ -1231,7 +1231,7 @@ textarea.form-control {
 	-webkit-overflow-scrolling: touch;
 }
 .chart-title {
-	margin-bottom: 25px;
+	margin-bottom: 12px;
 }
 .chart-title h4 {
 	display: inline-block;
@@ -1761,8 +1761,7 @@ ul.chat-user-total li i.old-users {
 	color: #fff;
 }
 .btn-group-study {
-	margin-top:12px;
-	margin-bottom:5px;
+	margin-bottom:15px;
 }
 
 /*-----------------

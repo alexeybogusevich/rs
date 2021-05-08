@@ -283,22 +283,22 @@
                         @if (Studies.Count() > 1)
                         {
                             <div class="row">
-                                @foreach (var chart in Charts)
+                                @foreach (var container in Containers)
                                 {
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="chart-title text-center">
-                                                    <h4><strong>@($"{chart.Key.TypeName}")</strong></h4>
-                                                    <h5 style="margin-top:5px;">@($"{chart.Key.SubtypeName}")</h5>
+                                                    <h4><strong>@($"{container.Value.TypeName}")</strong></h4>
+                                                    <h5 style="margin-top:5px;">@($"{container.Value.SubtypeName}")</h5>
                                                 </div>
-                                                <Chart Config="chart.Value.Configuration" @ref="chart.Value.Chart"></Chart>
+                                                <Chart Config="container.Value.Configuration" @ref="container.Value.Chart"></Chart>
                                             </div>
                                             <div class="col-md-12 btn-group-study text-center">
                                                 <div class="btn-group btn-group-lg">
-                                                    <button type="button" class="btn btn-white">Мінімум</button>
-                                                    <button type="button" class="btn btn-dark active">Середнє</button>
-                                                    <button type="button" class="btn btn-white">Максимум</button>
+                                                    <button id="study-btn-@container.Key-1" type="button" class="btn btn-white" @onclick="async () => await LoadCategoryResultsAsync(container.Key, 1)">Мінімум</button>
+                                                    <button id="study-btn-@container.Key-2" type="button" class="btn btn-primary active" @onclick="async () => await LoadCategoryResultsAsync(container.Key, 2)">Середнє</button>
+                                                    <button id="study-btn-@container.Key-3" type="button" class="btn btn-white" @onclick="async () => await LoadCategoryResultsAsync(container.Key, 3)">Максимум</button>
                                                 </div>
                                             </div>
                                         </div>

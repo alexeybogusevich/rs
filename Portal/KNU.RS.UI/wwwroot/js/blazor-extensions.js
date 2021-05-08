@@ -125,6 +125,24 @@
 
     HISTORY_BACK: function () {
         history.back();
+    },
+
+    SET_STUDY_CHART_BUTTONS: function (index, buttonId) {
+        for (i = 1; i <= 3; i++) {
+            $('#study-btn-' + index + '-' + i).removeClass();
+        }
+
+        for (i = 1; i <= 3; i++) {
+            if (i == buttonId) {
+                document.getElementById('study-btn-' + index + '-' + i).classList.add('btn');
+                document.getElementById('study-btn-' + index + '-' + i).classList.add('btn-primary');
+                document.getElementById('study-btn-' + index + '-' + i).classList.add('active');
+            }
+            else {
+                document.getElementById('study-btn-' + index + '-' + i).classList.add('btn');
+                document.getElementById('study-btn-' + index + '-' + i).classList.add('btn-white');
+            }
+        }
     }
 }
 
