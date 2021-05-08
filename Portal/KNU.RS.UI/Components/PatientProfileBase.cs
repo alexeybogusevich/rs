@@ -1,8 +1,4 @@
 ﻿using ChartJs.Blazor;
-using ChartJs.Blazor.Common;
-using ChartJs.Blazor.Common.Axes;
-using ChartJs.Blazor.Common.Axes.Ticks;
-using ChartJs.Blazor.Common.Enums;
 using ChartJs.Blazor.LineChart;
 using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Models.Patient;
@@ -55,6 +51,7 @@ namespace KNU.RS.UI.Components
 
             if (Studies.Count < 2)
             {
+                IsLoading = false;
                 return;
             }
 
@@ -73,11 +70,11 @@ namespace KNU.RS.UI.Components
                 var config = ChartHelper.GetLineChartConfig();
 
                 var datasetClockwise = ChartHelper.GetChartDataset(
-                    clockwiseStudies, Labels.ClockwiseDegreesTitle, 
+                    clockwiseStudies, Labels.ClockwiseDegreesTitle,
                     ChartConstants.BackgroundClockwise, ChartConstants.BorderClockwise);
 
                 var datasetCounterClockwise = ChartHelper.GetChartDataset(
-                    counterClockwiseStudies, Labels.CounterClockwiseTitle, 
+                    counterClockwiseStudies, Labels.CounterClockwiseTitle,
                     ChartConstants.BackgroundCounterClockwise, ChartConstants.BorderCounterClockwise);
 
                 config.Data.Datasets.Add(datasetClockwise);
@@ -120,7 +117,7 @@ namespace KNU.RS.UI.Components
             Func<StudyDetailsInfo, decimal> filterClockwise;
             Func<StudyDetailsInfo, decimal> filterCounterClockwise;
 
-            switch(category)
+            switch (category)
             {
                 case (1):
                     filterClockwise = s => s.MinClockwiseDegrees;

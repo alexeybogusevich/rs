@@ -90,6 +90,15 @@ namespace KNU.RS.UI
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+            if (!Environment.IsDevelopment())
+            {
+                services.AddSignalR().AddAzureSignalR(options =>
+                {
+                    options.ConnectionString = Configuration.GetConnectionString(ConnectionString.SignalR);
+                    options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required;
+                });
+            }
+
             services.AddScoped<IHostEnvironmentAuthenticationStateProvider>(sp =>
                 (ServerAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>());
 
