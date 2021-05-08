@@ -24,8 +24,12 @@ namespace KNU.RS.Logic.Converters
                     new StudyDetailsShort
                     {
                         StudySubtypeName = s.StudySubtype?.Name,
-                        ClockwiseDegrees = s.ClockwiseDegrees,
-                        CounterClockwiseDegrees = s.CounterClockwiseDegrees
+                        MinClockwiseDegrees = s.MinClockwiseDegrees,
+                        AvgClockwiseDegrees = s.AvgClockwiseDegrees,
+                        MaxClockwiseDegrees = s.MaxClockwiseDegrees,
+                        MinCounterClockwiseDegrees = s.MinCounterClockwiseDegrees,
+                        AvgCounterClockwiseDegrees = s.AvgCounterClockwiseDegrees,
+                        MaxCounterClockwiseDegrees = s.MaxCounterClockwiseDegrees
                     })
             };
         }
@@ -37,8 +41,12 @@ namespace KNU.RS.Logic.Converters
                 Id = studyDetails.Id,
                 SerialNumber = studyDetails.StudySubtype?.SerialNumber ?? default,
                 StudyHeaderId = studyDetails.StudyHeaderId,
-                ClockwiseDegrees = studyDetails.ClockwiseDegrees,
-                CounterClockwiseDegrees = studyDetails.CounterClockwiseDegrees,
+                MinClockwiseDegrees = studyDetails.MinClockwiseDegrees,
+                AvgClockwiseDegrees = studyDetails.AvgClockwiseDegrees,
+                MaxClockwiseDegrees = studyDetails.MaxClockwiseDegrees,
+                MinCounterClockwiseDegrees = studyDetails.MinCounterClockwiseDegrees,
+                AvgCounterClockwiseDegrees = studyDetails.AvgCounterClockwiseDegrees,
+                MaxCounterClockwiseDegrees = studyDetails.MaxCounterClockwiseDegrees,
                 DateTime = studyDetails.StudyHeader?.DateTime,
                 StudySubtypeId = studyDetails.StudySubtypeId,
                 StudySubtypeName = studyDetails.StudySubtype?.Name,
@@ -68,8 +76,12 @@ namespace KNU.RS.Logic.Converters
                     new StudyDetailsShort
                     {
                         StudySubtypeName = s.StudySubtype?.Name,
-                        ClockwiseDegrees = s.ClockwiseDegrees,
-                        CounterClockwiseDegrees = s.CounterClockwiseDegrees
+                        MinClockwiseDegrees = s.MinClockwiseDegrees,
+                        AvgClockwiseDegrees = s.AvgClockwiseDegrees,
+                        MaxClockwiseDegrees = s.MaxClockwiseDegrees,
+                        MinCounterClockwiseDegrees = s.MinCounterClockwiseDegrees,
+                        AvgCounterClockwiseDegrees = s.AvgCounterClockwiseDegrees,
+                        MaxCounterClockwiseDegrees = s.MaxCounterClockwiseDegrees
                     })
             };
         }

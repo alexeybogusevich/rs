@@ -111,8 +111,12 @@ namespace KNU.RS.Logic.Services.StudyService
                 new StudyDetails
                 {
                     Id = Guid.NewGuid(),
-                    ClockwiseDegrees = s.ClockwiseDegrees,
-                    CounterClockwiseDegrees = s.CounterClockwiseDegrees,
+                    MinClockwiseDegrees = Math.Round(s.MinClockwiseDegrees, 2),
+                    AvgClockwiseDegrees = Math.Round(s.AvgClockwiseDegrees, 2),
+                    MaxClockwiseDegrees = Math.Round(s.MaxClockwiseDegrees, 2),
+                    MinCounterClockwiseDegrees = Math.Round(s.MinCounterClockwiseDegrees, 2),
+                    AvgCounterClockwiseDegrees = Math.Round(s.AvgCounterClockwiseDegrees, 2),
+                    MaxCounterClockwiseDegrees = Math.Round(s.MaxCounterClockwiseDegrees, 2),
                     StudySubtypeId = s.StudySubtypeId,
                     StudyHeaderId = studyHeader.Id
                 });

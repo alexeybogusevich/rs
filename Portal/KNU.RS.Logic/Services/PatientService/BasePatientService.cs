@@ -20,6 +20,13 @@ namespace KNU.RS.Logic.Services.PatientService
             this.context = context;
         }
 
+        public async Task<Patient> GetAsync(Guid userId, CancellationToken cancellationToken = default)
+        {
+            return await context.Patients
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(p => p.UserId.Equals(userId), cancellationToken);
+        }
+
         public async Task<IEnumerable<PatientInfo>> GetInfoAsync(CancellationToken cancellationToken = default)
         {
             return await context.Patients
@@ -35,13 +42,6 @@ namespace KNU.RS.Logic.Services.PatientService
                 .FirstOrDefaultAsync(d => d.UserId.Equals(userId), cancellationToken);
 
             return PatientConverter.Convert(patient);
-        }
-
-        public async Task<Patient> GetAsync(Guid userId, CancellationToken cancellationToken = default)
-        {
-            return await context.Patients
-                .Include(p => p.User)
-                .FirstOrDefaultAsync(p => p.UserId.Equals(userId), cancellationToken);
         }
 
         public async Task<IEnumerable<PatientShort>> GetShortAsync(CancellationToken cancellationToken = default)

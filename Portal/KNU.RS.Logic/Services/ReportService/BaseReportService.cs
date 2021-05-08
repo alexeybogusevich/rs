@@ -78,7 +78,7 @@ namespace KNU.RS.Logic.Services.ReportService
                         TableCellProperties = tableCellProperties.CloneNode(true) as TableCellProperties
                     };
 
-                    var paragraph2 = new Paragraph(new Run(new Text(studyDetails.ClockwiseDegrees.ToString())))
+                    var paragraph2 = new Paragraph(new Run(new Text(studyDetails.AvgClockwiseDegrees.ToString())))
                     {
                         ParagraphProperties = paragraphProperties.CloneNode(true) as ParagraphProperties
                     };
@@ -88,7 +88,7 @@ namespace KNU.RS.Logic.Services.ReportService
                         TableCellProperties = tableCellProperties.CloneNode(true) as TableCellProperties
                     };
 
-                    var paragraph3 = new Paragraph(new Run(new Text(studyDetails.CounterClockwiseDegrees.ToString())))
+                    var paragraph3 = new Paragraph(new Run(new Text(studyDetails.AvgCounterClockwiseDegrees.ToString())))
                     {
                         ParagraphProperties = paragraphProperties.CloneNode(true) as ParagraphProperties
                     };

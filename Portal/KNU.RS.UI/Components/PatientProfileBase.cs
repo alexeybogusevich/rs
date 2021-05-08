@@ -60,8 +60,8 @@ namespace KNU.RS.UI.Components
                 var typeName = studiesOfSubtype.FirstOrDefault()?.StudyTypeName;
                 var title = $"{typeName} : {studiesOfSubtype.Key.Name}";
 
-                var clockwiseStudies = studiesOfSubtype.Select(s => s.ClockwiseDegrees).ToList();
-                var counterClockwiseStudies = studiesOfSubtype.Select(s => s.CounterClockwiseDegrees).ToList();
+                var clockwiseStudies = studiesOfSubtype.Select(s => s.AvgClockwiseDegrees).ToList();
+                var counterClockwiseStudies = studiesOfSubtype.Select(s => s.AvgCounterClockwiseDegrees).ToList();
 
                 var labels = studiesOfSubtype.Select(s => s.DateTime.GetValueOrDefault().ToString("dd.MM.yyyy")).ToList();
 
