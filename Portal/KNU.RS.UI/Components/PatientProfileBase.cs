@@ -1,11 +1,9 @@
-﻿using ChartJs.Blazor.ChartJS.Common.Axes;
-using ChartJs.Blazor.ChartJS.Common.Axes.Ticks;
-using ChartJs.Blazor.ChartJS.Common.Enums;
-using ChartJs.Blazor.ChartJS.Common.Handlers;
-using ChartJs.Blazor.ChartJS.Common.Properties;
-using ChartJs.Blazor.ChartJS.Common.Wrappers;
-using ChartJs.Blazor.ChartJS.LineChart;
-using ChartJs.Blazor.Charts;
+﻿using ChartJs.Blazor;
+using ChartJs.Blazor.Common;
+using ChartJs.Blazor.Common.Axes;
+using ChartJs.Blazor.Common.Axes.Ticks;
+using ChartJs.Blazor.Common.Enums;
+using ChartJs.Blazor.LineChart;
 using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Models.Patient;
 using KNU.RS.Logic.Models.Study;
@@ -73,16 +71,23 @@ namespace KNU.RS.UI.Components
 
                 var config = GetChartConfig(title);
 
-                var dataset1 = GetChartDataset(clockwiseStudies, title, ChartConstants.BackgroundColor1, ChartConstants.BorderColor1);
-                var dataset2 = GetChartDataset(counterClockwiseStudies, title, ChartConstants.BackgroundColor2, ChartConstants.BorderColor2);
+                var datasetClockwise = GetChartDataset(
+                    clockwiseStudies, Labels.ClockwiseDegreesTitle, 
+                    ChartConstants.BackgroundClockwise, ChartConstants.BorderClockwise);
 
-                config.Data.Datasets.Add(dataset1);
-                config.Data.Datasets.Add(dataset2);
+                var datasetCounterClockwise = GetChartDataset(
+                    counterClockwiseStudies, Labels.CounterClockwiseTitle, 
+                    ChartConstants.BackgroundCounterClockwise, ChartConstants.BorderCounterClockwise);
 
-                config.Data.Labels = new List<string>();
-                config.Data.Labels.AddRange(labels);
+                config.Data.Datasets.Add(datasetClockwise);
+                config.Data.Datasets.Add(datasetCounterClockwise);
 
-                var chart = new ChartJsLineChart();
+                foreach (var label in labels)
+                {
+                    config.Data.Labels.Add(label);
+                }
+
+                var chart = new Chart();
 
                 var key = new StudyKey
                 {
@@ -129,15 +134,9 @@ namespace KNU.RS.UI.Components
                         Mode = InteractionMode.Index,
                         Intersect = false
                     },
-                    Title = new OptionsTitle
-                    {
-                        Display = true,
-                        Text = title,
-                        Padding = 10
-                    },
                     Scales = new Scales
                     {
-                        yAxes = new List<CartesianAxis>
+                        YAxes = new List<CartesianAxis>
                         {
                             new LinearCartesianAxis
                             {
@@ -148,15 +147,16 @@ namespace KNU.RS.UI.Components
                                 }
                             }
                         }
-                    }
+                    },
+                    MaintainAspectRatio = true
                 }
             };
         }
 
-        protected LineDataset<DoubleWrapper> GetChartDataset(
+        protected LineDataset<double> GetChartDataset(
             IEnumerable<double> data, string label, string backgroundColor, string borderColor)
         {
-            return new LineDataset<DoubleWrapper>(data.Select(d => new DoubleWrapper(d)))
+            return new LineDataset<double>(data)
             {
                 Label = label,
                 BorderWidth = 1,
@@ -242,7 +242,7 @@ namespace KNU.RS.UI.Components
 
         protected class StudyValue
         {
-            public ChartJsLineChart Chart { get; set; }
+            public Chart Chart { get; set; }
             public LineConfig Configuration { get; set; }
         }
     }

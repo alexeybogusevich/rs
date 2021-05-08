@@ -1,6 +1,6 @@
 ﻿@using KNU.RS.Data.Enums
 @using EnumsNET
-@using ChartJs.Blazor.Charts
+@using ChartJs.Blazor
  
 @inherits PatientProfileBase
 
@@ -288,21 +288,17 @@
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="chart-title text-center">
-                                                            <h4><strong>@($"{chart.Key.TypeName}")</strong></h4>
-                                                            <h5 style="margin-top:5px;">@($"{chart.Key.SubtypeName}")</h5>
-                                                        </div>
-                                                        <ChartJsLineChart Config="chart.Value.Configuration" @ref="chart.Value.Chart"></ChartJsLineChart>
-                                                    </div>
-                                                    <div class="col-md-12 btn-group-study text-center">
-                                                        <div class="btn-group btn-group-lg">
-                                                            <button type="button" class="btn btn-white">Мінімум</button>
-                                                            <button type="button" class="btn btn-dark active">Середнє</button>
-                                                            <button type="button" class="btn btn-white">Максимум</button>
-                                                        </div>
-                                                    </div>
+                                                <div class="chart-title text-center">
+                                                    <h4><strong>@($"{chart.Key.TypeName}")</strong></h4>
+                                                    <h5 style="margin-top:5px;">@($"{chart.Key.SubtypeName}")</h5>
+                                                </div>
+                                                <Chart Config="chart.Value.Configuration" @ref="chart.Value.Chart"></Chart>
+                                            </div>
+                                            <div class="col-md-12 btn-group-study text-center">
+                                                <div class="btn-group btn-group-lg">
+                                                    <button type="button" class="btn btn-white">Мінімум</button>
+                                                    <button type="button" class="btn btn-dark active">Середнє</button>
+                                                    <button type="button" class="btn btn-white">Максимум</button>
                                                 </div>
                                             </div>
                                         </div>
