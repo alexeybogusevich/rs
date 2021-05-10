@@ -44,7 +44,7 @@ namespace KNU.RS.UI.Components
             IsLoading = true;
 
             var studyDetails = await StudyService.GetDetailsInfoAsync(Patient.Id, cancellationTokenSource.Token);
-            StudyDetails = studyDetails.OrderBy(s => s.DateTime).Take(15).ToList();
+            StudyDetails = studyDetails.OrderByDescending(s => s.DateTime).Take(15).OrderBy(s => s.DateTime).ToList();
 
             var studies = await StudyService.GetInfoAsync(Patient.Id, cancellationTokenSource.Token);
             Studies = studies.OrderByDescending(s => s.DateTime).ToList();
