@@ -8,15 +8,6 @@ namespace KNU.RS.Logic.Helpers
 {
     public static class OpenXmlWordHelper
     {
-        public static string GetDocument()
-        {
-            var document = WordprocessingDocument.Create("", WordprocessingDocumentType.Document);
-
-            var fields = document.GetMergeFields();
-
-            return string.Empty;
-        }
-
         public static IEnumerable<FieldCode> GetMergeFields(this WordprocessingDocument doc, string mergeFieldName = null)
         {
             if (doc == null)
@@ -90,10 +81,10 @@ namespace KNU.RS.Logic.Helpers
             if (xmlElement == null)
                 return null;
 
-            Paragraph paragraph = xmlElement is Paragraph
-                ? (Paragraph)xmlElement
-                : xmlElement.Parent is Paragraph ?
-                (Paragraph)xmlElement.Parent : xmlElement.Ancestors<Paragraph>().FirstOrDefault();
+            Paragraph paragraph = xmlElement is Paragraph ph
+                ? ph
+                : xmlElement.Parent is Paragraph p ?
+                p : xmlElement.Ancestors<Paragraph>().FirstOrDefault();
 
             return paragraph;
         }

@@ -58,7 +58,7 @@ namespace KNU.RS.Logic.Services.PasswordService
 
                     var randoms = builder.ToString();
 
-                    chars.Insert(rand.Next(0, randomChars.Count()), randoms[rand.Next(0, randoms.Count())]);
+                    chars.Insert(rand.Next(0, randomChars.Count), randoms[rand.Next(0, randoms.Length)]);
                 }
             }
 

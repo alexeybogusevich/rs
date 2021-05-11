@@ -20,9 +20,9 @@ namespace KNU.RS.UI.Components
 
         protected int Counter = 1;
 
-        private int PageSize = 10;
+        private readonly int PageSize = 10;
 
-        private int PagesForReference = 5;
+        private readonly int PagesForReference = 5;
 
         public List<PatientShort> Patients { get; set; } = new List<PatientShort>();
 
@@ -83,7 +83,7 @@ namespace KNU.RS.UI.Components
             }
 
             var filteredPatients = Patients.Where(p =>
-                p.FullName.IndexOf(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) >= 0);
+                p.FullName.Contains(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase));
 
             PatientsPage = PaginatedList<PatientShort>.Create(filteredPatients, 1, PageSize);
             SetAvailablePages();

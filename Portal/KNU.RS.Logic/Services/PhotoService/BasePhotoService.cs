@@ -22,7 +22,7 @@ namespace KNU.RS.Logic.Services.PhotoService
             var croppedImage = await file.RequestImageFileAsync(
                 configuration.Format, configuration.MaxHeight, configuration.MaxWidth);
 
-            using var reader = croppedImage.OpenReadStream();
+            using var reader = croppedImage.OpenReadStream(cancellationToken: cancellationToken);
             using var ms = new MemoryStream();
 
             await reader.CopyToAsync(ms, cancellationToken);

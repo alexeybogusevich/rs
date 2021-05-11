@@ -34,9 +34,9 @@ namespace KNU.RS.UI.Components
 
         protected int Counter = 1;
 
-        private int PageSize = 10;
+        private readonly int PageSize = 10;
 
-        private int PagesForReference = 5;
+        private readonly int PagesForReference = 5;
 
 
         protected List<int> AvailablePages { get; set; } = new List<int>();
@@ -102,9 +102,9 @@ namespace KNU.RS.UI.Components
             }
 
             var filteredPatients = Patients.Where(p =>
-                p.FirstName.IndexOf(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                p.LastName.IndexOf(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                p.MiddleName.IndexOf(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) >= 0);
+                p.FirstName.Contains(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) ||
+                p.LastName.Contains(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase) ||
+                p.MiddleName.Contains(FilteringModel.SearchWord, StringComparison.OrdinalIgnoreCase));
 
             PatientsPage = PaginatedList<PatientInfo>.Create(filteredPatients, 1, PageSize);
             SetAvailablePages();

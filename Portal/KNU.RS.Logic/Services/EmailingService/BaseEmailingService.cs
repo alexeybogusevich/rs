@@ -50,9 +50,12 @@ namespace KNU.RS.Logic.Services.EmailingService
 
         private async Task SendMessageAsync(MimeMessage message)
         {
-            using var emailClient = new SmtpClient();
-            emailClient.ServerCertificateValidationCallback =
-                (server, certificate, certChainType, errors) => true;
+            using var emailClient = new SmtpClient
+            {
+                ServerCertificateValidationCallback =
+                (server, certificate, certChainType, errors) => true
+            };
+
             emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
 
             await emailClient.ConnectAsync(options.Host, int.Parse(options.Port), SecureSocketOptions.StartTlsWhenAvailable);
@@ -61,30 +64,27 @@ namespace KNU.RS.Logic.Services.EmailingService
             await emailClient.DisconnectAsync(true);
         }
 
-        private string GetFullName(User user)
+        private static string GetFullName(User user)
         {
             var nameBuilder = new StringBuilder();
 
             nameBuilder.Append(user.LastName);
-            nameBuilder.Append(" ");
+            nameBuilder.Append(' ');
             nameBuilder.Append(user.FirstName);
-            nameBuilder.Append(" ");
+            nameBuilder.Append(' ');
             nameBuilder.Append(user.MiddleName);
 
             return nameBuilder.ToString();
         }
 
-        private string GetSubject(EmailType type)
+        private static string GetSubject(EmailType type)
         {
-            switch (type)
+            return type switch
             {
-                case EmailType.Registration:
-                    return "Дякуємо за реєстрацію";
-                case EmailType.ForgotPassword:
-                    return "Відновлення пароля";
-                default:
-                    return string.Empty;
-            }
+                EmailType.Registration => "Дякуємо за реєстрацію",
+                EmailType.ForgotPassword => "Відновлення пароля",
+                _ => string.Empty,
+            };
         }
     }
 }
