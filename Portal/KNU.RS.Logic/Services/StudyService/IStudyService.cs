@@ -14,6 +14,7 @@ namespace KNU.RS.Logic.Services.StudyService
         Task<IEnumerable<StudyInfo>> GetInfoAsync(CancellationToken cancellationToken = default);
         Task<IEnumerable<StudyInfo>> GetInfoAsync(Guid patientId, CancellationToken cancellationToken = default);
         Task<StudyReportInfo> GetReportAsync(Guid headerId, CancellationToken cancellationToken = default);
+        Task<IEnumerable<StudyType>> GetTypesAsync(CancellationToken cancellationToken = default);
         Task<IEnumerable<StudySubtype>> GetSubtypesAsync(CancellationToken cancellationToken = default);
         Task<StudyHeader> SaveAsync(StudyModel study, Guid userId);
     }

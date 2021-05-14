@@ -76,6 +76,11 @@ namespace KNU.RS.Logic.Services.StudyService
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
+        public async Task<IEnumerable<StudyType>> GetTypesAsync(CancellationToken cancellationToken = default)
+        {
+            return await context.StudyTypes.ToListAsync(cancellationToken);
+        }
+
         public async Task<IEnumerable<StudySubtype>> GetSubtypesAsync(CancellationToken cancellationToken = default)
         {
             return await context.StudySubtypes.ToListAsync(cancellationToken);
