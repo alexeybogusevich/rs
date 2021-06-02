@@ -85,5 +85,23 @@ namespace KNU.RS.Logic.Converters
                     })
             };
         }
+
+        public static StudyTypeInfo ConvertType(StudyType studyType)
+        {
+            return new StudyTypeInfo
+            {
+                Id = studyType.Id,
+                Name = studyType.Name
+            };
+        }
+
+        public static StudySubtypeInfo ConvertSubtype(StudySubtype studySubtype)
+        {
+            return new StudySubtypeInfo
+            {
+                Id = studySubtype.Id,
+                Name = studySubtype.Name
+            };
+        }
     }
 }

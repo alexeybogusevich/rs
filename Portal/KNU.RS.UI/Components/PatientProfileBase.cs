@@ -59,6 +59,11 @@ namespace KNU.RS.UI.Components
 
             foreach (var studiesOfSubtype in groupedStudies)
             {
+                if (studiesOfSubtype.Count() < 2)
+                {
+                    continue;
+                }
+
                 var typeName = studiesOfSubtype.FirstOrDefault()?.StudyTypeName;
                 var title = $"{typeName} : {studiesOfSubtype.Key.Name}";
 
