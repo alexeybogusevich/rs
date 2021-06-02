@@ -32,6 +32,7 @@ namespace KNU.RS.Logic.Models.Account
         [Required(ErrorMessage = "Будь-ласка, вкажіть поштову адресу")]
         [EmailAddress(ErrorMessage = "Будь-ласка, введіть валідну email адресу")]
         [MaxLength(100, ErrorMessage = "Будь-ласка, вкажіть не більше, ніж 100 символів")]
+        [RegularExpression(@"^\S*$", ErrorMessage = "Перевірте адресу на наявність пустих символів.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Будь-ласка, вкажіть номер телефону")]
