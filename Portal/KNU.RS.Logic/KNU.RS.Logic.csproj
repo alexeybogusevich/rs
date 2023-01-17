@@ -1,18 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.12.3" />
     <PackageReference Include="MailKit" Version="2.11.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="5.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.13" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.JSInterop" Version="5.0.5" />
+    <PackageReference Include="Microsoft.JSInterop" Version="6.0.13" />
     <PackageReference Include="MimeKit" Version="2.11.0" />
   </ItemGroup>
 
