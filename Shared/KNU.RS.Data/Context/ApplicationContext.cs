@@ -80,7 +80,7 @@ namespace KNU.RS.Data.Context
             modelBuilder.Entity<RecoveryDailyPlan>(rp =>
             {
                 rp.HasKey(r => r.Id);
-                rp.Property(r => r.SerialNumber).ValueGeneratedOnAdd();
+                rp.Property(r => r.SerialNumber);
                 rp.HasOne(r => r.DoctorPatient).WithMany(p => p.RecoveryDailyPlans).HasForeignKey(r => r.DoctorPatientId);
             });
 
@@ -101,7 +101,7 @@ namespace KNU.RS.Data.Context
             modelBuilder.Entity<StudySubtype>(ss =>
             {
                 ss.HasKey(s => s.Id);
-                ss.Property(s => s.SerialNumber).ValueGeneratedOnAdd();
+                ss.Property(s => s.SerialNumber);
                 ss.HasOne(s => s.StudyType).WithMany(s => s.StudySubtypes).HasForeignKey(s => s.StudyTypeId);
             });
 

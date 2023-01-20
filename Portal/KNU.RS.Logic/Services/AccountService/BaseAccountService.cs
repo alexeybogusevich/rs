@@ -351,7 +351,7 @@ namespace KNU.RS.Logic.Services.AccountService
             {
                 await photoService.UploadAsync(user.Id, photo);
             }
-            catch (Exception)
+            catch 
             {
                 user.HasPhoto = false;
             }

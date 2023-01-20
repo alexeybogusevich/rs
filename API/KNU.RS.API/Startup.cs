@@ -3,6 +3,7 @@ using KNU.RS.Data.Context;
 using KNU.RS.Data.Models;
 using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Constants;
+using KNU.RS.Logic.Helpers;
 using KNU.RS.Logic.Mapper;
 using KNU.RS.Logic.Middleware;
 using KNU.RS.Logic.Services.AccountService;
@@ -45,7 +46,7 @@ namespace KNU.RS.API
             services.AddControllers();
 
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString(ConnectionString.Database)));
+                options.UseMySql(Configuration.GetConnectionString(ConnectionString.Database), ServerVersion.AutoDetect(Configuration.GetConnectionString(ConnectionString.Database))));
 
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ApplicationContext>()
@@ -127,7 +128,7 @@ namespace KNU.RS.API
             services.AddSwaggerGenNewtonsoftSupport();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationContext applicationContext)
         {
             if (env.IsDevelopment())
             {

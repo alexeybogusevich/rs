@@ -28,6 +28,11 @@ namespace KNU.RS.Logic.Services.UserService
             return await context.Users.FirstOrDefaultAsync(u => u.Id.Equals(id), cancellationToken);
         }
 
+        public async Task<User> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
+        {
+            return await context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email), cancellationToken);
+        }
+
         public async Task<FooterInfo> GetFooterAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await context.Users

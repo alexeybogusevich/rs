@@ -75,7 +75,7 @@
                                                     <span class="title" style="width:100%">Вага:</span>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <span class="text" style="width:100%">@Patient.Weight</span>
+                                                    <span class="text" style="width:100%">@(Patient.Weight.HasValue ? Decimal.Round(Patient.Weight.Value, 2) : 0)</span>
                                                 </div>
                                             </div>
                                         </li>
@@ -85,7 +85,7 @@
                                                     <span class="title">Зріст:</span>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <span class="text" style="width:100%">@Patient.Height</span>
+                                                    <span class="text" style="width:100%">@(Patient.Height.HasValue ? Decimal.Round(Patient.Height.Value, 2) : 0)</span>
                                                 </div>
                                             </div>
                                         </li>

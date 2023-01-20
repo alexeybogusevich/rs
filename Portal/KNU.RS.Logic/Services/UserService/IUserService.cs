@@ -12,6 +12,7 @@ namespace KNU.RS.Logic.Services.UserService
 
         Task DeleteAsync(Guid id);
         Task<User> GetAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<User> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
         Task<FooterInfo> GetFooterAsync(Guid id, CancellationToken cancellationToken = default);
         Task<IEnumerable<string>> GetRolesAsync(string email);
     }

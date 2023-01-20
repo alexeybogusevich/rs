@@ -1,8 +1,10 @@
 using AutoMapper;
 using KNU.RS.Data.Context;
 using KNU.RS.Data.Models;
+using KNU.RS.Data.Seeding;
 using KNU.RS.Logic.Configuration;
 using KNU.RS.Logic.Constants;
+using KNU.RS.Logic.Helpers;
 using KNU.RS.Logic.Mapper;
 using KNU.RS.Logic.Middleware;
 using KNU.RS.Logic.Services.AccountService;
@@ -48,7 +50,7 @@ namespace KNU.RS.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString(ConnectionString.Database)));
+                options.UseMySql(Configuration.GetConnectionString(ConnectionString.Database), ServerVersion.AutoDetect(Configuration.GetConnectionString(ConnectionString.Database))));
 
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ApplicationContext>()
@@ -86,18 +88,10 @@ namespace KNU.RS.UI
             });
 
             services.AddRazorPages();
+            services.AddSignalR();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
-
-            if (!Environment.IsDevelopment())
-            {
-                services.AddSignalR().AddAzureSignalR(options =>
-                {
-                    options.ConnectionString = Configuration.GetConnectionString(ConnectionString.SignalR);
-                    options.ServerStickyMode = Microsoft.Azure.SignalR.ServerStickyMode.Required;
-                });
-            }
 
             services.AddScoped<IHostEnvironmentAuthenticationStateProvider>(sp =>
                 (ServerAuthenticationStateProvider)sp.GetRequiredService<AuthenticationStateProvider>());
@@ -112,7 +106,7 @@ namespace KNU.RS.UI
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationContext applicationContext, UserManager<User> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -145,6 +139,8 @@ namespace KNU.RS.UI
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+
+            app.Seed(applicationContext);
         }
     }
 }
