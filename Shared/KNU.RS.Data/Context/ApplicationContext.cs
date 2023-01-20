@@ -69,6 +69,10 @@ namespace KNU.RS.Data.Context
             modelBuilder.Entity<Patient>(p =>
             {
                 p.HasKey(p => p.Id);
+
+                p.Property(s => s.Height).HasPrecision(18, 2);
+                p.Property(s => s.Weight).HasPrecision(18, 2);
+
                 p.HasOne(d => d.User).WithOne(u => u.Patient).HasForeignKey<Patient>(d => d.UserId);
             });
 
@@ -87,6 +91,13 @@ namespace KNU.RS.Data.Context
             modelBuilder.Entity<StudyDetails>(sd =>
             {
                 sd.HasKey(s => s.Id);
+
+                sd.Property(s => s.MinClockwiseDegrees).HasPrecision(18, 2);
+                sd.Property(s => s.MinCounterClockwiseDegrees).HasPrecision(18, 2);
+                sd.Property(s => s.AvgClockwiseDegrees).HasPrecision(18, 2);
+                sd.Property(s => s.AvgCounterClockwiseDegrees).HasPrecision(18, 2);
+                sd.Property(s => s.MaxClockwiseDegrees).HasPrecision(18, 2);
+                sd.Property(s => s.MaxCounterClockwiseDegrees).HasPrecision(18, 2);
 
                 sd.HasOne(s => s.StudyHeader).WithMany(s => s.StudyDetails).HasForeignKey(s => s.StudyHeaderId);
                 sd.HasOne(s => s.StudySubtype).WithMany(s => s.StudyDetails).HasForeignKey(s => s.StudySubtypeId);
